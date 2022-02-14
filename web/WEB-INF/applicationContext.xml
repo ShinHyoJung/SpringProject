@@ -7,10 +7,10 @@
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context.xsd">
 
-
-    <context:component-scan base-package="com.project.Controller">
+<!--
+    <context:component-scan base-package="com.project.controller">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
-
+   </context:component-scan>
+-->
 
 </beans>
