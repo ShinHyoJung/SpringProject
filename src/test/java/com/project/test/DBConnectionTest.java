@@ -22,7 +22,6 @@ import java.sql.Connection;
 @ContextConfiguration(locations = {"classpath*:/com/project/conf/Configuration.java"})
 public class DBConnectionTest {
 
-    @Autowired
     private DataSource dataSource;
 
     @Test

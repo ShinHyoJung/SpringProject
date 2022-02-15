@@ -1,10 +1,7 @@
 package com.project.controller;
 
-import javax.annotation.Resource;
-import javax.inject.Inject;
 import com.project.dto.UserDTO;
 import com.project.service.UserService;
-import com.project.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 

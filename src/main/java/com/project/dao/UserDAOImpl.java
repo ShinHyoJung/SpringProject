@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public class UserDAOImpl implements UserDAO {
+public class UserDAOImpl implements UserDAO { //mapper에서 Impl을 사용함
 
     @Autowired
     SqlSession sqlSession;
