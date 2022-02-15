@@ -1,18 +1,16 @@
 package com.project.dao;
 
-import com.project.dto.User;
-import org.apache.ibatis.annotations.Mapper;
+import com.project.dto.UserDTO;
 
 /**
  * Created with IntellliJ IDEA.
- * User: nandsoft
+ * UserDTO: nandsoft
  * Date: 2022-02-14
  * Time: 오후 1:29
  * Comments:
  */
-@Mapper
+
 public interface UserDAO
 {
-
-    public void insertUser(User user);
+    void insertUser(UserDTO user) throws Exception;
 }

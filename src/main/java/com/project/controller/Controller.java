@@ -1,17 +1,18 @@
 package com.project.controller;
 
-import com.project.dto.User;
+import javax.annotation.Resource;
+import javax.inject.Inject;
+import com.project.dto.UserDTO;
 import com.project.service.UserService;
 import com.project.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.annotation.Resource;
 
 
 /**
  * Created with IntellliJ IDEA.
- * User: nandsoft
+ * UserDTO: nandsoft
  * Date: 2022-02-14
  * Time: 오전 11:01
  * Comments:
@@ -19,17 +20,16 @@ import javax.annotation.Resource;
 @org.springframework.stereotype.Controller
 public class Controller
 {
-
     @Autowired
-    UserService userservice;
+    private UserService userService;
 
-    @RequestMapping("/")
+    @RequestMapping("/") // 홈
     public String home() {
 
         return "home";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping("/login") // 로그인 창
     public String login() {
         return "login";
     }
@@ -41,10 +41,10 @@ public class Controller
     }
 
     @RequestMapping("/signup") // 회원가입 처리
-    public String signup(User user) {
+    public String signup(UserDTO user) throws Exception {
 
-        userservice.insertUser(user);
-        return "login";
+        userService.insertUser(user);
+        return "home";
 
     }
 }

@@ -2,12 +2,12 @@ package com.project.dto;
 
 /**
  * Created with IntellliJ IDEA.
- * User: nandsoft
+ * UserDTO: nandsoft
  * Date: 2022-02-14
  * Time: 오후 1:29
  * Comments:
  */
-public class User
+public class UserDTO
 {
     private int idx;
     private String id;
@@ -37,16 +37,6 @@ public class User
         this.id = id;
     }
 
-    public String getName()
-    {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
     public String getPassword()
     {
         return password;
@@ -55,6 +45,16 @@ public class User
     public void setPassword(String password)
     {
         this.password = password;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
     public String getP_num()
@@ -77,4 +77,8 @@ public class User
         this.address = address;
     }
 
+    @Override
+    public String toString() {
+        return "UserDTO [id=" + id + ", password=" + password + ", name=" + name + ", p_num=" + p_num + ", address=" + address + "]";
+    }
 }

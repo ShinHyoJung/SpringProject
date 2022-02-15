@@ -1,17 +1,19 @@
 package com.project.service;
 
-import com.project.dto.User;
+import com.project.dto.UserDTO;
 
 /**
  * Created with IntellliJ IDEA.
- * User: nandsoft
+ * UserDTO: nandsoft
  * Date: 2022-02-14
  * Time: 오후 3:38
  * Comments:
  */
+
+
 public interface UserService
 {
 
-   public void insertUser(User user);
+   public void insertUser(UserDTO user) throws Exception;
 
 }
