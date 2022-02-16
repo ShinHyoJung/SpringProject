@@ -16,4 +16,5 @@ public interface UserService
 
    public void insertUser(UserDTO user) throws Exception;
 
+   public UserDTO loginUser(UserDTO user) throws Exception;
 }

@@ -29,4 +29,10 @@ public class UserServiceImpl implements UserService {
 
         userdao.insertUser(user);
     }
+
+    @Override
+    public UserDTO loginUser(UserDTO user) throws Exception {
+        return userdao.loginUser(user);
+    }
+
 }

@@ -19,4 +19,15 @@
         )
     </insert>
 
+    <select id="loginUser" parameterType="com.project.dto.UserDTO" resultType="com.project.dto.UserDTO">
+        SELECT *
+        FROM user
+        WHERE u_id = #{id}
+        AND u_password = #{password}
+    </select>
+
+    <select id="selectUser" parameterType="">
+
+    </select>
+
 </mapper>

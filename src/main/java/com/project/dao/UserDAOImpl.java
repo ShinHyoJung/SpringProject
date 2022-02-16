@@ -1,12 +1,10 @@
 package com.project.dao;
 
-import javax.annotation.Resource;
-import javax.inject.Inject;
 import com.project.dto.UserDTO;
 import org.apache.ibatis.session.SqlSession;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 
 /**
  * Created with IntellliJ IDEA.
@@ -25,5 +23,18 @@ public class UserDAOImpl implements UserDAO { //mapper에서 Impl을 사용함
     @Override
     public void insertUser(UserDTO user) throws Exception {
         sqlSession.insert("insertUser", user);
+    }
+
+    @Override
+    public UserDTO loginUser(UserDTO user) throws Exception {
+        UserDTO res = null;
+
+        try {
+            res = sqlSession.selectOne("loginUser",user);
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return res;
     }
 }

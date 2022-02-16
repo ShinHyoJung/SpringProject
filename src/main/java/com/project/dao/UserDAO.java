@@ -12,5 +12,7 @@ import com.project.dto.UserDTO;
 
 public interface UserDAO
 {
-    void insertUser(UserDTO user) throws Exception;
+    public void insertUser(UserDTO user) throws Exception;
+
+    public UserDTO loginUser(UserDTO user) throws Exception;
 }
