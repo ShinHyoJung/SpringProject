@@ -13,7 +13,7 @@ import java.sql.Connection;
 
 /**
  * Created with IntellliJ IDEA.
- * UserDTO: nandsoft
+ * MemberDTO: nandsoft
  * Date: 2022-02-14
  * Time: 오전 11:02
  * Comments:

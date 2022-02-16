@@ -13,6 +13,5 @@
 <body>
 <h1>회원정보</h1>
 
-<input text
 </body>
 </html>

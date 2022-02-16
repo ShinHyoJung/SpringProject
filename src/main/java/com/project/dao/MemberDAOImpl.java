@@ -1,6 +1,6 @@
 package com.project.dao;
 
-import com.project.dto.UserDTO;
+import com.project.dto.MemberDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,22 +15,23 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public class UserDAOImpl implements UserDAO { //mapper에서 Impl을 사용함
+public class MemberDAOImpl implements MemberDAO
+{ //mapper에서 Impl을 사용함
 
     @Autowired
     SqlSession sqlSession;
 
     @Override
-    public void insertUser(UserDTO user) throws Exception {
-        sqlSession.insert("insertUser", user);
+    public void insertMember(MemberDTO member) throws Exception {
+        sqlSession.insert("insertUser", member);
     }
 
     @Override
-    public UserDTO loginUser(UserDTO user) throws Exception {
-        UserDTO res = null;
+    public MemberDTO loginMember(MemberDTO member) throws Exception {
+        MemberDTO res = null;
 
         try {
-            res = sqlSession.selectOne("loginUser",user);
+            res = sqlSession.selectOne("loginMemberr",member);
         }catch(Exception e) {
             e.printStackTrace();
         }

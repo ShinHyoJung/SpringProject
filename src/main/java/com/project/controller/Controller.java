@@ -1,7 +1,7 @@
 package com.project.controller;
 
-import com.project.dto.UserDTO;
-import com.project.service.UserService;
+import com.project.dto.MemberDTO;
+import com.project.service.MemberService;
 import org.mariadb.jdbc.internal.logging.Logger;
 import org.mariadb.jdbc.internal.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,14 +9,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
 /**
  * Created with IntellliJ IDEA.
- * UserDTO: nandsoft
+ * MemberDTO: nandsoft
  * Date: 2022-02-14
  * Time: 오전 11:01
  * Comments:
@@ -28,7 +27,7 @@ public class Controller
 
 
     @Autowired // 의존성주입방법
-    private UserService userService;
+    private MemberService memberService;
 
     @RequestMapping("/") // 홈
     public String home(Model model) {
@@ -44,11 +43,11 @@ public class Controller
     }
 
     @RequestMapping(value="/logindo", method= RequestMethod.POST) //로그인 처리
-    public String logindo(UserDTO user, HttpServletRequest request) throws Exception {
+    public String logindo(MemberDTO member, HttpServletRequest request) throws Exception {
         logger.info("Login");
 
         HttpSession session = request.getSession(); //웹에 접근한 사용자 식별하는 방법
-        UserDTO res = userService.loginUser(user);
+        MemberDTO res = memberService.loginMember(member);
 
         if(res!=null) {
             session.setAttribute("res", res);
@@ -66,9 +65,9 @@ public class Controller
     }
 
     @RequestMapping("/signup") // 회원가입 처리
-    public String signup(UserDTO user) throws Exception {
+    public String signup(MemberDTO member) throws Exception {
 
-        userService.insertUser(user);
+        memberService.insertMember(member);
         return "home";
     }
 

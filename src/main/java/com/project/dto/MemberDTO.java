@@ -2,12 +2,12 @@ package com.project.dto;
 
 /**
  * Created with IntellliJ IDEA.
- * UserDTO: nandsoft
+ * MemberDTO: nandsoft
  * Date: 2022-02-14
  * Time: 오후 1:29
  * Comments:
  */
-public class UserDTO
+public class MemberDTO
 {
     private int idx;
     private String id;
@@ -79,6 +79,6 @@ public class UserDTO
 
     @Override
     public String toString() {
-        return "UserDTO [id=" + id + ", password=" + password + ", name=" + name + ", p_num=" + p_num + ", address=" + address + "]";
+        return "MemberDTO [id=" + id + ", password=" + password + ", name=" + name + ", p_num=" + p_num + ", address=" + address + "]";
     }
 }
