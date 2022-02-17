@@ -3,6 +3,7 @@ package com.project.service;
 import com.project.dao.MemberDAO;
 import com.project.dto.MemberDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,17 +18,18 @@ public class MemberServiceImpl implements MemberService
 {
 
     @Autowired
-    MemberDAO userdao;
+    MemberDAO memberdao;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public void insertMember(MemberDTO member) throws Exception {
-
-        userdao.insertMember(member);
+        memberdao.insertMember(member);
     }
 
     @Override
     public MemberDTO loginMember(MemberDTO member) throws Exception {
-        return userdao.loginMember(member);
+       return memberdao.loginMember(member);
     }
 
 }

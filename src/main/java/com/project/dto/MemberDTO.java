@@ -13,9 +13,8 @@ public class MemberDTO
     private String id;
     private String name;
     private String password;
-    private String p_num;
+    private String pnum;
     private String address;
-
 
     public int getIdx()
     {
@@ -37,16 +36,6 @@ public class MemberDTO
         this.id = id;
     }
 
-    public String getPassword()
-    {
-        return password;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
     public String getName()
     {
         return name;
@@ -57,16 +46,25 @@ public class MemberDTO
         this.name = name;
     }
 
-    public String getP_num()
+    public String getPassword()
     {
-        return p_num;
+        return password;
     }
 
-    public void setP_num(String p_num)
+    public void setPassword(String password)
     {
-        this.p_num = p_num;
+        this.password = password;
     }
 
+    public String getPnum()
+    {
+        return pnum;
+    }
+
+    public void setPnum(String pnum)
+    {
+        this.pnum = pnum;
+    }
     public String getAddress()
     {
         return address;
@@ -79,6 +77,6 @@ public class MemberDTO
 
     @Override
     public String toString() {
-        return "MemberDTO [id=" + id + ", password=" + password + ", name=" + name + ", p_num=" + p_num + ", address=" + address + "]";
+        return "MemberDTO [id=" + id + ", password=" + password + ", name=" + name + ", pnum=" + pnum + ", address=" + address + "]";
     }
 }

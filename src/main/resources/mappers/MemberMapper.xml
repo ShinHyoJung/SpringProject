@@ -5,29 +5,25 @@
 
     <insert id="insertMember" parameterType="com.project.dto.MemberDTO">
         INSERT INTO member(
-        m_id,
-        m_password,
-        m_name,
-        m_pnum,
-        m_address
-        ) VALUES (
-        #{id},
-        #{password},
-        #{name},
-        #{p_num},
-        #{address}
+            m_id,
+            m_password,
+            m_name,
+            m_pnum,
+            m_address
+        )
+        VALUES (
+            #{id},
+            #{password},
+            #{name},
+            #{p_num},
+            #{address}
         )
     </insert>
 
     <select id="loginMember" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
-        SELECT *
-        FROM user
+        SELECT m_id as id,
+               m_password as password
+        FROM member
         WHERE m_id = #{id}
-        AND m_password = #{password}
     </select>
-
-    <select id="selectUser" parameterType="">
-
-    </select>
-
 </mapper>

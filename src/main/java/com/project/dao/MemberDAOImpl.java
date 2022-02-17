@@ -3,6 +3,7 @@ package com.project.dao;
 import com.project.dto.MemberDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 
@@ -20,22 +21,19 @@ public class MemberDAOImpl implements MemberDAO
 
     @Autowired
     SqlSession sqlSession;
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public void insertMember(MemberDTO member) throws Exception {
-        sqlSession.insert("insertUser", member);
+        sqlSession.insert("insertMember", member);
     }
 
+
     @Override
-    public MemberDTO loginMember(MemberDTO member) throws Exception {
-        MemberDTO res = null;
+    public MemberDTO loginMember(MemberDTO member) throws Exception
+    {
+       return sqlSession.selectOne("loginMember", member);
 
-        try {
-            res = sqlSession.selectOne("loginMemberr",member);
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
-
-        return res;
     }
 }

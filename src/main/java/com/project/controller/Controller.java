@@ -5,10 +5,11 @@ import com.project.service.MemberService;
 import org.mariadb.jdbc.internal.logging.Logger;
 import org.mariadb.jdbc.internal.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -24,7 +25,8 @@ import javax.servlet.http.HttpSession;
 public class Controller
 {
     private Logger logger = LoggerFactory.getLogger(Controller.class);
-
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired // 의존성주입방법
     private MemberService memberService;
@@ -47,14 +49,16 @@ public class Controller
         logger.info("Login");
 
         HttpSession session = request.getSession(); //웹에 접근한 사용자 식별하는 방법
-        MemberDTO res = memberService.loginMember(member);
+        MemberDTO login = memberService.loginMember(member);
 
-        if(res!=null) {
-            session.setAttribute("res", res);
+        boolean passMatch = bCryptPasswordEncoder.matches(member.getPassword(), login.getPassword());
+
+        if(login!=null && passMatch) {
+            session.setAttribute("login", login);
             return "redirect:/info";
         } else {
             //로그인정보가 틀렸습니다 알림창 띄우기
-            return "redirect:login";
+            return "redirect:/login";
         }
     }
 
@@ -65,11 +69,14 @@ public class Controller
     }
 
     @RequestMapping("/signup") // 회원가입 처리
-    public String signup(MemberDTO member) throws Exception {
+    public String signup(@ModelAttribute MemberDTO member) throws Exception {
 
+        String pwdbCrypt = bCryptPasswordEncoder.encode(member.getPassword()); //비밀번호 암호화
+        member.setPassword(pwdbCrypt);
         memberService.insertMember(member);
         return "home";
     }
+
 
     @RequestMapping("/info") // 회원정보 조회
     public String info() {

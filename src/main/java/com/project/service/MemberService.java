@@ -14,6 +14,7 @@ import com.project.dto.MemberDTO;
 public interface MemberService
 {
 
+
    public void insertMember(MemberDTO member) throws Exception;
 
    public MemberDTO loginMember(MemberDTO member) throws Exception;
