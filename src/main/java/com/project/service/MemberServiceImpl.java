@@ -32,4 +32,27 @@ public class MemberServiceImpl implements MemberService
        return memberdao.loginMember(member);
     }
 
+    @Override
+    public MemberDTO selectMember(String id) throws Exception {
+       MemberDTO login = null;
+
+       try{
+           login = memberdao.selectMember(id);
+       } catch(Exception e) {
+           e.printStackTrace();
+       }
+
+       return login;
+    }
+
+    @Override
+    public void updateMember(MemberDTO member) throws Exception {
+        memberdao.updateMember(member);
+    }
+
+    @Override
+    public void deleteMember(String id) throws Exception {
+        memberdao.deleteMember(id);
+    }
+
 }

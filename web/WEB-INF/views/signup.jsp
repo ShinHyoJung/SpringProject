@@ -17,7 +17,7 @@
         <input type="text" name="id" placeholder="아이디"> <br> <br>
         <input type="text" name="password" placeholder="비밀번호"> <br> <br>
         <input type="text" name="name" placeholder="이름"> <br><br>
-        <input type="text" name="p_num" placeholder="전화번호"> <br> <br>
+        <input type="text" name="pnum" placeholder="전화번호"> <br> <br>
         <input type="text" name="address" placeholder="주소"> <br> <br>
         <button type="submit">가입하기</button>
     </form>

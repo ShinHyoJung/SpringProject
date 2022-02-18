@@ -2,6 +2,8 @@ package com.project.dao;
 
 import com.project.dto.MemberDTO;
 
+import java.lang.reflect.Member;
+
 /**
  * Created with IntellliJ IDEA.
  * MemberDTO: nandsoft
@@ -15,4 +17,10 @@ public interface MemberDAO
         void insertMember(MemberDTO member) throws Exception;
 
         MemberDTO loginMember(MemberDTO member) throws Exception;
+
+        MemberDTO selectMember(String id) throws Exception;
+
+        void updateMember(MemberDTO member) throws Exception;
+
+        void deleteMember(String id) throws Exception;
     }

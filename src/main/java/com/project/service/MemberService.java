@@ -15,7 +15,13 @@ public interface MemberService
 {
 
 
-   public void insertMember(MemberDTO member) throws Exception;
+   void insertMember(MemberDTO member) throws Exception;
 
-   public MemberDTO loginMember(MemberDTO member) throws Exception;
+   MemberDTO loginMember(MemberDTO member) throws Exception;
+
+   MemberDTO selectMember(String id) throws Exception;
+
+   void updateMember(MemberDTO member) throws Exception;
+
+   void deleteMember(String id) throws Exception;
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.Member;
+
 
 /**
  * Created with IntellliJ IDEA.
@@ -35,5 +37,21 @@ public class MemberDAOImpl implements MemberDAO
     {
        return sqlSession.selectOne("loginMember", member);
 
+    }
+
+    @Override
+    public MemberDTO selectMember(String id) throws Exception {
+        return sqlSession.selectOne("selectMember", id);
+
+    }
+
+    @Override
+    public void updateMember(MemberDTO member) throws Exception {
+        sqlSession.update("updateMember", member);
+    }
+
+    @Override
+    public void deleteMember(String id) throws Exception {
+        sqlSession.delete("deleteMember", id);
     }
 }

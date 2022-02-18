@@ -15,7 +15,7 @@
             #{id},
             #{password},
             #{name},
-            #{p_num},
+            #{pnum},
             #{address}
         )
     </insert>
@@ -26,4 +26,29 @@
         FROM member
         WHERE m_id = #{id}
     </select>
+
+    <select id="selectMember" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
+        SELECT m_id as id,
+               m_password as password,
+               m_name as name,
+               m_pnum as pnum,
+               m_address as address
+        FROM member
+        WHERE m_id = #{id}
+    </select>
+    
+    <update id="updateMember" parameterType="com.project.dto.MemberDTO">
+        UPDATE member
+        SET
+               m_password = #{password},
+               m_name = #{name},
+               m_pnum = #{pnum},
+               m_address = #{address}
+        WHERE  m_id = #{id}
+    </update>
+
+    <delete id="deleteMember" parameterType="com.project.dto.MemberDTO">
+        DELETE FROM member
+        WHERE   m_id = #{id}
+    </delete>
 </mapper>

@@ -15,6 +15,7 @@ public class MemberDTO
     private String password;
     private String pnum;
     private String address;
+    private String mdatetime;
 
     public int getIdx()
     {
@@ -73,6 +74,16 @@ public class MemberDTO
     public void setAddress(String address)
     {
         this.address = address;
+    }
+
+    public String getMdatetime()
+    {
+        return mdatetime;
+    }
+
+    public void setMdatetime(String mdatetime)
+    {
+        this.mdatetime = mdatetime;
     }
 
     @Override
