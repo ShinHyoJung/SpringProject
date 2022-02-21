@@ -18,18 +18,18 @@ public class MemberServiceImpl implements MemberService
 {
 
     @Autowired
-    MemberDAO memberdao;
+    MemberDAO memberDAO;
     @Autowired
     PasswordEncoder passwordEncoder;
 
     @Override
     public void insertMember(MemberDTO member) throws Exception {
-        memberdao.insertMember(member);
+        memberDAO.insertMember(member);
     }
 
     @Override
     public MemberDTO loginMember(MemberDTO member) throws Exception {
-       return memberdao.loginMember(member);
+       return memberDAO.loginMember(member);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class MemberServiceImpl implements MemberService
        MemberDTO login = null;
 
        try{
-           login = memberdao.selectMember(id);
+           login = memberDAO.selectMember(id);
        } catch(Exception e) {
            e.printStackTrace();
        }
@@ -47,12 +47,12 @@ public class MemberServiceImpl implements MemberService
 
     @Override
     public void updateMember(MemberDTO member) throws Exception {
-        memberdao.updateMember(member);
+        memberDAO.updateMember(member);
     }
 
     @Override
     public void deleteMember(String id) throws Exception {
-        memberdao.deleteMember(id);
+        memberDAO.deleteMember(id);
     }
 
 }

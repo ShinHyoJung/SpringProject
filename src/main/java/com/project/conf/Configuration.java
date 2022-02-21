@@ -3,8 +3,6 @@ package com.project.conf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-
-import javax.inject.Inject;
 import javax.sql.DataSource;
 
 /**

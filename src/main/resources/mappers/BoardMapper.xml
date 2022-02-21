@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.dao.BoardDAOImpl">
+
+    <insert id="writeBoard" parameterType="com.project.dto.BoardDTO">
+        INSERT INTO board(
+            b_title,
+            b_content,
+            b_writer,
+            b_hit,
+            idx
+        ) VALUES (
+            #{btitle},
+            #{bcontent},
+            #{bwriter},
+            0,
+            #{idx}
+        )
+    </insert>
+
+    <select id="viewBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
+        SELECT b_id as bid,
+               b_title as btitle,
+               b_writer as bwriter,
+               b_hit as bhit,
+               b_datetime as bdatetime,
+               idx as idx
+        FROM   board
+    </select>
+
+    <select id="readBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
+        SELECT b_title as btitle,
+               b_writer as bwriter,
+               b_content as bcontent,
+               b_hit as bhit
+        FROM   board
+        WHERE  b_id = #{bid}
+    </select>
+</mapper>

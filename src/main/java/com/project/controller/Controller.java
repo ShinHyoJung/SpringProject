@@ -1,17 +1,18 @@
 package com.project.controller;
 
+import com.project.dto.BoardDTO;
 import com.project.dto.MemberDTO;
+import com.project.service.BoardService;
 import com.project.service.MemberService;
 import org.mariadb.jdbc.internal.logging.Logger;
 import org.mariadb.jdbc.internal.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 /**
@@ -30,6 +31,8 @@ public class Controller
 
     @Autowired // 의존성주입방법
     private MemberService memberService;
+    @Autowired
+    private BoardService boardService;
 
     @RequestMapping("/") // 홈
     public String home(Model model) {
@@ -41,7 +44,7 @@ public class Controller
     public String login() {
 
         logger.info("Login Page");
-        return "login";
+        return "member/login";
     }
 
     @RequestMapping(value="/logindo", method= RequestMethod.POST) //로그인 처리
@@ -51,19 +54,18 @@ public class Controller
         //웹에 접근한 사용자 식별하는 방법
         MemberDTO login = memberService.loginMember(member);
 
-        String id = login.getId();
         // 로그인정보에서 id값 추출
         boolean passMatch = bCryptPasswordEncoder.matches(member.getPassword(), login.getPassword());
 
         if(login!=null && passMatch) {
             session.setAttribute("login", login);
+            String id = login.getId();
             session.setAttribute("id", id);
             //세션에 로그인정보 애트리뷰트와 아이디 애트리뷰트 저장
-            return "redirect:/info";
-        } else {
-            //로그인정보가 틀렸습니다 알림창 띄우기
+            return "redirect:/list";
+        } else { // 비밀번호가 틀렸습니다 알림창 구현
             return "redirect:/login";
-        }
+        }// 아이디가 틀린경우 구현
     }
 
     @RequestMapping("/logout") // 로그아웃
@@ -77,7 +79,7 @@ public class Controller
     @RequestMapping("/beforesignup") // 회원가입 창
     public String beforesignup()
     {
-        return "/signup";
+        return "member/signup";
     }
 
     @RequestMapping("/signup") // 회원가입 처리
@@ -91,13 +93,14 @@ public class Controller
 
 
     @RequestMapping("/info") // 회원정보 조회
-    public void selectInfo(HttpSession session, Model model) throws Exception {
+    public String selectInfo(MemberDTO member, HttpSession session, Model model) throws Exception {
 
         String id = (String)session.getAttribute("id");
         // 세션 아이디 애트리뷰트에서 아이디값을 가져옴
         MemberDTO dto = memberService.selectMember(id);
         model.addAttribute("dto", dto);
 
+        return "member/info";
     }
 
     @RequestMapping("/update") // 회원정보 수정
@@ -117,4 +120,37 @@ public class Controller
         memberService.deleteMember(id);
         return "home";
     }
+
+    @RequestMapping(value="/list", method=RequestMethod.GET) // 게시판 리스트
+    public String list(Model model) throws Exception {
+
+        List<BoardDTO> list= boardService.viewBoard();
+        model.addAttribute("list", list);
+        return "board/list";
+    }
+
+    @RequestMapping("/write") // 게시글 쓰기
+    public String write(MemberDTO member, Model model, HttpSession session) throws Exception {
+
+        String id = (String)session.getAttribute("id");
+        MemberDTO dto = memberService.selectMember(id);
+        model.addAttribute("dto", dto);
+        return "board/write";
+    }
+
+    @RequestMapping("/enroll") // 게시글 등록
+    public String enroll(BoardDTO board) throws Exception {
+
+        boardService.writeBoard(board);
+        return "redirect:/list";
+    }
+
+    @RequestMapping(value="/read/{bid}", method = RequestMethod.GET) // 게시글 읽기 
+    public String read(@PathVariable("bid")int bid, Model model) throws Exception {
+
+        BoardDTO board = boardService.readBoard(bid);
+        model.addAttribute("board", board);
+        return "board/read";
+    }
+
 }
