@@ -23,7 +23,7 @@
             </td>
         <tr>
             <td>
-                작성자: ${dto.name}
+                작성자: ${user.name}
             </td>
         <tr>
             <td>
@@ -32,8 +32,8 @@
         </tr>
     </table>
     <button type="submit">등록</button>
-    <input type="hidden" value="${dto.name}" name="bwriter">
-    <input type="hidden" value="${dto.idx}" name="idx">
+    <input type="hidden" value="${user.name}" name="bwriter">
+    <input type="hidden" value="${user.idx}" name="idx">
 </form>
 </body>
 </html>
