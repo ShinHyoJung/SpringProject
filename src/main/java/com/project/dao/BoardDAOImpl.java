@@ -32,7 +32,7 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public BoardDTO readBoard(int bid) throws Exception {
-        return sqlSession.selectOne("readBoard", bid);
+    public BoardDTO readBoard(int bno) throws Exception {
+        return sqlSession.selectOne("readBoard", bno);
     }
 }

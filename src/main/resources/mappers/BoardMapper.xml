@@ -6,10 +6,10 @@
 
     <insert id="writeBoard" parameterType="com.project.dto.BoardDTO">
         INSERT INTO board(
-            b_title,
-            b_content,
-            b_writer,
-            b_hit,
+            board_title,
+            board_content,
+            board_writer,
+            board_hit,
             idx
         ) VALUES (
             #{btitle},
@@ -21,21 +21,21 @@
     </insert>
 
     <select id="viewBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
-        SELECT b_id as bid,
-               b_title as btitle,
-               b_writer as bwriter,
-               b_hit as bhit,
-               b_datetime as bdatetime,
+        SELECT board_no as bno,
+               board_title as btitle,
+               board_writer as bwriter,
+               board_hit as bhit,
+               board_updatetime as bupdatetime,
                idx as idx
         FROM   board
     </select>
 
     <select id="readBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
-        SELECT b_title as btitle,
-               b_writer as bwriter,
-               b_content as bcontent,
-               b_hit as bhit
+        SELECT board_title as btitle,
+               board_writer as bwriter,
+               board_content as bcontent,
+               board_hit as bhit
         FROM   board
-        WHERE  b_id = #{bid}
+        WHERE  board_no = #{bno}
     </select>
 </mapper>

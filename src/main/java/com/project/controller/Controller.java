@@ -97,8 +97,8 @@ public class Controller
 
         String id = (String)session.getAttribute("id");
         // 세션 아이디 애트리뷰트에서 아이디값을 가져옴
-        MemberDTO dto = memberService.selectMember(id);
-        model.addAttribute("dto", dto);
+        MemberDTO user = memberService.selectMember(id);
+        model.addAttribute("dto", user);
 
         return "member/info";
     }
@@ -133,8 +133,8 @@ public class Controller
     public String write(MemberDTO member, Model model, HttpSession session) throws Exception {
 
         String id = (String)session.getAttribute("id");
-        MemberDTO dto = memberService.selectMember(id);
-        model.addAttribute("dto", dto);
+        MemberDTO user = memberService.selectMember(id);
+        model.addAttribute("user", user);
         return "board/write";
     }
 
@@ -145,12 +145,20 @@ public class Controller
         return "redirect:/list";
     }
 
-    @RequestMapping(value="/read/{bid}", method = RequestMethod.GET) // 게시글 읽기 
-    public String read(@PathVariable("bid")int bid, Model model) throws Exception {
+    @RequestMapping(value="/read/{bno}", method = RequestMethod.GET) // 게시글 읽기
+    public String read(@PathVariable("bno")int bno, Model model) throws Exception {
 
-        BoardDTO board = boardService.readBoard(bid);
+        BoardDTO board = boardService.readBoard(bno);
         model.addAttribute("board", board);
         return "board/read";
+    }
+
+    @RequestMapping(value="/update/{bno}", method = RequestMethod.GET) // 게시글 수정 페이지
+    public String update(@PathVariable("bno")int bno, Model model) throws Exception {
+
+        BoardDTO board = boardService.readBoard(bno);
+        model.addAttribute("board", board);
+        return "board/update";
     }
 
 }

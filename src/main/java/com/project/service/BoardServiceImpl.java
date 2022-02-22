@@ -32,7 +32,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public BoardDTO readBoard(int bid) throws Exception {
-        return boardDAO.readBoard(bid);
+    public BoardDTO readBoard(int bno) throws Exception {
+        return boardDAO.readBoard(bno);
     }
 }

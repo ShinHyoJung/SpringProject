@@ -26,10 +26,10 @@
         </tr>
         <c:forEach items="${list}" var="list">
         <tr>
-            <td>${list.bid}</td>
-            <td><a href="/read/${list.bid}" name="list.btitle"/>${list.btitle}</td>
+            <td>${list.bno}</td>
+            <td><a href="/read/${list.bno}" name="list.btitle"/>${list.btitle}</td>
             <td>${list.bwriter}</td>
-            <td>${list.bdatetime}</td>
+            <td>${list.bupdatetime}</td>
             <td>${list.bhit}</td>
         </tr>
         </c:forEach>

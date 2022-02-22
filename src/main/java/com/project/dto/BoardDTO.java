@@ -9,23 +9,23 @@ package com.project.dto;
  */
 public class BoardDTO {
 
-    private int bid;
+    private int bno;
     private String btitle;
     private String bcontent;
     private String bwriter;
     private int bhit;
     private String bdatetime;
+    private String bupdatetime;
     private int idx;
 
 
-    public int getBid()
-    {
-        return bid;
+    public int getBno() {
+        return bno;
     }
 
-    public void setBid(int bid)
+    public void setBno(int bno)
     {
-        this.bid = bid;
+        this.bno = bno;
     }
 
     public String getBtitle()
@@ -76,6 +76,14 @@ public class BoardDTO {
     public void setBdatetime(String bdatetime)
     {
         this.bdatetime = bdatetime;
+    }
+
+    public String getBupdatetime() {
+        return bupdatetime;
+    }
+
+    public void setBupdatetime(String bupdatetime) {
+        this.bupdatetime = bupdatetime;
     }
 
     public int getIdx()

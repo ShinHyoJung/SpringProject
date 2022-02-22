@@ -5,11 +5,11 @@
 
     <insert id="insertMember" parameterType="com.project.dto.MemberDTO">
         INSERT INTO member(
-            m_id,
-            m_password,
-            m_name,
-            m_pnum,
-            m_address
+            id,
+            password,
+            name,
+            pnum,
+            address
         )
         VALUES (
             #{id},
@@ -21,35 +21,35 @@
     </insert>
 
     <select id="loginMember" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
-        SELECT m_id as id,
-               m_password as password
+        SELECT id as id,
+               password as password
         FROM member
-        WHERE m_id = #{id}
+        WHERE id = #{id}
     </select>
 
     <select id="selectMember" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
         SELECT idx as idx,
-               m_id as id,
-               m_password as password,
-               m_name as name,
-               m_pnum as pnum,
-               m_address as address
+               id as id,
+               password as password,
+               name as name,
+               pnum as pnum,
+               address as address
         FROM member
-        WHERE m_id = #{id}
+        WHERE id = #{id}
     </select>
     
     <update id="updateMember" parameterType="com.project.dto.MemberDTO">
         UPDATE member
         SET
-               m_password = #{password},
-               m_name = #{name},
-               m_pnum = #{pnum},
-               m_address = #{address}
-        WHERE  m_id = #{id}
+               password = #{password},
+               name = #{name},
+               pnum = #{pnum},
+               address = #{address}
+        WHERE  id = #{id}
     </update>
 
     <delete id="deleteMember" parameterType="com.project.dto.MemberDTO">
         DELETE FROM member
-        WHERE   m_id = #{id}
+        WHERE   id = #{id}
     </delete>
 </mapper>

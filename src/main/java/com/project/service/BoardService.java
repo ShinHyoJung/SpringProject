@@ -17,5 +17,5 @@ public interface BoardService {
 
     List<BoardDTO> viewBoard() throws Exception;
 
-    BoardDTO readBoard(int bid) throws Exception;
+    BoardDTO readBoard(int bno) throws Exception;
 }

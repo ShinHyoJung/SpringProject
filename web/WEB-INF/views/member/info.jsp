@@ -23,7 +23,7 @@
 </form>
 
 <a href="/logout">로그아웃</a>
-
 <a href="/quit">회원탈퇴</a>
+<a href="/list">목록</a>
 </body>
 </html>
