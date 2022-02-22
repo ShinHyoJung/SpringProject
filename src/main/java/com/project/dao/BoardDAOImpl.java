@@ -1,6 +1,8 @@
 package com.project.dao;
 
 import com.project.dto.BoardDTO;
+import com.project.dto.Criteria;
+import com.project.dto.PagingDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,8 +29,8 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public List<BoardDTO> viewBoard() throws Exception {
-        return sqlSession.selectList("viewBoard");
+    public List<BoardDTO> viewBoard(Criteria cri) throws Exception {
+        return sqlSession.selectList("viewBoard", cri);
     }
 
     @Override
@@ -53,5 +55,10 @@ public class BoardDAOImpl implements BoardDAO {
     @Override
     public int hitBoard(int bno) throws Exception {
         return sqlSession.update("hitBoard", bno);
+    }
+
+    @Override
+    public int countBoard() throws Exception {
+        return (Integer) sqlSession.selectOne("countBoard");
     }
 }

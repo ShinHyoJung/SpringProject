@@ -2,6 +2,8 @@ package com.project.service;
 
 import com.project.dao.BoardDAO;
 import com.project.dto.BoardDTO;
+import com.project.dto.Criteria;
+import com.project.dto.PagingDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +29,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardDTO> viewBoard() throws Exception {
-        return boardDAO.viewBoard();
+    public List<BoardDTO> viewBoard(Criteria cri) throws Exception {
+        return boardDAO.viewBoard(cri);
     }
 
     @Override
@@ -53,5 +55,9 @@ public class BoardServiceImpl implements BoardService {
         boardDAO.deleteBoard(bno);
     }
 
+    @Override
+    public int countBoard() throws Exception {
+        return boardDAO.countBoard();
+    }
 
 }

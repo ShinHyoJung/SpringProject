@@ -28,6 +28,8 @@
                board_updatetime as bupdatetime,
                idx as idx
         FROM   board
+        ORDER BY board_no DESC
+        LIMIT  #{skip}, #{amount}
     </select>
 
     <select id="readBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
@@ -69,4 +71,9 @@
         SET    board_hit  = board_hit +1
         WHERE  board_no = #{bno}
     </update>
+
+    <select id="countBoard" parameterType="com.project.dto.BoardDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM   board
+    </select>
 </mapper>

@@ -1,6 +1,8 @@
 package com.project.dao;
 
 import com.project.dto.BoardDTO;
+import com.project.dto.Criteria;
+import com.project.dto.PagingDTO;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ public interface BoardDAO {
 
     void writeBoard(BoardDTO board) throws Exception;
 
-    List<BoardDTO> viewBoard() throws Exception;
+    List<BoardDTO> viewBoard(Criteria cri) throws Exception;
 
     BoardDTO readBoard(int bno) throws Exception;
 
@@ -26,4 +28,6 @@ public interface BoardDAO {
     void deleteBoard(int bno) throws Exception;
 
     int hitBoard(int bno) throws Exception;
+
+    int countBoard() throws Exception;
 }

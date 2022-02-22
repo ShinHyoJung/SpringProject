@@ -1,7 +1,9 @@
 package com.project.controller;
 
 import com.project.dto.BoardDTO;
+import com.project.dto.Criteria;
 import com.project.dto.MemberDTO;
+import com.project.dto.PagingDTO;
 import com.project.service.BoardService;
 import com.project.service.MemberService;
 import org.mariadb.jdbc.internal.logging.Logger;
@@ -10,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -122,10 +123,14 @@ public class Controller
     }
 
     @RequestMapping(value="/list", method=RequestMethod.GET) // 게시판 리스트
-    public String list(Model model) throws Exception {
+    public String list(Criteria cri, Model model) throws Exception {
 
-        List<BoardDTO> list= boardService.viewBoard();
+        List<BoardDTO> list= boardService.viewBoard(cri);
         model.addAttribute("list", list);
+
+        int total = boardService.countBoard();
+        PagingDTO page = new PagingDTO(cri, total);
+        model.addAttribute("page", page);
         return "board/list";
     }
 

@@ -37,5 +37,10 @@
 
     <a href="/info">회원정보</a>
     <a href="/write">글쓰기</a>
+
+    <form id="/pageform" method="get">
+        <input type="hidden" name="pageNum" value="${page.cri.pageNum}">
+        <input type="hidden" name="amount" value = "${page.cri.amount}">
+    </form>
 </body>
 </html>
