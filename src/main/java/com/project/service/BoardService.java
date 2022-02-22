@@ -18,4 +18,12 @@ public interface BoardService {
     List<BoardDTO> viewBoard() throws Exception;
 
     BoardDTO readBoard(int bno) throws Exception;
+
+    BoardDTO modifyBoard(int bno) throws Exception;
+
+    void updateBoard(BoardDTO board) throws Exception;
+
+    void deleteBoard(int bno) throws Exception;
+
+
 }

@@ -33,6 +33,25 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public BoardDTO readBoard(int bno) throws Exception {
+
+        boardDAO.hitBoard(bno);
         return boardDAO.readBoard(bno);
     }
+
+    @Override
+    public BoardDTO modifyBoard(int bno) throws Exception {
+        return boardDAO.modifyBoard(bno);
+    }
+
+    @Override
+    public void updateBoard(BoardDTO board) throws Exception {
+        boardDAO.updateBoard(board);
+    }
+
+    @Override
+    public void deleteBoard(int bno) throws Exception {
+        boardDAO.deleteBoard(bno);
+    }
+
+
 }

@@ -98,7 +98,7 @@ public class Controller
         String id = (String)session.getAttribute("id");
         // 세션 아이디 애트리뷰트에서 아이디값을 가져옴
         MemberDTO user = memberService.selectMember(id);
-        model.addAttribute("dto", user);
+        model.addAttribute("user", user);
 
         return "member/info";
     }
@@ -147,18 +147,34 @@ public class Controller
 
     @RequestMapping(value="/read/{bno}", method = RequestMethod.GET) // 게시글 읽기
     public String read(@PathVariable("bno")int bno, Model model) throws Exception {
-
+    // 게시글 번호를 받아서 경로설정
         BoardDTO board = boardService.readBoard(bno);
+
         model.addAttribute("board", board);
         return "board/read";
     }
 
-    @RequestMapping(value="/update/{bno}", method = RequestMethod.GET) // 게시글 수정 페이지
-    public String update(@PathVariable("bno")int bno, Model model) throws Exception {
+    @RequestMapping(value="/modify/{bno}", method = RequestMethod.GET) // 게시글 수정 페이지
+    public String modify(@PathVariable("bno")int bno, Model model) throws Exception {
 
-        BoardDTO board = boardService.readBoard(bno);
+        BoardDTO board = boardService.modifyBoard(bno);
         model.addAttribute("board", board);
-        return "board/update";
+        return "board/modify";
+    }
+
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST) // 게시글 수정
+    public String update(BoardDTO board) throws Exception {
+
+        boardService.updateBoard(board);
+        return "redirect:list";
+    }
+
+    @RequestMapping("/delete") // 게시글 삭제
+    public String delete(int bno) throws Exception {
+
+        boardService.deleteBoard(bno);
+        return "redirect:list";
     }
 
 }

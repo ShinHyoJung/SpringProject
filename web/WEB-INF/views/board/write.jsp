@@ -12,7 +12,7 @@
 
 
 </head>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/write.css"/>
+<link rel="stylesheet" type="text/css" href="/css/write.css"/>
 
 <body>
 <form method="post" action="/enroll">

@@ -14,11 +14,11 @@
 <h1>회원정보</h1>
 
 <form action="/update" method="post">
-    아이디 <input name="id" value="${dto.id}" readonly="readonly"> <br><br>
+    아이디 <input name="id" value="${user.id}" readonly="readonly"> <br><br>
     비밀번호 <input type="password" name="password"><br><br>
-    이름 <input name="name" value="${dto.name}"><br><br>
-    전화번호 <input name="pnum" value="${dto.pnum}"><br><br>
-    주소 <input name="address" value="${dto.address}"><br><br>
+    이름 <input name="name" value="${user.name}"><br><br>
+    전화번호 <input name="pnum" value="${user.pnum}"><br><br>
+    주소 <input name="address" value="${user.address}"><br><br>
     <button type="submit">수정 </button>
 </form>
 

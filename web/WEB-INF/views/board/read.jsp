@@ -24,5 +24,11 @@
     </table>
 
     <a href="/list">목록</a>
+    <a href="/modify/${board.bno}">수정</a>
+
+    <form method="post" action="/delete">
+        <input type="hidden" value="${board.bno}" name="bno">
+        <button type="submit">삭제</button>
+    </form>
 </body>
 </html>

@@ -31,11 +31,42 @@
     </select>
 
     <select id="readBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
-        SELECT board_title as btitle,
+        SELECT board_no as bno,
+               board_title as btitle,
                board_writer as bwriter,
                board_content as bcontent,
                board_hit as bhit
         FROM   board
         WHERE  board_no = #{bno}
     </select>
+
+    <select id="modifyBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
+        SELECT board_no as bno,
+               board_title as btitle,
+               board_writer as bwriter,
+               board_content as bcontent,
+               board_hit as bhit,
+               idx as idx
+        FROM   board
+        WHERE  board_no = #{bno}
+    </select>
+
+    <update id="updateBoard" parameterType="com.project.dto.BoardDTO">
+        UPDATE board
+        SET
+               board_title = #{btitle},
+               board_content = #{bcontent}
+        WHERE  board_no = #{bno}
+    </update>
+
+    <delete id="deleteBoard" parameterType="com.project.dto.BoardDTO">
+        DELETE FROM board
+        WHERE  board_no = #{bno}
+    </delete>
+
+    <update id="hitBoard" parameterType="int">
+        UPDATE board
+        SET    board_hit  = board_hit +1
+        WHERE  board_no = #{bno}
+    </update>
 </mapper>

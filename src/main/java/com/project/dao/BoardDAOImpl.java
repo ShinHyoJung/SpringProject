@@ -35,4 +35,23 @@ public class BoardDAOImpl implements BoardDAO {
     public BoardDTO readBoard(int bno) throws Exception {
         return sqlSession.selectOne("readBoard", bno);
     }
+
+    @Override
+    public BoardDTO modifyBoard(int bno) throws Exception {
+        return sqlSession.selectOne("modifyBoard", bno);
+    }
+    @Override
+    public void updateBoard(BoardDTO board) throws Exception {
+        sqlSession.update("updateBoard", board);
+    }
+
+    @Override
+    public void deleteBoard(int bno) throws Exception {
+        sqlSession.delete("deleteBoard", bno);
+    }
+
+    @Override
+    public int hitBoard(int bno) throws Exception {
+        return sqlSession.update("hitBoard", bno);
+    }
 }
