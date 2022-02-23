@@ -36,20 +36,20 @@ public class Controller
     private BoardService boardService;
 
     @RequestMapping("/") // 홈
-    public String home(Model model) {
+    public String Home(Model model) {
 
         return "home";
     }
 
-    @RequestMapping("/login") // 로그인 창
-    public String login() {
+    @RequestMapping("/Login") // 로그인 창
+    public String Login() {
 
         logger.info("Login Page");
         return "member/login";
     }
 
-    @RequestMapping(value="/logindo", method= RequestMethod.POST) //로그인 처리
-    public String logindo(MemberDTO member, HttpSession session) throws Exception {
+    @RequestMapping(value="/doLogin", method= RequestMethod.POST) //로그인 처리
+    public String doLogin(MemberDTO member, HttpSession session) throws Exception {
         logger.info("Login");
 
         //웹에 접근한 사용자 식별하는 방법
@@ -69,22 +69,22 @@ public class Controller
         }// 아이디가 틀린경우 구현
     }
 
-    @RequestMapping("/logout") // 로그아웃
-    public String logout(HttpSession session) {
+    @RequestMapping("/Logout") // 로그아웃
+    public String Logout(HttpSession session) {
 
         session.invalidate();
         logger.info("Logout");
         return "home";
     }
 
-    @RequestMapping("/beforesignup") // 회원가입 창
-    public String beforesignup()
+    @RequestMapping("/beforeSignup") // 회원가입 창
+    public String beforeSignup()
     {
         return "member/signup";
     }
 
     @RequestMapping("/signup") // 회원가입 처리
-    public String signup(@ModelAttribute MemberDTO member) throws Exception {
+    public String Signup(@ModelAttribute MemberDTO member) throws Exception {
 
         String pwdbCrypt = bCryptPasswordEncoder.encode(member.getPassword()); //비밀번호 암호화
         member.setPassword(pwdbCrypt);
@@ -104,7 +104,7 @@ public class Controller
         return "member/info";
     }
 
-    @RequestMapping("/update") // 회원정보 수정
+    @RequestMapping("/updateInfo") // 회원정보 수정
     public String updateInfo(MemberDTO member) throws Exception {
 
         String pwdbCrypt = bCryptPasswordEncoder.encode(member.getPassword()); // 수정된 비밀번호 암호화
@@ -113,8 +113,8 @@ public class Controller
         return "redirect:/info";
     }
 
-    @RequestMapping("/quit") // 회원탈퇴
-    public String quit(MemberDTO member, HttpSession session) throws Exception {
+    @RequestMapping("/quitSignup") // 회원탈퇴
+    public String quitSignup(MemberDTO member, HttpSession session) throws Exception {
 
         String id = (String)session.getAttribute("id");
 
@@ -122,20 +122,20 @@ public class Controller
         return "home";
     }
 
-    @RequestMapping(value="/list", method=RequestMethod.GET) // 게시판 리스트
-    public String list(Criteria cri, Model model) throws Exception {
+    @RequestMapping(value="/list", method=RequestMethod.GET) // 게시판 목록
+    public String List(Criteria cri, Model model) throws Exception {
 
         List<BoardDTO> list= boardService.viewBoard(cri);
         model.addAttribute("list", list);
 
-        int total = boardService.countBoard();
+        int total = boardService.countBoard(cri);
         PagingDTO page = new PagingDTO(cri, total);
         model.addAttribute("page", page);
         return "board/list";
     }
 
     @RequestMapping("/write") // 게시글 쓰기
-    public String write(MemberDTO member, Model model, HttpSession session) throws Exception {
+    public String writeBoard(MemberDTO member, Model model, HttpSession session) throws Exception {
 
         String id = (String)session.getAttribute("id");
         MemberDTO user = memberService.selectMember(id);
@@ -144,14 +144,14 @@ public class Controller
     }
 
     @RequestMapping("/enroll") // 게시글 등록
-    public String enroll(BoardDTO board) throws Exception {
+    public String enrollBoard(BoardDTO board) throws Exception {
 
         boardService.writeBoard(board);
         return "redirect:/list";
     }
 
     @RequestMapping(value="/read/{bno}", method = RequestMethod.GET) // 게시글 읽기
-    public String read(@PathVariable("bno")int bno, Model model) throws Exception {
+    public String readBoard(@PathVariable("bno")int bno, Model model) throws Exception {
     // 게시글 번호를 받아서 경로설정
         BoardDTO board = boardService.readBoard(bno);
 
@@ -160,7 +160,7 @@ public class Controller
     }
 
     @RequestMapping(value="/modify/{bno}", method = RequestMethod.GET) // 게시글 수정 페이지
-    public String modify(@PathVariable("bno")int bno, Model model) throws Exception {
+    public String modifyBoard(@PathVariable("bno")int bno, Model model) throws Exception {
 
         BoardDTO board = boardService.modifyBoard(bno);
         model.addAttribute("board", board);
@@ -169,14 +169,14 @@ public class Controller
 
 
     @RequestMapping(value = "/update", method = RequestMethod.POST) // 게시글 수정
-    public String update(BoardDTO board) throws Exception {
+    public String updateBoard(BoardDTO board) throws Exception {
 
         boardService.updateBoard(board);
         return "redirect:list";
     }
 
     @RequestMapping("/delete") // 게시글 삭제
-    public String delete(int bno) throws Exception {
+    public String deleteBoard(int bno) throws Exception {
 
         boardService.deleteBoard(bno);
         return "redirect:list";

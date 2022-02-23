@@ -18,9 +18,13 @@ public class Criteria {
 
     // 스킵할 게시물의 수 (pageNum-1) * amount)
     private int skip;
-    // 기본 생성자 -> 기본 세팅: pageNum=1, amount=10
+
+    // 검색 키워드
+    private String keyword;
+
+    // 기본 생성자 -> 기본 세팅: pageNum=1, amount=5
     public Criteria() {
-        this(1, 3);
+        this(1, 5);
         this.skip=0;
     }
 
@@ -52,9 +56,17 @@ public class Criteria {
         this.amount = amount;
     }
 
+    public String getKeyword() {
+        return keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
+    }
+
     @Override
     public String toString() {
-        return "Criteria [pageNum=" + pageNum + ", amount=" + amount + "]";
+        return "Criteria [pageNum=" + pageNum + ", amount=" + amount + ", keyword=" + keyword + "]";
     }
 
 }

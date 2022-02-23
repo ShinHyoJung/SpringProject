@@ -25,7 +25,7 @@
         <tr>
             <td>작성자: ${board.bwriter}</td>
         <tr>
-            <td style="height:500px;">내용 ${board.bcontent}</td>
+            <td style="height:500px;">${board.bcontent}</td>
         <tr>
             <td>조회수: ${board.bhit}</td>
         <tr>
@@ -35,7 +35,7 @@
     </table>
 
     <a href="/list">목록</a>
-    <a href="/modify/${board.bno}">수정</a>
+    <a href="/modifyBoard/${board.bno}">수정</a>
 
     <form method="post" action="/delete">
         <input type="hidden" value="${board.bno}" name="bno">

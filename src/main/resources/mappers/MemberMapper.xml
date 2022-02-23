@@ -34,6 +34,7 @@
                id as id,
                password as password,
                name as name,
+               nickname as nickname,
                pnum as pnum,
                address as address
         FROM member
@@ -45,7 +46,7 @@
         SET
                password = #{password},
                name = #{name},
-
+               nickname = #{nickname},
                pnum = #{pnum},
                address = #{address}
         WHERE  id = #{id}

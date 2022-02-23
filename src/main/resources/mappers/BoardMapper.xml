@@ -28,6 +28,9 @@
                board_updatetime as bupdatetime,
                idx as idx
         FROM   board
+        <if test = "keyword != null">
+        WHERE  board_title LIKE concat('%', #{keyword}, '%')
+        </if>
         ORDER BY board_no DESC
         LIMIT  #{skip}, #{amount}
     </select>
@@ -77,5 +80,8 @@
     <select id="countBoard" parameterType="com.project.dto.BoardDTO" resultType="int">
         SELECT COUNT(*)
         FROM   board
+        <if test="keyword != null">
+        WHERE board_title LIKE concat ('%',#{keyword},'%')
+        </if>
     </select>
 </mapper>

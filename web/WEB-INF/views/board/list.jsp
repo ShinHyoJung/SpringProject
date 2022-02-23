@@ -8,31 +8,31 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
     <title>게시판 목록</title>
-
     <style>
         table {
             margin-left: 120px;
         }
-        .pageInfo {
+        .paging {
             list-style: none;
             display: inline-block;
             margin: 0px 0 0 25px;
 
         }
 
-        .pageInfo li {
+        .paging li {
             float: left;
             font-size:15px;
-            margin-left: 18px;
+            margin-left: 50px;
             padding: 7px;
             font-weight: 200;
 
         }
 
-        .pageInfo_btn a{
+        .paging_btn a{
             text-decoration-line: none;
         }
 
@@ -42,6 +42,7 @@
     </style>
 </head>
 <body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <h1>게시판</h1>
     <table>
         <tr>
@@ -62,22 +63,22 @@
         </c:forEach>
     </table>
 
-<div class="pageInfo_wrap">
-    <div class="pageInfo_area">
-        <ul id="pageInfo" class="pageInfo">
+<div class="paging_wrap">
+    <div class="paging_area">
+        <ul id="paging" class="paging">
             <!--이전 페이지 버튼-->
             <c:if test="${page.prev}">
-                <li class="pageInfo_btn previous"><a href="/list?pageNum=${page.startPage-1}"> < </a></li>
+                <li class="paging_btn previous"><a href="/list?pageNum=${page.startPage-1}"> < </a></li>
             </c:if>
 
             <!--각 번호 페이지 버튼-->
             <c:forEach var ="num" begin = "${page.startPage}" end="${page.endPage}">
-                <li class = "pageInfo_btn ${page.cri.pageNum == num ? "active":""}"><a href="/list?pageNum=${num}">${num}</a></li>
+                <li class = "paging_btn ${page.cri.pageNum == num ? "active":""}"><a href="/list?pageNum=${num}">${num}</a></li>
             </c:forEach>
 
             <!--다음 페이지 버튼-->
             <c:if test="${page.next}">
-                <li class="pageInfo_btn next"><a href="/list?pageNum=${page.endPage + 1}"> > </a></li>
+                <li class="paging_btn next"><a href="/list?pageNum=${page.endPage + 1}"> > </a></li>
             </c:if>
         </ul>
     </div>
@@ -86,13 +87,33 @@
     <form id="moveForm" method="get">
         <input type="hidden" name="pageNum" value="${page.cri.pageNum}">
         <input type="hidden" name="amount" value = "${page.cri.amount}">
+        <input type="hidden" name="keyword" value="${page.cri.keyword}">
     </form>
+
+    <div class="search_wrap">
+        <div class="search_area">
+            <input type="text" name="keyword" value="${page.cri.keyword}">
+            <button id="search">검색</button>
+        </div>
+    </div>
+
+<br><br>
 
     <a href="/info">회원정보</a>
     <a href="/write">글쓰기</a>
 
 <script>
+    $(document).ready(function () {
+        let moveForm = $("#moveForm");
 
+
+        $("#search").click(function () {
+
+            let val = $("input[name='keyword']").val();
+            moveForm.find("input[name='keyword']").val(val);
+            moveForm.submit();
+        });
+    });
 
 </script>
 

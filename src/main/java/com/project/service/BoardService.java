@@ -27,6 +27,6 @@ public interface BoardService {
 
     void deleteBoard(int bno) throws Exception;
 
-    int countBoard() throws Exception;
+    int countBoard(Criteria cri) throws Exception;
 
 }

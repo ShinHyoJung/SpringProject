@@ -13,17 +13,18 @@
 <body>
 <h1>회원정보</h1>
 
-<form action="/update" method="post">
+<form action="/updateInfo" method="post">
     아이디 <input name="id" value="${user.id}" readonly="readonly"> <br><br>
     비밀번호 <input type="password" name="password"><br><br>
     이름 <input name="name" value="${user.name}"><br><br>
+    닉네임<input name="nickname" value="${user.nickname}"><br><br>
     전화번호 <input name="pnum" value="${user.pnum}"><br><br>
     주소 <input name="address" value="${user.address}"><br><br>
     <button type="submit">수정 </button>
 </form>
 
-<a href="/logout">로그아웃</a>
-<a href="/quit">회원탈퇴</a>
+<a href="/Logout">로그아웃</a>
+<a href="/quitSignup">회원탈퇴</a>
 <a href="/list">목록</a>
 </body>
 </html>

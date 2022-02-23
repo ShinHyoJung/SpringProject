@@ -23,16 +23,16 @@
             </td>
         <tr>
             <td>
-                작성자: ${user.name}
+                작성자: ${user.nickname}
             </td>
         <tr>
             <td>
-                내용 <textarea name="bcontent" style="width:200px; height:300px;"></textarea>
+                 <textarea name="bcontent" style="width:200px; height:300px;"></textarea>
             </td>
         </tr>
     </table>
     <button type="submit">등록</button>
-    <input type="hidden" value="${user.name}" name="bwriter">
+    <input type="hidden" value="${user.nickname}" name="bwriter">
     <input type="hidden" value="${user.idx}" name="idx">
 </form>
 </body>

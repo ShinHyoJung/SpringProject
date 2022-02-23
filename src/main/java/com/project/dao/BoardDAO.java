@@ -29,5 +29,5 @@ public interface BoardDAO {
 
     int hitBoard(int bno) throws Exception;
 
-    int countBoard() throws Exception;
+    int countBoard(Criteria cri) throws Exception;
 }

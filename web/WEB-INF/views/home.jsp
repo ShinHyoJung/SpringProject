@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>홈</h1>
-<a href="/login">로그인</a>
-<a href="/beforesignup">회원가입</a>
+<a href="/Login">로그인</a>
+<a href="/beforeSignup">회원가입</a>
 </body>
 </html>

@@ -56,8 +56,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public int countBoard() throws Exception {
-        return boardDAO.countBoard();
+    public int countBoard(Criteria cri) throws Exception {
+        return boardDAO.countBoard(cri);
     }
 
 }
