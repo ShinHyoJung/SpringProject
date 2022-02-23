@@ -8,6 +8,7 @@
             id,
             password,
             name,
+            nickname,
             pnum,
             address
         )
@@ -15,6 +16,7 @@
             #{id},
             #{password},
             #{name},
+            #{nickname},
             #{pnum},
             #{address}
         )
@@ -43,6 +45,7 @@
         SET
                password = #{password},
                name = #{name},
+
                pnum = #{pnum},
                address = #{address}
         WHERE  id = #{id}

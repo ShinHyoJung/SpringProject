@@ -12,7 +12,34 @@
 <head>
     <title>게시판 목록</title>
 
+    <style>
+        table {
+            margin-left: 120px;
+        }
+        .pageInfo {
+            list-style: none;
+            display: inline-block;
+            margin: 0px 0 0 25px;
 
+        }
+
+        .pageInfo li {
+            float: left;
+            font-size:15px;
+            margin-left: 18px;
+            padding: 7px;
+            font-weight: 200;
+
+        }
+
+        .pageInfo_btn a{
+            text-decoration-line: none;
+        }
+
+        .active {
+            background-color: #cdd5ec;
+        }
+    </style>
 </head>
 <body>
 <h1>게시판</h1>
@@ -35,12 +62,40 @@
         </c:forEach>
     </table>
 
-    <a href="/info">회원정보</a>
-    <a href="/write">글쓰기</a>
+<div class="pageInfo_wrap">
+    <div class="pageInfo_area">
+        <ul id="pageInfo" class="pageInfo">
+            <!--이전 페이지 버튼-->
+            <c:if test="${page.prev}">
+                <li class="pageInfo_btn previous"><a href="/list?pageNum=${page.startPage-1}"> < </a></li>
+            </c:if>
 
-    <form id="/pageform" method="get">
+            <!--각 번호 페이지 버튼-->
+            <c:forEach var ="num" begin = "${page.startPage}" end="${page.endPage}">
+                <li class = "pageInfo_btn ${page.cri.pageNum == num ? "active":""}"><a href="/list?pageNum=${num}">${num}</a></li>
+            </c:forEach>
+
+            <!--다음 페이지 버튼-->
+            <c:if test="${page.next}">
+                <li class="pageInfo_btn next"><a href="/list?pageNum=${page.endPage + 1}"> > </a></li>
+            </c:if>
+        </ul>
+    </div>
+</div>
+
+    <form id="moveForm" method="get">
         <input type="hidden" name="pageNum" value="${page.cri.pageNum}">
         <input type="hidden" name="amount" value = "${page.cri.amount}">
     </form>
+
+    <a href="/info">회원정보</a>
+    <a href="/write">글쓰기</a>
+
+<script>
+
+
+</script>
+
+
 </body>
 </html>

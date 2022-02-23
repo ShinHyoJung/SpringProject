@@ -10,17 +10,28 @@
 <head>
     <title>게시글읽기</title>
 
+    <style>
+        td {
+            width:300px;
+            height:50px;
+        }
+
+    </style>
 </head>
 <body>
     <table>
         <tr>
-            <td style="width:200px; height:30px;">${board.btitle}</td>
+            <td>제목: ${board.btitle}</td>
         <tr>
-            <td style="width:200px; height:30px;">${board.bwriter}</td>
+            <td>작성자: ${board.bwriter}</td>
         <tr>
-            <td style="width:200px; height:300px;">${board.bcontent}</td>
+            <td style="height:500px;">내용 ${board.bcontent}</td>
         <tr>
-            <td style="width:200px; height:30px;">${board.bhit}</td>
+            <td>조회수: ${board.bhit}</td>
+        <tr>
+            <td>작성날짜: ${board.bdatetime}</td>
+        <tr>
+            <td>업데이트날짜: ${board.bupdatetime}</td>
     </table>
 
     <a href="/list">목록</a>
