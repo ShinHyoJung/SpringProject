@@ -84,4 +84,15 @@
         WHERE board_title LIKE concat ('%',#{keyword},'%')
         </if>
     </select>
+
+    <select id="searchBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
+        SELECT board_no as bno,
+               board_title as btitle,
+               board_writer as bwriter,
+               board_content as bcontent,
+               board_hit as bhit,
+               board_updatetime as bupdatetime
+        FROM   board
+        WHERE  board_writer = #{bwriter}
+    </select>
 </mapper>

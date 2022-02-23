@@ -29,4 +29,5 @@ public interface BoardService {
 
     int countBoard(Criteria cri) throws Exception;
 
+    List<BoardDTO> searchBoard(String bwriter) throws Exception;
 }

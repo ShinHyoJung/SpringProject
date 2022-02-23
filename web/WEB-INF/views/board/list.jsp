@@ -56,7 +56,7 @@
         <tr>
             <td>${list.bno}</td>
             <td><a href="/read/${list.bno}" name="list.btitle"/>${list.btitle}</td>
-            <td>${list.bwriter}</td>
+            <td><a href="/search/${list.bwriter}" name="list.bwriter"/>${list.bwriter}</td>
             <td>${list.bupdatetime}</td>
             <td>${list.bhit}</td>
         </tr>
@@ -84,18 +84,14 @@
     </div>
 </div>
 
-    <form id="moveForm" method="get">
-        <input type="hidden" name="pageNum" value="${page.cri.pageNum}">
-        <input type="hidden" name="amount" value = "${page.cri.amount}">
-        <input type="hidden" name="keyword" value="${page.cri.keyword}">
-    </form>
-
     <div class="search_wrap">
         <div class="search_area">
-            <input type="text" name="keyword" value="${page.cri.keyword}">
+            <input id="keyword" type="text" name="keyword" value="${page.cri.keyword}">
             <button id="search">검색</button>
         </div>
     </div>
+
+<a id="search_result" href=""></a>
 
 <br><br>
 
@@ -103,17 +99,13 @@
     <a href="/write">글쓰기</a>
 
 <script>
-    $(document).ready(function () {
-        let moveForm = $("#moveForm");
-
 
         $("#search").click(function () {
 
-            let val = $("input[name='keyword']").val();
-            moveForm.find("input[name='keyword']").val(val);
-            moveForm.submit();
+            let keyword = $("#keyword").val();
+            $("#search_result").attr("href","/list?keyword="+keyword);
+            $("#search_result").get(0).click();
         });
-    });
 
 </script>
 

@@ -182,4 +182,13 @@ public class Controller
         return "redirect:list";
     }
 
+    @RequestMapping(value="/search/{bwriter}", method=RequestMethod.GET)
+    public String searchBoard(@PathVariable("bwriter")String bwriter, Model model) throws Exception {
+
+        List<BoardDTO> result = boardService.searchBoard(bwriter);
+        String writer = bwriter;
+        model.addAttribute("result",result);
+        model.addAttribute("writer", writer);
+        return "board/search";
+    }
 }

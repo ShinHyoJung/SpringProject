@@ -30,4 +30,6 @@ public interface BoardDAO {
     int hitBoard(int bno) throws Exception;
 
     int countBoard(Criteria cri) throws Exception;
+
+    List<BoardDTO> searchBoard(String bwriter) throws Exception;
 }

@@ -60,4 +60,9 @@ public class BoardServiceImpl implements BoardService {
         return boardDAO.countBoard(cri);
     }
 
+    @Override
+    public List<BoardDTO> searchBoard(String bwriter) throws Exception {
+        return boardDAO.searchBoard(bwriter);
+    }
+
 }

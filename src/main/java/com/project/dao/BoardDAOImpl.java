@@ -61,4 +61,9 @@ public class BoardDAOImpl implements BoardDAO {
     public int countBoard(Criteria cri) throws Exception {
         return (Integer) sqlSession.selectOne("countBoard", cri);
     }
+
+    @Override
+    public List<BoardDTO> searchBoard(String bwriter) throws Exception {
+        return sqlSession.selectList("searchBoard", bwriter);
+    }
 }
