@@ -21,9 +21,10 @@ public class CommentController {
     CommentService commentService;
 
     @RequestMapping("/writeComment")
-    public String writeComment(CommentDTO comment) throws Exception {
+    public String writeComment(CommentDTO comment) throws Exception { // 댓글 쓰기
 
         commentService.insertComment(comment);
-        return "redirect:read";
+        int bno = comment.getBno();
+        return "redirect:read/"+bno;
     }
 }
