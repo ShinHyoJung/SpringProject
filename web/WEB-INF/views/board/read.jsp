@@ -41,5 +41,16 @@
         <input type="hidden" value="${board.bno}" name="bno">
         <button type="submit">삭제</button>
     </form>
+
+    <form method="post" action="/writeComment">
+        <textarea id="text" name="ctext"></textarea>
+        <input type="hidden" name="cwriter" value="${user.nickname}">
+        <input type="hidden" name="bno" value="${board.bno}">
+        <input type="hidden" name="idx" value="${board.idx}">
+        <button type="submit">등록</button>
+    </form>
+
+
+</form>
 </body>
 </html>

@@ -15,11 +15,11 @@ import java.util.List;
  */
 public interface BoardDAO {
 
-    void writeBoard(BoardDTO board) throws Exception;
+    void insertBoard(BoardDTO board) throws Exception;
 
     List<BoardDTO> viewBoard(Criteria cri) throws Exception;
 
-    BoardDTO readBoard(int bno) throws Exception;
+    BoardDTO selectBoard(int bno) throws Exception;
 
     BoardDTO modifyBoard(int bno) throws Exception;
 

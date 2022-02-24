@@ -24,8 +24,8 @@ public class BoardServiceImpl implements BoardService {
     BoardDAO boardDAO;
 
     @Override
-    public void writeBoard(BoardDTO board) throws  Exception {
-        boardDAO.writeBoard(board);
+    public void insertBoard(BoardDTO board) throws  Exception {
+        boardDAO.insertBoard(board);
     }
 
     @Override
@@ -34,10 +34,10 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public BoardDTO readBoard(int bno) throws Exception {
+    public BoardDTO selectBoard(int bno) throws Exception {
 
         boardDAO.hitBoard(bno);
-        return boardDAO.readBoard(bno);
+        return boardDAO.selectBoard(bno);
     }
 
     @Override

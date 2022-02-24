@@ -24,8 +24,8 @@ public class BoardDAOImpl implements BoardDAO {
     SqlSession sqlSession;
 
     @Override
-    public void writeBoard(BoardDTO board) throws Exception {
-        sqlSession.insert("writeBoard", board);
+    public void insertBoard(BoardDTO board) throws Exception {
+        sqlSession.insert("insertBoard", board);
     }
 
     @Override
@@ -34,8 +34,8 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public BoardDTO readBoard(int bno) throws Exception {
-        return sqlSession.selectOne("readBoard", bno);
+    public BoardDTO selectBoard(int bno) throws Exception {
+        return sqlSession.selectOne("selectBoard", bno);
     }
 
     @Override

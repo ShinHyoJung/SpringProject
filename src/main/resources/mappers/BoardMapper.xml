@@ -4,7 +4,7 @@
 
 <mapper namespace="com.project.dao.BoardDAOImpl">
 
-    <insert id="writeBoard" parameterType="com.project.dto.BoardDTO">
+    <insert id="insertBoard" parameterType="com.project.dto.BoardDTO">
         INSERT INTO board(
             board_title,
             board_content,
@@ -25,24 +25,25 @@
                board_title as btitle,
                board_writer as bwriter,
                board_hit as bhit,
-               board_updatetime as bupdatetime,
+               DATE_FORMAT(board_updatetime,'%Y-%m-%d') as bupdatetime,
                idx as idx
         FROM   board
         <if test = "keyword != null">
-        WHERE  board_title LIKE concat('%', #{keyword}, '%')
+            <include refid="criteria"></include>
         </if>
         ORDER BY board_no DESC
         LIMIT  #{skip}, #{amount}
     </select>
 
-    <select id="readBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
+    <select id="selectBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
         SELECT board_no as bno,
                board_title as btitle,
                board_writer as bwriter,
                board_content as bcontent,
                board_hit as bhit,
-               board_datetime as bdatetime,
-               board_updatetime as bupdatetime
+               DATE_FORMAT(board_datetime,'%Y-%m-%d-%H:%i') as bdatetime,
+               DATE_FORMAT(board_updatetime,'%Y-%m-%d-%H:%i') as bupdatetime,
+               idx as idx
         FROM   board
         WHERE  board_no = #{bno}
     </select>
@@ -81,7 +82,7 @@
         SELECT COUNT(*)
         FROM   board
         <if test="keyword != null">
-        WHERE board_title LIKE concat ('%',#{keyword},'%')
+            <include refid = "criteria"> </include>
         </if>
     </select>
 
@@ -91,8 +92,27 @@
                board_writer as bwriter,
                board_content as bcontent,
                board_hit as bhit,
-               board_updatetime as bupdatetime
+               board_updatetime as bupdatetime,
+               idx as idx
         FROM   board
         WHERE  board_writer = #{bwriter}
+        ORDER BY board_no DESC
     </select>
+
+    <sql id="criteria">
+        <trim prefix="where (" suffix=")" prefixOverrides="OR">
+            <foreach collection="typeArr" item="type">
+                <trim prefix="OR">
+                    <choose>
+                        <when test = "type == 'T'.toString()">
+                            board_title like concat('%',#{keyword},'%')
+                        </when>
+                        <when test="type == 'C'.toString()">
+                            board_content like concat('%',#{keyword},'%')
+                        </when>
+                    </choose>
+                </trim>
+            </foreach>
+        </trim>
+    </sql>
 </mapper>

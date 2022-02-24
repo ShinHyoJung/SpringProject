@@ -1,0 +1,29 @@
+package com.project.controller;
+
+import com.project.dto.CommentDTO;
+import com.project.service.CommentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+/**
+ * Created with IntellliJ IDEA.
+ * User: nandsoft
+ * Date: 2022-02-24
+ * Time: 오후 4:29
+ * Comments:
+ */
+
+@Controller
+public class CommentController {
+
+    @Autowired
+    CommentService commentService;
+
+    @RequestMapping("/writeComment")
+    public String writeComment(CommentDTO comment) throws Exception {
+
+        commentService.insertComment(comment);
+        return "redirect:read";
+    }
+}
