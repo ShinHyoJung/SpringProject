@@ -9,8 +9,6 @@ package com.project.dto;
  */
 public class CommentDTO {
 
-
-
     private int cno;
     private String ctext;
     private String cwriter;

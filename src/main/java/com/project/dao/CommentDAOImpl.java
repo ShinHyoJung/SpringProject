@@ -5,6 +5,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created with IntellliJ IDEA.
  * User: nandsoft
@@ -22,5 +24,20 @@ public class CommentDAOImpl implements CommentDAO {
     @Override
     public void insertComment(CommentDTO comment) throws Exception {
         sqlSession.insert("insertComment", comment);
+    }
+
+    @Override
+    public List<CommentDTO> selectComment(CommentDTO comment) throws Exception {
+        return sqlSession.selectList("selectComment", comment);
+    }
+
+    @Override
+    public void deleteComment(int cno) throws Exception {
+        sqlSession.delete("deleteComment", cno);
+    }
+
+    @Override
+    public void updateComment(CommentDTO comment) throws Exception {
+        sqlSession.update("updateComment", comment);
     }
 }

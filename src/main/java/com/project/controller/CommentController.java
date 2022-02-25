@@ -27,4 +27,16 @@ public class CommentController {
         int bno = comment.getBno();
         return "redirect:read/"+bno;
     }
+
+    @RequestMapping("/deleteComment")
+    public String deleteComment(int cno, CommentDTO comment) throws Exception { // 댓글 삭제
+
+        commentService.deleteComment(cno);
+        int bno = comment.getBno();
+        return "redirect:read/" + bno;
+    }
+
+
+
+
 }

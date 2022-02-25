@@ -7,7 +7,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <html>
 <head>
@@ -80,7 +79,7 @@
         <ul id="paging" class="paging">
             <!--이전 페이지 버튼-->
             <c:if test="${page.prev}">
-                <li class="paging_btn prev"><a class="page" href="/list?pageNum=${page.startPage-1}" > < </a></li>
+                <li class="paging_btn prev"><a class="page" href="/list?pageNum=${page.startPage-1}&keyword=${page.cri.keyword}&type=${page.cri.type}" > < </a></li>
             </c:if>
 
             <!--각 번호 페이지 버튼-->
@@ -94,7 +93,7 @@
 
             <!--다음 페이지 버튼-->
             <c:if test="${page.next}">
-                <li class="paging_btn next"><a class="page" href="/list?pageNum=${page.endPage + 1}&keyword=${page.cri.keyword}"> > </a></li>
+                <li class="paging_btn next"><a class="page" href="/list?pageNum=${page.endPage + 1}&keyword=${page.cri.keyword}&type=${page.cri.type}"> > </a></li>
             </c:if>
         </ul>
     </div>

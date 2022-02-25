@@ -2,6 +2,8 @@ package com.project.dao;
 
 import com.project.dto.CommentDTO;
 
+import java.util.List;
+
 /**
  * Created with IntellliJ IDEA.
  * User: nandsoft
@@ -12,4 +14,10 @@ import com.project.dto.CommentDTO;
 public interface CommentDAO {
 
     void insertComment(CommentDTO comment) throws Exception;
+
+    List<CommentDTO> selectComment(CommentDTO comment) throws Exception;
+
+    void deleteComment(int cno) throws Exception;
+
+    void updateComment(CommentDTO comment) throws Exception;
 }

@@ -17,4 +17,26 @@
             #{idx}
         )
     </insert>
+
+    <select id="selectComment" parameterType="com.project.dto.CommentDTO" resultType="com.project.dto.CommentDTO">
+        SELECT comment_no as cno,
+               comment_text as ctext,
+               comment_writer as cwriter,
+               board_no as bno,
+               idx as idx
+        FROM   comment
+        WHERE  board_no = #{bno}
+    </select>
+
+    <delete id="deleteComment" parameterType="com.project.dto.CommentDTO">
+        DELETE FROM comment
+        WHERE comment_no = #{cno}
+    </delete>
+
+    <update id="updateComment" parameterType="com.project.dto.CommentDTO">
+        UPDATE comment
+        SET    comment_text = #{ctext}
+        WHERE  comment_no = #{cno}
+    </update>
+
 </mapper>

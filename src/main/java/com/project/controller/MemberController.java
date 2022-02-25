@@ -74,7 +74,7 @@ public class MemberController {
         return "member/signup";
     }
 
-    @RequestMapping("/signup") // 회원가입 처리
+    @RequestMapping("/Signup") // 회원가입 처리
     public String Signup(@ModelAttribute MemberDTO member) throws Exception {
 
         String pwdbCrypt = bCryptPasswordEncoder.encode(member.getPassword()); //비밀번호 암호화

@@ -1,10 +1,8 @@
 package com.project.controller;
 
-import com.project.dto.BoardDTO;
-import com.project.dto.Criteria;
-import com.project.dto.MemberDTO;
-import com.project.dto.PagingDTO;
+import com.project.dto.*;
 import com.project.service.BoardService;
+import com.project.service.CommentService;
 import com.project.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +31,9 @@ public class BoardController {
 
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private CommentService commentService;
 
 
     @RequestMapping(value="/list", method= RequestMethod.GET) // 게시판 목록
@@ -69,8 +70,12 @@ public class BoardController {
         BoardDTO board = boardService.selectBoard(bno);
         String id = (String)session.getAttribute("id");
         MemberDTO user = memberService.selectMember(id);
+        CommentDTO comment = new CommentDTO();
+        comment.setBno(bno);
+        List<CommentDTO> comments = commentService.selectComment(comment);
         model.addAttribute("board", board);
         model.addAttribute("user", user);
+        model.addAttribute("comments", comments);
         return "board/read";
     }
 
