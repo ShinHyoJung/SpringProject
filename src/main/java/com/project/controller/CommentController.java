@@ -5,6 +5,7 @@ import com.project.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created with IntellliJ IDEA.
@@ -29,11 +30,11 @@ public class CommentController {
     }
 
     @RequestMapping("/deleteComment")
+    @ResponseBody
     public String deleteComment(int cno, CommentDTO comment) throws Exception { // 댓글 삭제
 
         commentService.deleteComment(cno);
-        int bno = comment.getBno();
-        return "redirect:read/" + bno;
+        return "success";
     }
 
 

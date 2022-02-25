@@ -70,12 +70,9 @@
                 <td>${comments.cwriter}</td>
 
                 <td id="comment_content" style="display: block;">${comments.ctext}</td>
-                <td id= "modify_comment" style="display: none;"><textarea >${comments.ctext}"</textarea></td>
-                <td id="delete_comment" style="display: block;">
-                    <form method="post" action="/deleteComment">
-                        <input type="hidden" name="cno" value="${comments.cno}">
-                    <button type="submit">삭제</button>
-                    </form>
+                <td id= "modify_comment" style="display: none;"><textarea>${comments.ctext}"</textarea></td>
+                <td>
+                    <button id="delete_comment" comment_no = "${comments.cno}" style="display: block;">삭제</button>
                 </td>
                 <td>
                     <button id="select_comment" style="display: block;">수정</button>
@@ -89,7 +86,22 @@
 
 <script>
 
+    $("#delete_comment").on("click", function() {
+        let comment_no = $(this).attr('comment_no');
+
+        $.ajax({
+            method:"post",
+            url:"/deleteComment",
+            data:{cno: comment_no}
+        })
+        .done( data => {
+            $(this).parent().parent().remove();
+            location.reload();
+        });
+    });
+
     $("#select_comment").on("click", function() {
+       
         $(this).parent().parent().find("#modify_comment").css("display", "block");
         $(this).parent().parent().find("#comment_content").css("display", "none");
         $(this).parent().parent().find("#delete_comment").css("display", "none");
