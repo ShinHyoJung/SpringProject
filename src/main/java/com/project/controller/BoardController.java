@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -113,9 +114,10 @@ public class BoardController {
     }
 
     @RequestMapping("/upBoard")
-    public String upBoard(int bno, BoardDTO board) throws Exception {
+    @ResponseBody
+    public String upBoard(int bno) throws Exception {
 
         boardService.upBoard(bno);
-        return "redirect:read/"+bno;
+        return "success";
     }
 }
