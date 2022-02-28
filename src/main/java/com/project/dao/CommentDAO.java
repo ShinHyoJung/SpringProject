@@ -17,7 +17,7 @@ public interface CommentDAO {
 
     List<CommentDTO> selectComment(CommentDTO comment) throws Exception;
 
-    void deleteComment(int cno) throws Exception;
+    void deleteComment(CommentDTO comment) throws Exception;
 
     void updateComment(CommentDTO comment) throws Exception;
 }

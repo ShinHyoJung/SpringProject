@@ -65,4 +65,9 @@ public class BoardServiceImpl implements BoardService {
         return boardDAO.searchBoard(bwriter);
     }
 
+    @Override
+    public int upBoard(int bno) throws Exception {
+        return boardDAO.upBoard(bno);
+    }
+
 }

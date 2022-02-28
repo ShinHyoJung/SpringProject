@@ -66,4 +66,9 @@ public class BoardDAOImpl implements BoardDAO {
     public List<BoardDTO> searchBoard(String bwriter) throws Exception {
         return sqlSession.selectList("searchBoard", bwriter);
     }
+
+    @Override
+    public int upBoard(int bno) throws Exception {
+        return sqlSession.update("upBoard", bno);
+    }
 }

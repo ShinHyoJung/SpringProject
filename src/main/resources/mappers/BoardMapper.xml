@@ -10,11 +10,13 @@
             board_content,
             board_writer,
             board_hit,
+            board_heart,
             idx
         ) VALUES (
             #{btitle},
             #{bcontent},
             #{bwriter},
+            0,
             0,
             #{idx}
         )
@@ -25,6 +27,7 @@
                board_title as btitle,
                board_writer as bwriter,
                board_hit as bhit,
+               board_heart as bheart,
                DATE_FORMAT(board_updatetime,'%Y-%m-%d') as bupdatetime,
                idx as idx
         FROM   board
@@ -41,6 +44,7 @@
                board_writer as bwriter,
                board_content as bcontent,
                board_hit as bhit,
+               board_heart as bheart,
                DATE_FORMAT(board_datetime,'%Y-%m-%d-%H:%i') as bdatetime,
                DATE_FORMAT(board_updatetime,'%Y-%m-%d-%H:%i') as bupdatetime,
                idx as idx
@@ -54,6 +58,7 @@
                board_writer as bwriter,
                board_content as bcontent,
                board_hit as bhit,
+               board_heart as bheart,
                idx as idx
         FROM   board
         WHERE  board_no = #{bno}
@@ -92,11 +97,30 @@
                board_writer as bwriter,
                board_content as bcontent,
                board_hit as bhit,
+               board_heart as bheart,
                board_updatetime as bupdatetime,
                idx as idx
         FROM   board
         WHERE  board_writer = #{bwriter}
         ORDER BY board_no DESC
+    </select>
+
+    <update id="upBoard" parameterType="com.project.dto.BoardDTO">
+        UPDATE board
+        SET board_heart = board_heart+1
+        WHERE board_no = #{bno}
+    </update>
+
+    <update id="downBoard" parameterType="com.project.dto.BoardDTO">
+        UPDATE board
+        SET    board_heart = board_heart -1
+        WHERE  board_no = #{bno}
+    </update>
+
+    <select id="HeartBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
+        SELECT board_heart
+        FROM   board
+        WHERE  board_no = #{bno}
     </select>
 
     <sql id="criteria">

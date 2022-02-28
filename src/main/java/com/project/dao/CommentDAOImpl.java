@@ -32,8 +32,8 @@ public class CommentDAOImpl implements CommentDAO {
     }
 
     @Override
-    public void deleteComment(int cno) throws Exception {
-        sqlSession.delete("deleteComment", cno);
+    public void deleteComment(CommentDTO comment) throws Exception {
+        sqlSession.delete("deleteComment", comment);
     }
 
     @Override

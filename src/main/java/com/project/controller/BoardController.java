@@ -111,4 +111,11 @@ public class BoardController {
         model.addAttribute("writer", writer);
         return "board/search";
     }
+
+    @RequestMapping("/upBoard")
+    public String upBoard(int bno, BoardDTO board) throws Exception {
+
+        boardService.upBoard(bno);
+        return "redirect:read/"+bno;
+    }
 }

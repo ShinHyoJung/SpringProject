@@ -14,6 +14,7 @@ public class BoardDTO {
     private String bcontent;
     private String bwriter;
     private int bhit;
+    private int bheart;
     private String bdatetime;
     private String bupdatetime;
     private int idx;
@@ -66,6 +67,14 @@ public class BoardDTO {
     public void setBhit(int bhit)
     {
         this.bhit = bhit;
+    }
+
+    public int getBheart() {
+        return bheart;
+    }
+
+    public void setBheart(int bheart) {
+        this.bheart = bheart;
     }
 
     public String getBdatetime()

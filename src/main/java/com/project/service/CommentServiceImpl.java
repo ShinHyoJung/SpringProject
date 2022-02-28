@@ -32,8 +32,8 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public void deleteComment(int cno) throws Exception {
-        commentDAO.deleteComment(cno);
+    public void deleteComment(CommentDTO comment) throws Exception {
+        commentDAO.deleteComment(comment);
     }
 
     @Override
