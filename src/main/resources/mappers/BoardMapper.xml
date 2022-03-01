@@ -23,13 +23,13 @@
     </insert>
 
     <select id="viewBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
-        SELECT board_no as bno,
-               board_title as btitle,
-               board_writer as bwriter,
-               board_hit as bhit,
-               board_heart as bheart,
+        SELECT board_no AS bno,
+               board_title AS btitle,
+               board_writer AS bwriter,
+               board_hit AS bhit,
+               board_heart AS bheart,
                DATE_FORMAT(board_updatetime,'%Y-%m-%d') as bupdatetime,
-               idx as idx
+               idx AS idx
         FROM   board
         <if test = "keyword != null">
             <include refid="criteria"></include>
@@ -39,27 +39,27 @@
     </select>
 
     <select id="selectBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
-        SELECT board_no as bno,
-               board_title as btitle,
-               board_writer as bwriter,
-               board_content as bcontent,
-               board_hit as bhit,
-               board_heart as bheart,
-               DATE_FORMAT(board_datetime,'%Y-%m-%d-%H:%i') as bdatetime,
-               DATE_FORMAT(board_updatetime,'%Y-%m-%d-%H:%i') as bupdatetime,
-               idx as idx
+        SELECT board_no AS bno,
+               board_title AS btitle,
+               board_writer AS bwriter,
+               board_content AS bcontent,
+               board_hit AS bhit,
+               board_heart AS bheart,
+               DATE_FORMAT(board_datetime,'%Y-%m-%d-%H:%i') AS bdatetime,
+               DATE_FORMAT(board_updatetime,'%Y-%m-%d-%H:%i') AS bupdatetime,
+               idx AS idx
         FROM   board
         WHERE  board_no = #{bno}
     </select>
 
     <select id="modifyBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
-        SELECT board_no as bno,
-               board_title as btitle,
-               board_writer as bwriter,
-               board_content as bcontent,
-               board_hit as bhit,
-               board_heart as bheart,
-               idx as idx
+        SELECT board_no AS bno,
+               board_title AS btitle,
+               board_writer AS bwriter,
+               board_content AS bcontent,
+               board_hit AS bhit,
+               board_heart AS bheart,
+               idx AS idx
         FROM   board
         WHERE  board_no = #{bno}
     </select>
@@ -92,14 +92,14 @@
     </select>
 
     <select id="searchBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
-        SELECT board_no as bno,
-               board_title as btitle,
-               board_writer as bwriter,
-               board_content as bcontent,
-               board_hit as bhit,
-               board_heart as bheart,
-               board_updatetime as bupdatetime,
-               idx as idx
+        SELECT board_no AS bno,
+               board_title AS btitle,
+               board_writer AS bwriter,
+               board_content AS bcontent,
+               board_hit AS bhit,
+               board_heart AS bheart,
+               board_updatetime AS bupdatetime,
+               idx AS idx
         FROM   board
         WHERE  board_writer = #{bwriter}
         ORDER BY board_no DESC
@@ -129,10 +129,10 @@
                 <trim prefix="OR">
                     <choose>
                         <when test = "type == 'T'.toString()">
-                            board_title like concat('%',#{keyword},'%')
+                            board_title LIKE concat('%',#{keyword},'%')
                         </when>
                         <when test="type == 'C'.toString()">
-                            board_content like concat('%',#{keyword},'%')
+                            board_content LIKE concat('%',#{keyword},'%')
                         </when>
                     </choose>
                 </trim>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.dao.HeartDAOImpl">
+
+    <insert id="insertHeart" parameterType="com.project.dto.HeartDTO">
+        INSERT INTO heart (
+        heart_no,
+        board_no,
+        idx
+        ) VALUES (
+        #{hno},
+        #{bno},
+        #{idx}
+        )
+    </insert>
+
+    <select id="selectHeart" parameterType="java.util.HashMap" resultType="com.project.dto.HeartDTO">
+        SELECT
+        heart_no AS hno,
+        baord_no AS bno,
+        idx AS idx
+        FROM   heart
+        WHERE  board_no = #{bno} AND idx = #{idx}
+    </select>
+
+
+</mapper>

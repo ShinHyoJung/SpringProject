@@ -18,11 +18,11 @@
     </insert>
 
     <select id="selectComment" parameterType="com.project.dto.CommentDTO" resultType="com.project.dto.CommentDTO">
-        SELECT comment_no as cno,
-               comment_text as ctext,
-               comment_writer as cwriter,
-               board_no as bno,
-               idx as idx
+        SELECT comment_no AS cno,
+               comment_text AS ctext,
+               comment_writer AS cwriter,
+               board_no AS bno,
+               idx AS idx
         FROM   comment
         WHERE  board_no = #{bno}
     </select>

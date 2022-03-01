@@ -23,20 +23,20 @@
     </insert>
 
     <select id="loginMember" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
-        SELECT id as id,
-               password as password
+        SELECT id AS id,
+               password AS password
         FROM member
         WHERE id = #{id}
     </select>
 
     <select id="selectMember" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
-        SELECT idx as idx,
-               id as id,
-               password as password,
-               name as name,
-               nickname as nickname,
-               pnum as pnum,
-               address as address
+        SELECT idx AS idx,
+               id AS id,
+               password AS password,
+               name AS name,
+               nickname AS nickname,
+               pnum AS pnum,
+               address AS address
         FROM member
         WHERE id = #{id}
     </select>

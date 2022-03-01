@@ -3,6 +3,7 @@ package com.project.controller;
 import com.project.dto.*;
 import com.project.service.BoardService;
 import com.project.service.CommentService;
+import com.project.service.HeartService;
 import com.project.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,9 @@ public class BoardController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private HeartService heartService;
+
 
     @RequestMapping(value="/list", method= RequestMethod.GET) // 게시판 목록
     public String List(Criteria cri, Model model) throws Exception {
@@ -68,15 +72,17 @@ public class BoardController {
     @RequestMapping(value="/read/{bno}", method = RequestMethod.GET) // 게시글 읽기
     public String readBoard(@PathVariable("bno")int bno, MemberDTO member, Model model, HttpSession session) throws Exception {
         // 게시글 번호를 받아서 경로설정
-        BoardDTO board = boardService.selectBoard(bno);
+        BoardDTO board = boardService.selectBoard(bno); //게시글
         String id = (String)session.getAttribute("id");
         MemberDTO user = memberService.selectMember(id);
-        CommentDTO comment = new CommentDTO();
+
+        CommentDTO comment = new CommentDTO(); // 댓글
         comment.setBno(bno);
         List<CommentDTO> comments = commentService.selectComment(comment);
         model.addAttribute("board", board);
         model.addAttribute("user", user);
         model.addAttribute("comments", comments);
+
         return "board/read";
     }
 
@@ -113,11 +119,5 @@ public class BoardController {
         return "board/search";
     }
 
-    @RequestMapping("/upBoard")
-    @ResponseBody
-    public String upBoard(int bno) throws Exception {
 
-        boardService.upBoard(bno);
-        return "success";
-    }
 }
