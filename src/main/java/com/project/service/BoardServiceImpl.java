@@ -66,8 +66,17 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public int upBoard(int bno) throws Exception {
-        return boardDAO.upBoard(bno);
+    public BoardDTO heartBoard(int bno) throws Exception {
+        return boardDAO.heartBoard(bno);
     }
 
+    @Override
+    public void upBoard(int bno) throws Exception {
+        boardDAO.upBoard(bno);
+    }
+
+    @Override
+    public void downBoard(int bno) throws Exception {
+        boardDAO.downBoard(bno);
+    }
 }

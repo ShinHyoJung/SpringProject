@@ -24,7 +24,8 @@
 
     <select id="loginMember" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
         SELECT id AS id,
-               password AS password
+               password AS password,
+               idx AS idx
         FROM member
         WHERE id = #{id}
     </select>

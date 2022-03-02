@@ -105,23 +105,23 @@
         ORDER BY board_no DESC
     </select>
 
-    <update id="upBoard" parameterType="com.project.dto.BoardDTO">
-        UPDATE board
-        SET board_heart = board_heart+1
-        WHERE board_no = #{bno}
-    </update>
-
-    <update id="downBoard" parameterType="com.project.dto.BoardDTO">
-        UPDATE board
-        SET    board_heart = board_heart -1
-        WHERE  board_no = #{bno}
-    </update>
-
     <select id="HeartBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
-        SELECT board_heart
+        SELECT board_heart AS bheart
         FROM   board
         WHERE  board_no = #{bno}
     </select>
+
+    <update id="upBoard" parameterType="com.project.dto.BoardDTO">
+        UPDATE board
+        SET    board_heart = board_heart+1
+        WHERE  board_no = #{bno}
+    </update>
+
+    <update id="downBoard" parameterType="com.project.dto.BoardDTO">
+        UPDATE  board
+        SET     board_heart = board_heart-1
+        WHERE   board_no = #{bno}
+    </update>
 
     <sql id="criteria">
         <trim prefix="where (" suffix=")" prefixOverrides="OR">

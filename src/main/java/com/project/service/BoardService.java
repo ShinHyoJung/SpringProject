@@ -31,5 +31,9 @@ public interface BoardService {
 
     List<BoardDTO> searchBoard(String bwriter) throws Exception;
 
-    int upBoard(int bno) throws Exception;
+    BoardDTO heartBoard(int bno) throws Exception;
+
+    void upBoard(int bno) throws Exception;
+
+    void downBoard(int bno) throws Exception;
 }

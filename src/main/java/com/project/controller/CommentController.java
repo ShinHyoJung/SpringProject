@@ -44,6 +44,7 @@ public class CommentController {
     public String updateComment(CommentDTO comment, Model model) throws Exception { // 댓글 수정
 
         commentService.updateComment(comment);
+        int bno = comment.getBno();
         List<CommentDTO> comments = commentService.selectComment(comment);
         model.addAttribute("comments", comments);
         return "/comment";

@@ -68,7 +68,17 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public int upBoard(int bno) throws Exception {
-        return sqlSession.update("upBoard", bno);
+    public BoardDTO heartBoard(int bno) throws Exception {
+        return sqlSession.selectOne("heartBoard", bno);
+    }
+
+    @Override
+    public void upBoard(int bno) throws Exception {
+        sqlSession.update("upBoard", bno);
+    }
+
+    @Override
+    public void downBoard(int bno) throws Exception {
+        sqlSession.update("downBoard", bno);
     }
 }

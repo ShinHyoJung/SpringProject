@@ -6,5 +6,9 @@ import java.util.Map;
 
 public interface HeartDAO {
 
-    HeartDTO selectHeart(Map<String, Integer> number) throws Exception;
+    void insertHeart(HeartDTO heart) throws Exception;
+
+    HeartDTO selectHeart(Map<String, Integer> num) throws Exception;
+
+    void deleteHeart(Map<String, Integer> num) throws Exception;
 }

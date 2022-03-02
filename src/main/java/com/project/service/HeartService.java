@@ -6,6 +6,10 @@ import java.util.Map;
 
 public interface HeartService {
 
-    HeartDTO selectHeart(Map<String, Integer> number) throws Exception;
+    void insertHeart(HeartDTO heart) throws Exception;
+
+    HeartDTO selectHeart(int bno, int idx) throws Exception;
+
+    void deleteHeart(int bno, int idx) throws Exception;
 
 }

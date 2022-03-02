@@ -15,8 +15,19 @@ public class HeartDAOImpl implements HeartDAO {
     SqlSession sqlSession;
 
     @Override
-    public HeartDTO selectHeart(Map<String, Integer> number) throws Exception {
-        return sqlSession.selectOne("selectHeart", number);
+    public void insertHeart(HeartDTO heart) throws Exception {
+        sqlSession.insert("insertHeart", heart);
     }
 
+    @Override
+    public HeartDTO selectHeart(Map<String, Integer> num) throws Exception {
+        return sqlSession.selectOne("selectHeart", num);
+    }
+
+    @Override
+    public void deleteHeart(Map<String, Integer> num) throws Exception {
+        sqlSession.delete("deleteHeart", num);
+    }
 }
+
+

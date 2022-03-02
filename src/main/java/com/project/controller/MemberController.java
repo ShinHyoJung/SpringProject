@@ -52,7 +52,9 @@ public class MemberController {
         if(login!=null && passMatch) {
             session.setAttribute("login", login);
             String id = login.getId();
+            int idx = login.getIdx();
             session.setAttribute("id", id);
+            session.setAttribute("idx", idx);
             //세션에 로그인정보 애트리뷰트와 아이디 애트리뷰트 저장
             return "redirect:/list";
         } else { // 비밀번호가 틀렸습니다 알림창 구현

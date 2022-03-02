@@ -4,9 +4,10 @@ public class HeartDTO {
 
 
     private int hno;
+    private int hcheck;
     private int bno;
     private int idx;
-    private int check;
+
 
     public int getHno() {
         return hno;
@@ -14,6 +15,14 @@ public class HeartDTO {
 
     public void setHno(int hno) {
         this.hno = hno;
+    }
+
+    public int getHcheck() {
+        return hcheck;
+    }
+
+    public void setHcheck(int hcheck) {
+        this.hcheck = hcheck;
     }
 
     public int getBno() {
@@ -32,13 +41,7 @@ public class HeartDTO {
         this.idx = idx;
     }
 
-    public int getCheck() {
-        return check;
-    }
 
-    public void setCheck(int check) {
-        this.check = check;
-    }
 
 
 

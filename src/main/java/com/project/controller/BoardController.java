@@ -72,15 +72,23 @@ public class BoardController {
     @RequestMapping(value="/read/{bno}", method = RequestMethod.GET) // 게시글 읽기
     public String readBoard(@PathVariable("bno")int bno, MemberDTO member, Model model, HttpSession session) throws Exception {
         // 게시글 번호를 받아서 경로설정
+
         BoardDTO board = boardService.selectBoard(bno); //게시글
+        model.addAttribute("board", board);
         String id = (String)session.getAttribute("id");
         MemberDTO user = memberService.selectMember(id);
+
+
+        int idx = (Integer)session.getAttribute("idx");
+        HeartDTO heart = heartService.selectHeart(bno, idx);
+
 
         CommentDTO comment = new CommentDTO(); // 댓글
         comment.setBno(bno);
         List<CommentDTO> comments = commentService.selectComment(comment);
-        model.addAttribute("board", board);
+
         model.addAttribute("user", user);
+        model.addAttribute("heart", heart);
         model.addAttribute("comments", comments);
 
         return "board/read";
@@ -119,5 +127,20 @@ public class BoardController {
         return "board/search";
     }
 
+    @RequestMapping("/upBoard")
+    @ResponseBody
+    public String upBoard(int bno) throws Exception {
 
+        boardService.upBoard(bno);
+        boardService.selectBoard(bno);
+        return "success";
+    }
+
+    @RequestMapping("/downBoard")
+    @ResponseBody
+    public String downBoard(int bno) throws Exception {
+        boardService.downBoard(bno);
+        boardService.selectBoard(bno);
+        return "success";
+    }
 }

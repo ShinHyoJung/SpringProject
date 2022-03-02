@@ -5,24 +5,30 @@
 
     <insert id="insertHeart" parameterType="com.project.dto.HeartDTO">
         INSERT INTO heart (
-        heart_no,
-        board_no,
-        idx
+            heart_no,
+            heart_check,
+            board_no,
+            idx
         ) VALUES (
-        #{hno},
-        #{bno},
-        #{idx}
+            #{hno},
+            1,
+            #{bno},
+            #{idx}
         )
     </insert>
 
     <select id="selectHeart" parameterType="java.util.HashMap" resultType="com.project.dto.HeartDTO">
-        SELECT
-        heart_no AS hno,
-        baord_no AS bno,
-        idx AS idx
-        FROM   heart
-        WHERE  board_no = #{bno} AND idx = #{idx}
+        SELECT  heart_no AS hno,
+                heart_check AS hcheck,
+                board_no AS bno,
+                idx AS idx
+        FROM    heart
+        WHERE   board_no = #{bno} AND idx = #{idx}
     </select>
 
-
+    <update id="deleteHeart" parameterType="java.util.HashMap">
+        UPDATE  heart
+        SET     heart_check = heart_check-1
+        WHERE   board_no = #{bno} AND idx= #{idx}
+    </update>
 </mapper>
