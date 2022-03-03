@@ -11,20 +11,32 @@
     <title>게시글 수정</title>
 </head>
 <body>
-    <form method="post" action="/update">
+    <form name="updateForm" method="post" action="/update">
         <table>
             <tr>
-                <td style="width:200px; height:30px;"><textarea name="btitle">${board.btitle}</textarea></td>
+                <td style="width:200px; height:30px;"><textarea name="btitle" style="width:200px; height:30px;">${board.btitle}</textarea></td>
             <tr>
                 <td style="width:200px; height:30px;">${board.bwriter}</td>
             <tr>
-            <td style="width:200px; height:300px;"><textarea name="bcontent">${board.bcontent}</textarea></td>
+            <td style="width:200px; height:300px;"><textarea name="bcontent" style="width:200px; height:300px;">${board.bcontent}</textarea></td>
             <tr>
                 <td style="width:200px; height:30px;">${board.bhit}</td>
         </table>
         <input type="hidden" name="bno" value="${board.bno}">
         <input type="hidden" name="idx" value="${board.idx}">
-        <button type="submit">저장</button>
+        <button type="button" onclick="restore()">저장</button>
     </form>
 </body>
+
+<script>
+
+    function restore() {
+        if(confirm("저장하시겠습니까?")) {
+            updateForm.submit();
+        } else {
+
+        }
+    }
+
+</script>
 </html>

@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -25,8 +27,13 @@ public class HeartDAOImpl implements HeartDAO {
     }
 
     @Override
-    public void deleteHeart(Map<String, Integer> num) throws Exception {
-        sqlSession.delete("deleteHeart", num);
+    public void deleteHeart(int hno) throws Exception {
+        sqlSession.delete("deleteHeart", hno);
+    }
+
+    @Override
+    public void updateHeart(HeartDTO heart) throws Exception {
+        sqlSession.update("updateHeart", heart);
     }
 }
 

@@ -5,7 +5,9 @@ import com.project.dto.HeartDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -21,19 +23,23 @@ public class HeartServiceImpl implements HeartService {
 
     @Override
     public HeartDTO selectHeart(int bno, int idx) throws Exception {
+        
+        Map<String, Integer> num = new HashMap<>();
+        num.put("bno",bno);
+        num.put("idx",idx);
 
-        Map<String, Integer> num = new HashMap<String, Integer>();
-        num.put("bno", bno);
-        num.put("idx", idx);
         return heartDAO.selectHeart(num);
     }
 
     @Override
-    public void deleteHeart(int bno, int idx) throws Exception {
+    public void deleteHeart(int hno) throws Exception {
 
-        Map<String, Integer> num = new HashMap<String, Integer>();
-        num.put("bno", bno);
-        num.put("idx", idx);
-        heartDAO.deleteHeart(num);
+        heartDAO.deleteHeart(hno);
+    }
+
+    @Override
+    public void updateHeart(HeartDTO heart) throws Exception {
+
+        heartDAO.updateHeart(heart);
     }
 }

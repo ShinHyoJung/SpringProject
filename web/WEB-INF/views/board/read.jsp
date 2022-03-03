@@ -20,7 +20,6 @@
             height:50px;
         }
 
-
     </style>
 </head>
 <body>
@@ -40,37 +39,38 @@
             <td class="read">업데이트날짜: ${board.bupdatetime}</td>
         <tr>
     </table>
-<svg id="fill_heart" style="display: none;" idx = "${user.idx}" board_no = "${board.bno}" check="${heart.hcheck}" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 512 512">
+<svg class="heart" id="fill_heart" style="display: none;" heart_no = "${heart.hno}" idx = "${user.idx}" heart_idx = "${heart.idx}" board_no = "${board.bno}" check="${heart.hcheck}" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 512 512">
     <path d="M0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84.02L256 96L267.1
     84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1
     464.4 300.4L283.7 469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1
     .0003 232.4 .0003 190.9L0 190.9z"/></svg>
 
-<svg id ="empty_heart" style="display: block;" idx="${user.idx}" board_no="${board.bno}" check="${heart.hcheck}" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 512 512">
+<svg class="heart" id ="empty_heart" style="display: block;" heart_no = "${heart.hno}" idx="${user.idx}" heart_idx = "${heart.idx}" board_no="${board.bno}" check="${heart.hcheck}" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 512 512">
     <path d="M244 84L255.1 96L267.1 84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1 464.4 300.4L283.7
     469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1 0 232.4 0 190.9V185.1C0 115.2 50.52 55.58 119.4
     44.1C164.1 36.51 211.4 51.37 244 84C243.1 84 244 84.01 244 84L244 84zM255.1 163.9L210.1 117.1C188.4 96.28 157.6 86.4
     127.3 91.44C81.55 99.07 48 138.7 48 185.1V190.9C48 219.1 59.71 246.1 80.34 265.3L256
     429.3L431.7 265.3C452.3 246.1 464 219.1 464 190.9V185.1C464 138.7
 430.4 99.07 384.7 91.44C354.4 86.4 323.6 96.28 301.9 117.1L255.1 163.9z"/></svg>
-    <div id="heart">${board.bheart}</div>
+    <div id="heart">${board.bheart} <br>
 
-    <a href="/list">목록</a>
     <c:if test="${board.idx eq user.idx}">
-    <a href="/modifyBoard/${board.bno}">수정</a>
+    <button onclick="location.href='/modify/${board.bno}'">수정</button>
 
-    <form method="post" action="/delete">
+    <form name = "removeForm" method="post" action="/delete">
         <input type="hidden" value="${board.bno}" name="bno">
-        <button type="submit">삭제</button>
+        <button type="button" onclick="remove()">삭제</button>
     </form>
     </c:if>
+    </div>
+    <a href="/list">목록</a> <br>
 
-    <form method="post" action="/writeComment">
-        <textarea id="text" name="ctext"></textarea>
+    <form name="commentForm" method="post" action="/writeComment">
+        <textarea id="text" name="ctext" onkeyup="enterComment()"></textarea>
         <input type="hidden" name="cwriter" value="${user.nickname}">
         <input type="hidden" name="bno" value="${board.bno}">
         <input type="hidden" name="idx" value="${user.idx}">
-        <button type="submit">등록</button>
+        <button type="button" onclick="enroll()">등록</button>
     </form>
 
 <c:if test="${not empty comments}">
@@ -104,7 +104,25 @@
 
 
 <script>
-    let check = $("#empty_heart").attr("check");
+    let check = $(".heart").attr("check");
+    let heart_no = $(".heart").attr("heart_no");
+
+    function remove() {
+        if(confirm("정말 삭제하시겠습니까?")) {
+            removeForm.submit();
+        } else {
+        }
+    }
+
+    function enterComment() {
+        if(window.event.keyCode == 13) {
+            enroll();
+        }
+    }
+
+    function enroll() {
+        commentForm.submit();
+    }
 
     $(".delete_comment").on("click", function () { // 댓글 삭제
         let comment_no = $(this).val();
@@ -149,68 +167,83 @@
     });
 
 
-    $("#empty_heart").on("click", function () {
+    $("#empty_heart").on("click", function () { // 좋아요
 
         let board_no = $(this).attr("board_no");
         let idx = $(this).attr("idx");
+        let heart_idx = $(this).attr("heart_idx");
 
         alert("좋아요 반영되었습니다.");
 
         $.ajax({
-            method:"post",
-            url: "/insertHeart",
-            data: {bno: board_no, idx: idx}
-        })
-        .done (data => {
-            $("#empty_heart").css("display", "none");
-            $("#fill_heart").css("display", "block");
-            location.reload();
-        });
-
-        $.ajax({
             method: "post",
-            url:"/upBoard",
+            url: "/upBoard",
             data: {bno: board_no}
         })
-        .done(data=> {
-            location.reload();
-        });
+            .done(data => {
+                location.reload();
+            });
+
+        if(idx == heart_idx) { // 좋아요를 다시할때, idx값 대조
+
+            $.ajax({
+                method: "post",
+                url: "/updateHeart",
+                data: {hno: heart_no}
+            })
+                .done(data => {
+                    $("#empty_heart").css("display", "none");
+                    $("#fill_heart").css("display", "block");
+                    location.reload();
+                });
+        } else { // 좋아요를 처음하는 경우,
+
+            $.ajax({
+                method: "post",
+                url: "/insertHeart",
+                data: {bno: board_no, idx: idx}
+            })
+                .done(data => {
+                    $("#empty_heart").css("display", "none");
+                    $("#fill_heart").css("display", "block");
+                    location.reload();
+                });
+        }
     });
 
-    $("#fill_heart").on("click", function () {
+    $("#fill_heart").on("click", function () { // 좋아요 취소
 
-        let board_no = $(this).attr("board_no");
-        let idx = $(this).attr("idx");
+        if(confirm("좋아요를 취소하시겠습니까?")) {
+            $.ajax({
+                method: "post",
+                url: "/deleteHeart",
+                data: {hno: heart_no}
+            })
+                .done(data => {
+                    $("#empty_heart").css("display", "block");
+                    $("#fill_heart").css("display", "none");
+                    location.reload();
+                });
 
-        alert("좋아요 취소하시겠습니까?");
+            $.ajax({
+                method: "post",
+                url:"/downBoard",
+                data: {bno: board_no}
+            })
+                .done(data=> {
+                    location.reload();
+                });
+        } else {
 
-        $.ajax({
-            method: "post",
-            url:"/deleteHeart",
-            data: {bno:board_no, idx: idx}
-        })
-        .done( data=> {
-            $("#empty_heart").css("display", "block");
-            $("#fill_heart").css("display", "none");
-           location.reload();
-        });
+        }
 
-
-        $.ajax({
-            method: "post",
-            url:"/downBoard",
-            data: {bno: board_no}
-        })
-        .done(data=> {
-            location.reload();
-        });
     });
 
-    if(check == 1) {
+    if(check == 1) { // check값이 1일때, 하트 채우기
         $("#empty_heart").css("display", "none");
         $("#fill_heart").css("display", "block");
     }
-    else {
+    else { // check값이 0일때, 하트 비우기
         $("#empty_heart").css("display", "block");
         $("#fill_heart").css("display", "none");
     }

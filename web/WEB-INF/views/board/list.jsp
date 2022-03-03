@@ -54,17 +54,23 @@
     <table>
         <tr>
             <c:if test="${not empty page.cri.keyword}">
-                검색결과 : ${page.cri.keyword} <br>
+
+                검색결과 : '${page.cri.keyword}'
+                <c:if test="${empty list}">
+                    <br>검색결과없음
+                </c:if>
+                <br>
                 <a href="/list">이전</a>
             </c:if>
-          <th>글번호</th>
-          <th>제목</th>
-          <th>작성자</th>
-          <th>작성날짜</th>
-          <th>조회수</th>
+
+              <th>글번호</th>
+              <th>제목</th>
+              <th>작성자</th>
+              <th>작성날짜</th>
+              <th>조회수</th>
         </tr>
-        <c:forEach items="${list}" var="list">
         <tr>
+            <c:forEach items="${list}" var="list">
             <td>${list.bno}</td>
             <td><a class = "read" href="/read/${list.bno}" name="list.btitle"/>${list.btitle}</td>
             <td><a class="read" href="/search/${list.bwriter}" name="list.bwriter"/>${list.bwriter}</td>
@@ -114,29 +120,45 @@
                 <option value="C" <c:out value="${page.cri.type eq 'C'?'selected':''}"/> >내용</option>
                 <option value="TC" <c:out value="${page.cri.type eq 'TC'?'selected':''}"/>>제목 + 내용</option>
             </select>
-            <input id="keyword" type="text" name="keyword" value="${page.cri.keyword}">
-            <button id="search">검색</button>
+            <input id="keyword" type="text" name="keyword" onkeyup="enterSearch()" value="${page.cri.keyword}">
+            <button type="button" onclick="Search()">검색</button>
         </div>
     </div>
 
 <br><br>
-
+    <button type="button" onclick="location.href='/write'">글쓰기</button> <br> <br>
+    <button type="button" onclick="Logout()">로그아웃</button>
+    <a id="logout" href="/Logout"></a>
     <a href="/info">회원정보</a>
-    <a href="/write">글쓰기</a>
+
 
 <script>
 
+        function Logout() {
+
+            if(confirm("로그아웃하시겠습니까?")) {
+                logout.click();
+            } else {
+            }
+        }
+
         let moveForm = $("#moveForm");
 
-        $("#search").on("click", function () {
+        function enterSearch() {
+            if(window.event.keyCode == 13) {
+                Search();
+            }
+        }
 
-            let type= $("#type").val();
+        function Search() {
+
+            let type = $("#type").val();
             let keyword = $("#keyword").val();
             moveForm.find("input[name='type']").val(type);
             moveForm.find("input[name='keyword']").val(keyword);
             moveForm.find("input[name='pageNum']").val(1);
             moveForm.submit();
-        });
+        }
 
 
 </script>

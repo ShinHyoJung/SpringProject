@@ -26,9 +26,17 @@
         WHERE   board_no = #{bno} AND idx = #{idx}
     </select>
 
-    <update id="deleteHeart" parameterType="java.util.HashMap">
+    <update id="deleteHeart" parameterType="com.project.dto.HeartDTO">
+        UPDATE heart
+        SET
+                heart_check = 0
+        WHERE   heart_no = #{hno}
+    </update>
+
+    <update id="updateHeart" parameterType="com.project.dto.HeartDTO">
         UPDATE  heart
-        SET     heart_check = heart_check-1
-        WHERE   board_no = #{bno} AND idx= #{idx}
+        SET
+                heart_check = 1
+        WHERE   heart_no = #{hno}
     </update>
 </mapper>

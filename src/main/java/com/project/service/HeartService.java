@@ -10,6 +10,8 @@ public interface HeartService {
 
     HeartDTO selectHeart(int bno, int idx) throws Exception;
 
-    void deleteHeart(int bno, int idx) throws Exception;
+    void deleteHeart(int hno) throws Exception;
+
+    void updateHeart(HeartDTO heart) throws Exception;
 
 }

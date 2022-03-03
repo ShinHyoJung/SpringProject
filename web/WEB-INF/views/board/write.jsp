@@ -12,10 +12,9 @@
 
 
 </head>
-<link rel="stylesheet" type="text/css" href="/css/write.css"/>
 
 <body>
-<form method="post" action="/enroll">
+<form name= "writeForm" method="post" action="/enroll">
     <table>
         <tr>
             <td>
@@ -31,9 +30,22 @@
             </td>
         </tr>
     </table>
-    <button type="submit">등록</button>
+    <button type="button" onclick="enroll()">등록</button>
     <input type="hidden" value="${user.nickname}" name="bwriter">
     <input type="hidden" value="${user.idx}" name="idx">
 </form>
+
+<script>
+
+    function enroll() {
+        var form = document.writeForm;
+
+        if(confirm("글을 등록하시겠습니까?")) {
+            form.submit();
+        } else {
+
+        }
+    }
+</script>
 </body>
 </html>

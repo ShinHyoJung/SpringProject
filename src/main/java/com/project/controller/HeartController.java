@@ -34,12 +34,18 @@ public class HeartController {
 
     @RequestMapping("/deleteHeart")
     @ResponseBody
-    public String deleteHeart(BoardDTO board, HttpSession session) throws Exception {
+    public String deleteHeart(HeartDTO heart) throws Exception {
 
-        int bno = board.getBno();
-        int idx = (Integer)session.getAttribute("idx");
+        int hno = heart.getHno();
+        heartService.deleteHeart(hno);
+        return "success";
+    }
 
-        heartService.deleteHeart(bno, idx);
+    @RequestMapping("/updateHeart")
+    @ResponseBody
+    public String updateHeart(HeartDTO heart) throws Exception {
+
+        heartService.updateHeart(heart);
         return "success";
     }
 }

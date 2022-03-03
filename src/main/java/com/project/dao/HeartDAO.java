@@ -2,6 +2,8 @@ package com.project.dao;
 
 import com.project.dto.HeartDTO;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public interface HeartDAO {
@@ -10,5 +12,7 @@ public interface HeartDAO {
 
     HeartDTO selectHeart(Map<String, Integer> num) throws Exception;
 
-    void deleteHeart(Map<String, Integer> num) throws Exception;
+    void deleteHeart(int hno) throws Exception;
+
+    void updateHeart(HeartDTO heart) throws Exception;
 }

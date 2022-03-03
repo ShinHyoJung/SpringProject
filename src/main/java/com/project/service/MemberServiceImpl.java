@@ -55,4 +55,10 @@ public class MemberServiceImpl implements MemberService
         memberDAO.deleteMember(id);
     }
 
+    @Override
+    public int checkMember(MemberDTO member) throws Exception {
+        int result = memberDAO.checkMember(member);
+        return result;
+    }
+
 }

@@ -54,4 +54,10 @@ public class MemberDAOImpl implements MemberDAO
     public void deleteMember(String id) throws Exception {
         sqlSession.delete("deleteMember", id);
     }
+
+    @Override
+    public int checkMember(MemberDTO member) throws Exception {
+        int result = sqlSession.selectOne("checkMember", member);
+        return result;
+    }
 }

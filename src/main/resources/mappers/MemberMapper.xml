@@ -57,4 +57,10 @@
         DELETE FROM member
         WHERE   id = #{id}
     </delete>
+
+    <select id="checkMember" parameterType="com.project.dto.MemberDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM   member
+        WHERE  id = #{id}
+    </select>
 </mapper>

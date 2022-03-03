@@ -24,4 +24,5 @@ public interface MemberService
    void updateMember(MemberDTO member) throws Exception;
 
    void deleteMember(String id) throws Exception;
+   int checkMember(MemberDTO member) throws Exception;
 }

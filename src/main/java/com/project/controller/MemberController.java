@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -78,10 +79,18 @@ public class MemberController {
 
     @RequestMapping("/Signup") // 회원가입 처리
     public String Signup(@ModelAttribute MemberDTO member) throws Exception {
-
-        String pwdbCrypt = bCryptPasswordEncoder.encode(member.getPassword()); //비밀번호 암호화
-        member.setPassword(pwdbCrypt);
-        memberService.insertMember(member);
+        int result = memberService.checkMember(member);
+        try {
+            if(result ==1) {
+                return "/beforeSignup";
+            } else if (result ==0){
+                String pwdbCrypt = bCryptPasswordEncoder.encode(member.getPassword()); //비밀번호 암호화
+                member.setPassword(pwdbCrypt);
+                memberService.insertMember(member);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException();
+        }
         return "home";
     }
 
@@ -113,5 +122,12 @@ public class MemberController {
 
         memberService.deleteMember(id);
         return "home";
+    }
+
+    @RequestMapping(value="/checkMember", method=RequestMethod.POST)
+    @ResponseBody
+    public int checkMember(MemberDTO member) throws Exception {
+        int result = memberService.checkMember(member);
+        return result;
     }
 }
