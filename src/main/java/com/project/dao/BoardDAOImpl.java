@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntellliJ IDEA.
@@ -80,5 +81,10 @@ public class BoardDAOImpl implements BoardDAO {
     @Override
     public void downBoard(int bno) throws Exception {
         sqlSession.update("downBoard", bno);
+    }
+
+    @Override
+    public void insertFile(Map<String, Object> map) throws Exception {
+        sqlSession.insert("insertFile", map);
     }
 }

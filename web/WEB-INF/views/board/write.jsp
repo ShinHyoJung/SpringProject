@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<form name= "writeForm" method="post" action="/enroll">
+<form name= "writeForm" method="post" action="/enroll" enctype="multipart/form-data">
     <table>
         <tr>
             <td>
@@ -28,11 +28,19 @@
             <td>
                  <textarea name="bcontent" style="width:200px; height:300px;"></textarea>
             </td>
+        <tr>
+            <td>
+                <input type="file" name="file">
+            </td>
         </tr>
     </table>
     <button type="button" onclick="enroll()">등록</button>
     <input type="hidden" value="${user.nickname}" name="bwriter">
     <input type="hidden" value="${user.idx}" name="idx">
+    <br><br>
+
+
+    <a href="/list">뒤로가기</a>
 </form>
 
 <script>
@@ -42,6 +50,7 @@
 
         if(confirm("글을 등록하시겠습니까?")) {
             form.submit();
+            alert("등록되었습니다.");
         } else {
 
         }

@@ -5,6 +5,7 @@ import com.project.dto.Criteria;
 import com.project.dto.PagingDTO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntellliJ IDEA.
@@ -38,5 +39,7 @@ public interface BoardDAO {
     void upBoard(int bno) throws Exception;
 
     void downBoard(int bno) throws Exception;
+
+    void insertFile(Map<String, Object> map) throws Exception;
 
 }

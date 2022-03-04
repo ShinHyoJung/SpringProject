@@ -79,18 +79,10 @@ public class MemberController {
 
     @RequestMapping("/Signup") // 회원가입 처리
     public String Signup(@ModelAttribute MemberDTO member) throws Exception {
-        int result = memberService.checkMember(member);
-        try {
-            if(result ==1) {
-                return "/beforeSignup";
-            } else if (result ==0){
-                String pwdbCrypt = bCryptPasswordEncoder.encode(member.getPassword()); //비밀번호 암호화
-                member.setPassword(pwdbCrypt);
-                memberService.insertMember(member);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException();
-        }
+
+        String pwdbCrypt = bCryptPasswordEncoder.encode(member.getPassword()); //비밀번호 암호화
+        member.setPassword(pwdbCrypt);
+        memberService.insertMember(member);
         return "home";
     }
 
@@ -124,8 +116,8 @@ public class MemberController {
         return "home";
     }
 
-    @RequestMapping(value="/checkMember", method=RequestMethod.POST)
     @ResponseBody
+    @RequestMapping(value="/checkMember", method=RequestMethod.POST)
     public int checkMember(MemberDTO member) throws Exception {
         int result = memberService.checkMember(member);
         return result;

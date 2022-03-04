@@ -33,6 +33,7 @@
     function restore() {
         if(confirm("저장하시겠습니까?")) {
             updateForm.submit();
+            alert("저장이 완료되었습니다.");
         } else {
 
         }

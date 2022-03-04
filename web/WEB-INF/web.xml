@@ -20,6 +20,7 @@
             <param-value>
                 /WEB-INF/dispatcher-servlet.xml
                 /WEB-INF/spring-security.xml
+                /WEB-INF/context-common.xml
             </param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>

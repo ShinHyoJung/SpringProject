@@ -3,8 +3,10 @@ package com.project.service;
 import com.project.dto.BoardDTO;
 import com.project.dto.Criteria;
 import com.project.dto.PagingDTO;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntellliJ IDEA.
@@ -15,7 +17,7 @@ import java.util.List;
  */
 public interface BoardService {
 
-    void insertBoard(BoardDTO board) throws Exception;
+    void insertBoard(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception;
 
     List<BoardDTO> viewBoard(Criteria cri) throws Exception;
 
@@ -36,4 +38,6 @@ public interface BoardService {
     void upBoard(int bno) throws Exception;
 
     void downBoard(int bno) throws Exception;
+
+
 }

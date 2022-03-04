@@ -1,13 +1,17 @@
 package com.project.service;
 
+import com.project.conf.FileUtils;
 import com.project.dao.BoardDAO;
 import com.project.dto.BoardDTO;
 import com.project.dto.Criteria;
 import com.project.dto.PagingDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntellliJ IDEA.
@@ -20,12 +24,20 @@ import java.util.List;
 @Service
 public class BoardServiceImpl implements BoardService {
 
+    @Resource(name="fileUtils")
+    private FileUtils fileUtils;
     @Autowired
     BoardDAO boardDAO;
 
     @Override
-    public void insertBoard(BoardDTO board) throws  Exception {
+    public void insertBoard(BoardDTO board, MultipartHttpServletRequest mpRequest) throws  Exception {
         boardDAO.insertBoard(board);
+
+        List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(board, mpRequest);
+        int size = list.size();
+        for(int i=0; i<size; i++) {
+            boardDAO.insertFile(list.get(i));
+        }
     }
 
     @Override
@@ -79,4 +91,6 @@ public class BoardServiceImpl implements BoardService {
     public void downBoard(int bno) throws Exception {
         boardDAO.downBoard(bno);
     }
+
+
 }

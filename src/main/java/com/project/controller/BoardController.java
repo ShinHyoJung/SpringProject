@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -63,9 +64,9 @@ public class BoardController {
     }
 
     @RequestMapping("/enroll") // 게시글 등록
-    public String enrollBoard(BoardDTO board) throws Exception {
+    public String enrollBoard(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception {
 
-        boardService.insertBoard(board);
+        boardService.insertBoard(board, mpRequest);
         return "redirect:/list";
     }
 
@@ -127,8 +128,7 @@ public class BoardController {
         return "board/search";
     }
 
-    @RequestMapping("/upBoard")
-    @ResponseBody
+    @RequestMapping("/upBoard") // 게시글 좋아요수 증가
     public String upBoard(int bno) throws Exception {
 
         boardService.upBoard(bno);
@@ -138,7 +138,7 @@ public class BoardController {
 
     @RequestMapping("/downBoard")
     @ResponseBody
-    public String downBoard(int bno) throws Exception {
+    public String downBoard(int bno) throws Exception { // 게시글 좋아요수 감소
         boardService.downBoard(bno);
         boardService.selectBoard(bno);
         return "success";
