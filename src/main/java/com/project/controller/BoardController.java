@@ -8,14 +8,20 @@ import com.project.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.net.URLEncoder;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
 /**
  * Created with IntellliJ IDEA.
@@ -67,6 +73,19 @@ public class BoardController {
     public String enrollBoard(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception {
 
         boardService.insertBoard(board, mpRequest);
+
+        Iterator<String> iterator = mpRequest.getFileNames();
+        MultipartFile multipartFile = null;
+        while(iterator.hasNext()) {
+            multipartFile = mpRequest.getFile(iterator.next());
+            if(multipartFile.isEmpty() == false) {
+                log.println("-------file start------");
+                log.println("name : " + multipartFile.getName());
+                log.println("filename : " + multipartFile.getOriginalFilename());
+                log.println("size: " + multipartFile.getSize());
+                log.println(("----------end----------"));
+            }
+        }
         return "redirect:/list";
     }
 
@@ -88,9 +107,12 @@ public class BoardController {
         comment.setBno(bno);
         List<CommentDTO> comments = commentService.selectComment(comment);
 
+        List<Map<String, Object>> file = boardService.selectFile(bno);
+
         model.addAttribute("user", user);
         model.addAttribute("heart", heart);
         model.addAttribute("comments", comments);
+        model.addAttribute("file", file);
 
         return "board/read";
     }
@@ -142,5 +164,23 @@ public class BoardController {
         boardService.downBoard(bno);
         boardService.selectBoard(bno);
         return "success";
+    }
+
+    @RequestMapping("/downFile")
+    public void downFile(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception {
+        Map<String, Object> resultMap = boardService.downFile(map);
+
+        String storedFileName = (String) resultMap.get("stored_fname");
+        String originalFileName = (String) resultMap.get("org_fname");
+
+        byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("D:\\file\\"+storedFileName));
+
+        response.setContentType("application/octet-stream");
+        response.setContentLength(fileByte.length);
+        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(originalFileName, "UTF-8")+"\";");
+        response.setHeader("Content-Transfer-Encoding", "binary");
+        response.getOutputStream().write(fileByte);
+        response.getOutputStream().flush();
+        response.getOutputStream().close();
     }
 }

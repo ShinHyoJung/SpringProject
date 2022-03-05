@@ -38,12 +38,22 @@
         <tr>
             <td class="read">업데이트날짜: ${board.bupdatetime}</td>
         <tr>
+            <form name="downForm" method="post" action="/downFile" >
+            <td class="read">파일
+            <c:forEach var="file" items="${file}">
+                <a href="#" onclick="downFile(); return false;">${file.org_fname}</a>(${file.fsize}kb)
+                <input type="hidden" id = "fno" name="fno" value="${file.fno}">
+            </c:forEach>
+            </td>
+            </form>
+        </tr>
     </table>
 <svg class="heart" id="fill_heart" style="display: none;" heart_no = "${heart.hno}" idx = "${user.idx}" heart_idx = "${heart.idx}" board_no = "${board.bno}" check="${heart.hcheck}" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 512 512">
     <path d="M0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84.02L256 96L267.1
     84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1
     464.4 300.4L283.7 469.1C276.2 476.1 266.3 480 256 480C245.7 480 235.8 476.1 228.3 469.1L47.59 300.4C17.23 272.1
     .0003 232.4 .0003 190.9L0 190.9z"/></svg>
+
 
 <svg class="heart" id ="empty_heart" style="display: block;" heart_no = "${heart.hno}" idx="${user.idx}" heart_idx = "${heart.idx}" board_no="${board.bno}" check="${heart.hcheck}" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 512 512">
     <path d="M244 84L255.1 96L267.1 84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1 464.4 300.4L283.7
@@ -106,12 +116,15 @@
 <script>
     let check = $(".heart").attr("check");
     let heart_no = $(".heart").attr("heart_no");
-
     function remove() {
         if(confirm("정말 삭제하시겠습니까?")) {
             removeForm.submit();
         } else {
         }
+    }
+
+    function downFile() {
+        downForm.submit();
     }
 
     function enterComment() {

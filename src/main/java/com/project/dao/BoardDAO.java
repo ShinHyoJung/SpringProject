@@ -42,4 +42,7 @@ public interface BoardDAO {
 
     void insertFile(Map<String, Object> map) throws Exception;
 
+    List<Map<String, Object>> selectFile(int bno) throws Exception;
+
+    Map<String, Object> downFile(Map<String, Object> map) throws Exception;
 }

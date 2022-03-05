@@ -43,6 +43,8 @@ public class FileUtils {
             if(multipartFile.isEmpty() == false) {
                 originalFileName = multipartFile.getOriginalFilename();
                 originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+                storedFileName = CommonUtils.getRandomString() + originalFileExtension;
+
 
                 file = new File(filePath + storedFileName);
                 multipartFile.transferTo(file);

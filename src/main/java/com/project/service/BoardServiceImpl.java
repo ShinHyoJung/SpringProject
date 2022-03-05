@@ -92,5 +92,13 @@ public class BoardServiceImpl implements BoardService {
         boardDAO.downBoard(bno);
     }
 
+    @Override
+    public List<Map<String, Object>> selectFile(int bno) throws Exception {
+        return boardDAO.selectFile(bno);
+    }
 
+    @Override
+    public Map<String, Object> downFile(Map<String, Object> map) throws Exception {
+        return boardDAO.downFile(map);
+    }
 }

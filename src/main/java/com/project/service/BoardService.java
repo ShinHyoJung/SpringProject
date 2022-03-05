@@ -39,5 +39,8 @@ public interface BoardService {
 
     void downBoard(int bno) throws Exception;
 
+    List<Map<String, Object>> selectFile(int bno) throws Exception;
+
+    Map<String, Object> downFile(Map<String, Object> map) throws Exception;
 
 }
