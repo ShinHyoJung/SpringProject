@@ -28,9 +28,6 @@ public class MemberController {
 
     private Logger logger = LoggerFactory.getLogger(Controller.class);
 
-      @Autowired
-     BCryptPasswordEncoder bCryptPasswordEncoder;
-
     @Autowired // 의존성주입방법
     private MemberService memberService;
 
@@ -49,9 +46,9 @@ public class MemberController {
         MemberDTO login = memberService.loginMember(member);
 
         // 로그인정보에서 id값 추출
-        boolean passMatch = bCryptPasswordEncoder.matches(member.getPassword(), login.getPassword());
+        //boolean passMatch = bCryptPasswordEncoder.matches(member.getPassword(), login.getPassword());
 
-        if(login!=null && passMatch) {
+        /*if(login!=null && passMatch) {
             session.setAttribute("login", login);
             String id = login.getId();
             int idx = login.getIdx();
@@ -61,8 +58,9 @@ public class MemberController {
             return "redirect:/list";
         } else { // 비밀번호가 틀렸습니다 알림창 구현
             return "redirect:/Login";
-        }// 아이디가 틀린경우 구현*/
-
+        }// 아이디가 틀린경우 구현
+                */
+        return "redirect:/Login";
     }
 
     @RequestMapping("/Logout") // 로그아웃
@@ -82,8 +80,8 @@ public class MemberController {
     @RequestMapping("/Signup") // 회원가입 처리
     public String Signup(@ModelAttribute MemberDTO member) throws Exception {
 
-        String pwdbCrypt = bCryptPasswordEncoder.encode(member.getPassword()); //비밀번호 암호화
-        member.setPassword(pwdbCrypt);
+        //String pwdbCrypt = bCryptPasswordEncoder.encode(member.getPassword()); //비밀번호 암호화
+        //member.setPassword(pwdbCrypt);
 
         member.setUsername(member.getId());
         member.setAccountNonExpired(true);
@@ -113,8 +111,8 @@ public class MemberController {
     @RequestMapping("/updateInfo") // 회원정보 수정
     public String updateInfo(MemberDTO member) throws Exception {
 
-        String pwdbCrypt = bCryptPasswordEncoder.encode(member.getPassword()); // 수정된 비밀번호 암호화
-        member.setPassword(pwdbCrypt);
+        //String pwdbCrypt = bCryptPasswordEncoder.encode(member.getPassword()); // 수정된 비밀번호 암호화
+        //member.setPassword(pwdbCrypt);
         memberService.updateMember(member);
         return "redirect:/info";
     }

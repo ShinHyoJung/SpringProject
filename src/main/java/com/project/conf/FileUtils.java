@@ -17,7 +17,7 @@ import java.util.*;
  */
 @Component("fileUtils")
 public class FileUtils {
-    private static final String filePath = "D:\\file\\"; // 값이 고정됨
+    private static final String filePath = "D:\\file\\"; // 상수로 값이 고정됨
 
     public List<Map<String, Object>> parseInsertFileInfo(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception {
 
@@ -28,17 +28,17 @@ public class FileUtils {
         String originalFileExtension = null;
         String storedFileName = null;
 
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        Map<String, Object> listMap = null;
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>(); // 묶은 해시값을 리스트에 넣음
+        Map<String, Object> listMap = null; // 파일이 여러개이므로 하나의 값으로 묶음
 
         int bno = board.getBno();
 
         File file = new File(filePath);
-        if(file.exists() == false) {
+        if(file.exists() == false) { //
             file.mkdirs();
         }
 
-        while(iterator.hasNext()) {
+        while(iterator.hasNext()) { // 값이 없어서 false가 나올때까지 값을 계속 받음
             multipartFile = mpRequest.getFile(iterator.next());
             if(multipartFile.isEmpty() == false) {
                 originalFileName = multipartFile.getOriginalFilename();
@@ -47,7 +47,7 @@ public class FileUtils {
 
 
                 file = new File(filePath + storedFileName);
-                multipartFile.transferTo(file);
+                multipartFile.transferTo(file); // 받은 파일을 destination file로 변환
                 listMap = new HashMap<String, Object>();
                 listMap.put("bno", bno);
                 listMap.put("org_fname", originalFileName);
