@@ -34,8 +34,8 @@ public class FileUtils {
         int bno = board.getBno();
 
         File file = new File(filePath);
-        if(file.exists() == false) { //
-            file.mkdirs();
+        if(file.exists() == false) { 
+            file.mkdirs(); //파일이 존재하지않으면 경로에 디렉토리만듬
         }
 
         while(iterator.hasNext()) { // 값이 없어서 false가 나올때까지 값을 계속 받음
