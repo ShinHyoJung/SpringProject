@@ -2,9 +2,15 @@ package com.project.service;
 
 import com.project.dao.MemberDAO;
 import com.project.dto.MemberDTO;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created with IntellliJ IDEA.
@@ -19,8 +25,38 @@ public class MemberServiceImpl implements MemberService
 
     @Autowired
     MemberDAO memberDAO;
-    @Autowired
-    PasswordEncoder passwordEncoder;
+//    @Autowired
+//    PasswordEncoder passwordEncoder;
+
+
+    @Override
+    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+        MemberDTO member = null;
+        try {
+            member = memberDAO.selectMember(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            member.setAuthorities(getAuthorities(id));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return member;
+    }
+
+    @Override
+    public Collection<GrantedAuthority> getAuthorities(String id)  throws Exception {
+        List<GrantedAuthority> authorities = memberDAO.readAuthorities(id);
+        return authorities;
+    }
+
+    @Override
+    public void createAuthorities(MemberDTO member) throws Exception {
+        memberDAO.createAuthorities(member);
+    }
 
     @Override
     public void insertMember(MemberDTO member) throws Exception {

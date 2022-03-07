@@ -17,11 +17,11 @@ import java.util.*;
  */
 @Component("fileUtils")
 public class FileUtils {
-    private static final String filePath = "D:\\file\\";
+    private static final String filePath = "D:\\file\\"; // 값이 고정됨
 
     public List<Map<String, Object>> parseInsertFileInfo(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception {
 
-        Iterator<String> iterator = mpRequest.getFileNames();
+        Iterator<String> iterator = mpRequest.getFileNames(); // 리스트를 저장하기위한 컬렉션 프레임워크 인터페이스
 
         MultipartFile multipartFile = null;
         String originalFileName = null;

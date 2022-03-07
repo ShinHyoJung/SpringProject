@@ -5,6 +5,7 @@ import com.project.service.MemberService;
 import org.mariadb.jdbc.internal.logging.Logger;
 import org.mariadb.jdbc.internal.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,8 +28,8 @@ public class MemberController {
 
     private Logger logger = LoggerFactory.getLogger(Controller.class);
 
-    @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+      @Autowired
+     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired // 의존성주입방법
     private MemberService memberService;
@@ -59,8 +60,9 @@ public class MemberController {
             //세션에 로그인정보 애트리뷰트와 아이디 애트리뷰트 저장
             return "redirect:/list";
         } else { // 비밀번호가 틀렸습니다 알림창 구현
-            return "redirect:/login";
-        }// 아이디가 틀린경우 구현
+            return "redirect:/Login";
+        }// 아이디가 틀린경우 구현*/
+
     }
 
     @RequestMapping("/Logout") // 로그아웃
@@ -82,7 +84,17 @@ public class MemberController {
 
         String pwdbCrypt = bCryptPasswordEncoder.encode(member.getPassword()); //비밀번호 암호화
         member.setPassword(pwdbCrypt);
+
+        member.setUsername(member.getId());
+        member.setAccountNonExpired(true);
+        member.setAccountNonLocked(true);
+        member.setEnabled(true);
+        member.setCredentialsNonExpired(true);
+        member.setAuthorities(AuthorityUtils.createAuthorityList("ROLE_USER"));
+
         memberService.insertMember(member);
+
+        memberService.createAuthorities(member);
         return "home";
     }
 
@@ -121,5 +133,10 @@ public class MemberController {
     public int checkMember(MemberDTO member) throws Exception {
         int result = memberService.checkMember(member);
         return result;
+    }
+
+    @RequestMapping("/denied")
+    public String denied(Model model) throws Exception {
+        return "member/denied";
     }
 }

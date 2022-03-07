@@ -3,10 +3,12 @@ package com.project.dao;
 import com.project.dto.MemberDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.Member;
+import java.util.List;
 
 
 /**
@@ -23,8 +25,21 @@ public class MemberDAOImpl implements MemberDAO
 
     @Autowired
     SqlSession sqlSession;
-    @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+
+//    @Autowired
+//    BCryptPasswordEncoder passwordEncoder;
+
+
+    @Override
+    public void createAuthorities(MemberDTO member) throws Exception {
+        sqlSession.insert("createAuthority", member);
+    }
+
+    @Override
+    public List<GrantedAuthority>readAuthorities(String id) throws Exception {
+        return sqlSession.selectOne("readAuthorities", id);
+    }
+
 
     @Override
     public void insertMember(MemberDTO member) throws Exception {
@@ -60,4 +75,6 @@ public class MemberDAOImpl implements MemberDAO
         int result = sqlSession.selectOne("checkMember", member);
         return result;
     }
+
+
 }

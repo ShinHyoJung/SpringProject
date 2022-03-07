@@ -1,8 +1,10 @@
 package com.project.dao;
 
 import com.project.dto.MemberDTO;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.lang.reflect.Member;
+import java.util.List;
 
 /**
  * Created with IntellliJ IDEA.
@@ -14,6 +16,11 @@ import java.lang.reflect.Member;
 
 public interface MemberDAO
     {
+
+        List<GrantedAuthority> readAuthorities(String id) throws Exception;
+
+        void createAuthorities(MemberDTO member) throws Exception;
+
         void insertMember(MemberDTO member) throws Exception;
 
         MemberDTO loginMember(MemberDTO member) throws Exception;
@@ -25,4 +32,5 @@ public interface MemberDAO
         void deleteMember(String id) throws Exception;
 
         int checkMember(MemberDTO member) throws Exception;
+
     }

@@ -3,6 +3,13 @@
 
 <mapper namespace="com.project.dao.MemberDAOImpl">
 
+    <select id="readAuthorities" parameterType="String" resultType="org.springframework.security.core.authority.SimpleGrantedAuthority">
+        SELECT auth
+        FROM authority
+        WHERE 1=1
+        AND id = #{id}
+    </select>
+
     <insert id="insertMember" parameterType="com.project.dto.MemberDTO">
         INSERT INTO member(
             id,
@@ -41,7 +48,7 @@
         FROM member
         WHERE id = #{id}
     </select>
-    
+
     <update id="updateMember" parameterType="com.project.dto.MemberDTO">
         UPDATE member
         SET
@@ -63,4 +70,17 @@
         FROM   member
         WHERE  id = #{id}
     </select>
+
+    <insert id="createAuthority" parameterType="org.springframework.security.core.GrantedAuthority">
+        INSERT INTO authority (
+            id,
+            auth,
+        ) VALUES
+        <foreach item="authority" index = "index" collection="authorities" separator=",">
+            (#{id}, #{authority.role})
+        </foreach>
+        ON DUPLICATE KEY
+        UPDATE
+        id = #{id}
+    </insert>
 </mapper>

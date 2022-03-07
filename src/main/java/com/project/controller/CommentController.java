@@ -50,7 +50,4 @@ public class CommentController {
         return "/comment";
     }
 
-
-
-
 }

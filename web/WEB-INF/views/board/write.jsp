@@ -18,7 +18,7 @@
     <table>
         <tr>
             <td>
-                제목 <textarea name="btitle" style="width:200px; height:30px; "></textarea>
+                제목 <textarea name="btitle" id="btitle" style="width:200px; height:30px; "></textarea>
             </td>
         <tr>
             <td>
@@ -30,7 +30,7 @@
             </td>
         <tr>
             <td>
-                <input type="file" name="file">
+                <input type="file" name="file" placeholder="파일선택" multiple/>
             </td>
         </tr>
     </table>
@@ -48,11 +48,15 @@
     function enroll() {
         var form = document.writeForm;
 
-        if(confirm("글을 등록하시겠습니까?")) {
-            form.submit();
-            alert("등록되었습니다.");
-        } else {
-
+        if(!form.btitle.value) { // 제목 유효성 검사
+            alert("제목을 입력해주세요.");
+        }
+        else {
+            if (confirm("글을 등록하시겠습니까?")) {
+                form.submit();
+                alert("등록되었습니다.");
+            } else {
+            }
         }
     }
 </script>

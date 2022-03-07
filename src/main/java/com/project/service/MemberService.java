@@ -1,6 +1,10 @@
 package com.project.service;
 
 import com.project.dto.MemberDTO;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+import java.util.Collection;
 
 /**
  * Created with IntellliJ IDEA.
@@ -11,9 +15,11 @@ import com.project.dto.MemberDTO;
  */
 
 
-public interface MemberService
+public interface MemberService extends UserDetailsService
 {
+   Collection<GrantedAuthority> getAuthorities(String id)  throws Exception;
 
+   void createAuthorities(MemberDTO member) throws Exception;
 
    void insertMember(MemberDTO member) throws Exception;
 
@@ -24,5 +30,7 @@ public interface MemberService
    void updateMember(MemberDTO member) throws Exception;
 
    void deleteMember(String id) throws Exception;
+
    int checkMember(MemberDTO member) throws Exception;
+
 }

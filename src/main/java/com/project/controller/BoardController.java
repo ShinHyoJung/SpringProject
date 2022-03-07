@@ -6,6 +6,7 @@ import com.project.service.CommentService;
 import com.project.service.HeartService;
 import com.project.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,6 @@ import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 @Controller
 public class BoardController {
 
-
     @Autowired // 의존성주입방법
     private MemberService memberService;
 
@@ -60,6 +60,7 @@ public class BoardController {
         return "board/list";
     }
 
+    @Secured("ROLE_USER")
     @RequestMapping("/write") // 게시글 쓰기
     public String writeBoard(MemberDTO member, Model model, HttpSession session) throws Exception {
 
@@ -76,7 +77,7 @@ public class BoardController {
 
         Iterator<String> iterator = mpRequest.getFileNames();
         MultipartFile multipartFile = null;
-        while(iterator.hasNext()) {
+        while(iterator.hasNext()) { // 컬렉션에 저장되어있는 요소들을 읽어오는 방법 표준화, 요소가 있으면 true, 없으면 false
             multipartFile = mpRequest.getFile(iterator.next());
             if(multipartFile.isEmpty() == false) {
                 log.println("-------file start------");

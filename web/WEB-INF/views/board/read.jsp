@@ -26,11 +26,11 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <table class="read">
         <tr>
-            <td class="read">제목: ${board.btitle}</td>
+            <td class="read">제목: <c:out value="${board.btitle}" escapeXml="true"/></td>
         <tr>
             <td class="read">작성자: ${board.bwriter}</td>
         <tr>
-            <td class="read" style="height:500px;">${board.bcontent}</td>
+            <td class="read" style="height:500px;"><c:out value="${board.bcontent}" escapeXml="true"/></td>
         <tr>
             <td class="read">조회수: ${board.bhit}</td>
         <tr>
@@ -116,9 +116,13 @@
 <script>
     let check = $(".heart").attr("check");
     let heart_no = $(".heart").attr("heart_no");
+    let board_no = $(".heart").attr("board_no");
+
+
     function remove() {
         if(confirm("정말 삭제하시겠습니까?")) {
             removeForm.submit();
+            alert("삭제되었습니다.");
         } else {
         }
     }
@@ -225,6 +229,7 @@
     });
 
     $("#fill_heart").on("click", function () { // 좋아요 취소
+
 
         if(confirm("좋아요를 취소하시겠습니까?")) {
             $.ajax({

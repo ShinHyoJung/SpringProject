@@ -1,5 +1,10 @@
 package com.project.dto;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+
 /**
  * Created with IntellliJ IDEA.
  * MemberDTO: nandsoft
@@ -7,17 +12,26 @@ package com.project.dto;
  * Time: 오후 1:29
  * Comments:
  */
-public class MemberDTO
-{
+public class MemberDTO implements UserDetails {
+
     private int idx;
     private String id;
     private String name;
     private String nickname;
+    private String username;
     private String password;
     private String pnum;
     private String address;
     private String datetime;
     private String updatetime;
+    private Collection<? extends GrantedAuthority> authorities;
+
+
+    private boolean isAccountNonExpired;
+    private boolean isAccountNonLocked;
+    private boolean isCredentialsNonExpired;
+    private boolean isEnabled;
+
 
     public int getIdx()
     {
@@ -55,6 +69,15 @@ public class MemberDTO
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword()
@@ -104,8 +127,53 @@ public class MemberDTO
         this.updatetime = updatetime;
     }
 
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return isAccountNonExpired;
+    }
+
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        isAccountNonExpired = accountNonExpired;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return isAccountNonLocked;
+    }
+
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        isAccountNonLocked = accountNonLocked;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return isCredentialsNonExpired;
+    }
+
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        isCredentialsNonExpired = credentialsNonExpired;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
     @Override
     public String toString() {
-        return "MemberDTO [id=" + id + ", password=" + password + ", name=" + name + ", pnum=" + pnum + ", address=" + address + "]";
+        return "MemberDTO [id=" + id + ", password=" + password + ", name=" + name + ", pnum=" + pnum + ", address=" + address +
+                ", datetime=" + datetime + ", updatetime=" + updatetime + ", authorities=" + authorities + ", isAccountNonExpired=" +
+                isAccountNonExpired() + ", isAccountNonLocked=" + isAccountNonLocked() + ", isCredentialNonExpired=" +
+                isCredentialsNonExpired() + ", isEnabled=" + isEnabled() + "]";
     }
 }
