@@ -41,7 +41,6 @@
                 } else if (data == 0) {
                     document.getElementById("check").setAttribute("value", 1);
                     alert("사용가능한 아이디입니다.");
-                    alert(document.getElementById("check").value);
                 }
             },
             error: function (error) {

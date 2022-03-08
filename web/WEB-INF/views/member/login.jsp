@@ -14,6 +14,7 @@
     <h1>로그인</h1>
 
     <form name="loginForm" action="/doLogin" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
         <input type="text" id="id" name="id" placeholder="아이디"/> <br><br>
         <input type="password" name="password" onkeyup="enterLogin()" placeholder="비밀번호"/> <br>
         <button type="button"  onclick="loginChk()">로그인</button>

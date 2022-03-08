@@ -17,7 +17,7 @@ import java.util.List;
 public interface MemberDAO
     {
 
-        List<GrantedAuthority> readAuthorities(String id) throws Exception;
+        List<GrantedAuthority> readAuthorities(String username) throws Exception;
 
         void createAuthorities(MemberDTO member) throws Exception;
 
@@ -32,5 +32,7 @@ public interface MemberDAO
         void deleteMember(String id) throws Exception;
 
         int checkMember(MemberDTO member) throws Exception;
+
+        MemberDTO readMember(String username) throws Exception;
 
     }

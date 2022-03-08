@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -25,31 +24,25 @@ public class MemberServiceImpl implements MemberService
 
     @Autowired
     MemberDAO memberDAO;
-//    @Autowired
-//    PasswordEncoder passwordEncoder;
-
 
     @Override
-    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
         MemberDTO member = null;
         try {
-            member = memberDAO.selectMember(id);
+            member = memberDAO.readMember(username);
+            member.setAuthorities(getAuthorities(username));
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        try {
-            member.setAuthorities(getAuthorities(id));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         return member;
     }
 
     @Override
-    public Collection<GrantedAuthority> getAuthorities(String id)  throws Exception {
-        List<GrantedAuthority> authorities = memberDAO.readAuthorities(id);
+    public Collection<GrantedAuthority> getAuthorities(String username)  throws Exception {
+        List<GrantedAuthority> authorities = memberDAO.readAuthorities(username);
         return authorities;
     }
 
@@ -95,6 +88,11 @@ public class MemberServiceImpl implements MemberService
     public int checkMember(MemberDTO member) throws Exception {
         int result = memberDAO.checkMember(member);
         return result;
+    }
+
+    @Override
+    public MemberDTO readMember(String username) throws Exception {
+        return memberDAO.readMember(username);
     }
 
 }

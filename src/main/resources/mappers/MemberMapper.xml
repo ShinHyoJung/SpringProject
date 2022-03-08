@@ -7,7 +7,7 @@
         SELECT auth
         FROM authority
         WHERE 1=1
-        AND id = #{id}
+        AND username = #{username}
     </select>
 
     <insert id="insertMember" parameterType="com.project.dto.MemberDTO">
@@ -15,17 +15,27 @@
             id,
             password,
             name,
+            username,
             nickname,
             pnum,
-            address
+            address,
+            isAccountNonExpired,
+            isAccountNonLocked,
+            isCredentialsNonExpired,
+            isEnabled
         )
         VALUES (
             #{id},
             #{password},
             #{name},
+            #{username},
             #{nickname},
             #{pnum},
-            #{address}
+            #{address},
+            #{isAccountNonExpired},
+            #{isAccountNonLocked},
+            #{isCredentialsNonExpired},
+            #{isEnabled}
         )
     </insert>
 
@@ -37,6 +47,23 @@
         WHERE id = #{id}
     </select>
 
+    <select id="readMember" parameterType="String" resultType="com.project.dto.MemberDTO">
+        SELECT idx AS idx,
+               id AS id,
+               password AS password,
+               name AS name,
+               nickname AS nickname,
+               pnum AS pnum,
+               address AS address,
+               isAccountNonExpired AS isAccountNonExpired,
+               isAccountNonLocked AS isAccountNonLocked,
+               isCredentialsNonExpired AS isCredentialsNonExpired,
+               isEnabled AS isEnabled
+        FROM member
+        WHERE 1=1
+        AND username = #{username}
+    </select>
+
     <select id="selectMember" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
         SELECT idx AS idx,
                id AS id,
@@ -45,8 +72,8 @@
                nickname AS nickname,
                pnum AS pnum,
                address AS address
-        FROM member
-        WHERE id = #{id}
+        FROM   member
+        WHERE  id = #{id}
     </select>
 
     <update id="updateMember" parameterType="com.project.dto.MemberDTO">
@@ -73,14 +100,15 @@
 
     <insert id="createAuthority" parameterType="org.springframework.security.core.GrantedAuthority">
         INSERT INTO authority (
-            id,
-            auth,
+            username,
+            auth
         ) VALUES
         <foreach item="authority" index = "index" collection="authorities" separator=",">
-            (#{id}, #{authority.role})
+            (#{username}, #{authority.role})
         </foreach>
         ON DUPLICATE KEY
         UPDATE
-        id = #{id}
+        username = #{username}
     </insert>
+
 </mapper>

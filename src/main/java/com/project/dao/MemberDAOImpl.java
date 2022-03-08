@@ -26,9 +26,6 @@ public class MemberDAOImpl implements MemberDAO
     @Autowired
     SqlSession sqlSession;
 
-//    @Autowired
-//    BCryptPasswordEncoder passwordEncoder;
-
 
     @Override
     public void createAuthorities(MemberDTO member) throws Exception {
@@ -36,8 +33,8 @@ public class MemberDAOImpl implements MemberDAO
     }
 
     @Override
-    public List<GrantedAuthority>readAuthorities(String id) throws Exception {
-        return sqlSession.selectOne("readAuthorities", id);
+    public List<GrantedAuthority>readAuthorities(String username) throws Exception {
+        return sqlSession.selectOne("readAuthorities", username);
     }
 
 
@@ -76,5 +73,9 @@ public class MemberDAOImpl implements MemberDAO
         return result;
     }
 
+    @Override
+    public MemberDTO readMember(String username) throws Exception {
+        return sqlSession.selectOne("readMember", username);
+    }
 
 }

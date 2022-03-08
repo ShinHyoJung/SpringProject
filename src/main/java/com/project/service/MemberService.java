@@ -2,7 +2,9 @@ package com.project.service;
 
 import com.project.dto.MemberDTO;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Collection;
 
@@ -17,7 +19,9 @@ import java.util.Collection;
 
 public interface MemberService extends UserDetailsService
 {
-   Collection<GrantedAuthority> getAuthorities(String id)  throws Exception;
+   UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+
+   Collection<GrantedAuthority> getAuthorities(String username)  throws Exception;
 
    void createAuthorities(MemberDTO member) throws Exception;
 
@@ -33,4 +37,5 @@ public interface MemberService extends UserDetailsService
 
    int checkMember(MemberDTO member) throws Exception;
 
+   MemberDTO readMember(String username) throws Exception;
 }
