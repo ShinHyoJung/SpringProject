@@ -24,6 +24,8 @@
         <property name="contentType" value="text/html; charset=UTF-8"/>
     </bean>
 
+    <security:global-method-security secured-annotations="enabled"/>
+
     <mvc:default-servlet-handler/>
 
 </beans>

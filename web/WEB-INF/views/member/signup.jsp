@@ -9,21 +9,57 @@
 <html>
 <head>
     <title>회원가입</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 
 <body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">홈</a>
+
+        <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/list">게시판</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<h1>회원 가입</h1>
-    <form name="signupForm" action="/Signup" method="post" >
-        <input id="id" type="text" name="id" placeholder="아이디"/> <button type="button" id="check" onclick="idCheck()" value=0>아이디 중복체크</button><br> <br>
-        <input type="text" name="password" placeholder="비밀번호"/> <br><br>
-        <input type="text" name="name" placeholder="이름"/> <br><br>
-        <input type="text" name="nickname" placeholder="닉네임"/> <br><br>
-        <input type="text" name="pnum" placeholder="전화번호"/> <br> <br>
-        <input type="text" name="address" placeholder="주소"/> <br> <br>
-        <button type="button" onclick="signup()">가입하기</button>
+
+    <form name="signupForm" style="width:50%; margin-left: 700px;"action="/Signup" method="post" >
+        <h1>회원 가입</h1> <br>
+        <div class="form-group">
+            <label for="id">아이디</label>
+            <input id="id" class="form-control" style="width:30%;" type="text" name="id" placeholder="아이디를 입력해주세요."/> <button class="btn btn-default" type="button" id="check" onclick="idCheck()" value=0>아이디 중복체크</button>
+        </div><br>
+        <div class="form-group" >
+            <label for="password">비밀번호</label>
+            <input id= "password" type="text" class="form-control" style="width:50%;" name="password" placeholder="비밀번호를 입력해주세요."/> <br><br>
+        </div>
+        <div class="form-group">
+            <label for="name">이름</label>
+            <input id= "name" type="text" class="form-control" style="width:50%;" name="name" placeholder="이름을 입력해주세요."/>
+        </div>    <br>
+        <div class="form-group">
+            <label for="nickname">닉네임</label>
+            <input id= "nickname" type="text" class="form-control" style="width:50%;" name="nickname" placeholder="닉네임을 입력해주세요."/>
+        </div> <br>
+        <div class="form-group">
+            <label for="pnum">전화번호</label>
+            <input id="pnum" type="text" class="form-control" style="width:50%;" name="pnum" placeholder="전화번호를 입력해주세요."/> <br> <br>
+        </div>
+        <div class="form-group">
+            <label for="address">주소</label>
+            <input id="address" type="text" class= "form-control" style="width:50%;" name="address" placeholder="주소를 입력해주세요."/>
+        </div>    <br>
+        <div class="form-group">
+        <button class="btn btn-default" type="button" onclick="signup()">가입하기</button>
+        </div>
     </form>
 
+<a href="/" style="margin-left: 700px;">홈으로</a>
 <script>
 
     function idCheck() {

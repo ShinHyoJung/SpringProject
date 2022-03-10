@@ -9,24 +9,55 @@
 <html>
 <head>
     <title>회원정보</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
-<h1>회원정보</h1>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">홈</a>
 
-<form name="updateForm" action="/updateInfo" method="post">
-    아이디 <input name="id" value="${user.id}" readonly="readonly"> <br><br>
-    비밀번호 <input type="password" name="password"><br><br>
-    이름 <input name="name" value="${user.name}"><br><br>
-    닉네임<input name="nickname" value="${user.nickname}"><br><br>
-    전화번호 <input name="pnum" value="${user.pnum}"><br><br>
-    주소 <input name="address" value="${user.address}"><br><br>
-    <button type="button" onclick="update()">수정 </button>
+        <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/list">게시판</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<form name="updateForm" style="width: 20%; margin-left: 700px;" action="/updateInfo" method="post">
+    <h1>회원정보</h1>
+    <div class="form-group">
+        <label for="id">아이디</label>
+        <input id= "id" class="form-control" name="id" value="${user.id}" readonly="readonly">
+    </div>
+    <div class="form-group">
+        <label for="password">비밀번호</label>
+        <input id="password" class="form-control" type="password" name="password">
+    </div>
+    <div class="form-group">
+        <label for="name">이름</label>
+        <input id="name" class="form-control" name="name" value="${user.name}">
+    </div>
+    <div class="form-group">
+        <label for="nickname">닉네임</label>
+        <input id = "nickname" class="form-control" name="nickname" value="${user.nickname}">
+    </div>
+    <div class="form-group">
+        <label for="pnum">전화번호</label>
+        <input id="pnum" class="form-control" name="pnum" value="${user.pnum}">
+    </div>
+    <div class="form-group">
+        <label for="address">주소</label>
+        <input id = "address" class="form-control" name="address" value="${user.address}">
+    </div>
+    <button class= "btn btn-default" type="button" onclick="update()">수정 </button>
 </form>
 
 
 <a id= "quit" href="/quitSignup"></a>
-<button type="button" onclick="quitSignup()">회원탈퇴</button>
-<a href="/list">뒤로가기</a>
+<button class = "btn btn-default" style="margin-left: 1000px;" type="button" onclick="quitSignup()">회원탈퇴</button>
+<a href="/list" style="margin-left: 1100px;">뒤로가기</a>
 
 <script>
 

@@ -10,15 +10,26 @@
 <head>
     <title>게시글쓰기</title>
 
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 
 <body>
-<form name= "writeForm" method="post" action="/enroll" enctype="multipart/form-data">
-    <table>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">홈</a>
+
+        <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/list">게시판</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<form class="form-group" style="margin-left: 270px;width: 70%;" name= "writeForm" method="post" action="/enroll" enctype="multipart/form-data">
+    <table class="table table-bordered">
         <tr>
             <td>
-                제목 <textarea name="btitle" id="btitle" style="width:200px; height:30px; "></textarea>
+                제목 <textarea class="form-control" rows="1" name="btitle" id="btitle" style="height:30px; "></textarea>
             </td>
         <tr>
             <td>
@@ -26,7 +37,7 @@
             </td>
         <tr>
             <td>
-                 <textarea name="bcontent" style="width:200px; height:300px;"></textarea>
+                 <textarea class="form-control" rows="20" name="bcontent" style="height:300px;"></textarea>
             </td>
         <tr>
             <td>
@@ -34,12 +45,9 @@
             </td>
         </tr>
     </table>
-    <button type="button" onclick="enroll()">등록</button>
+    <button class="btn btn-default" type="button" onclick="enroll()">등록</button>
     <input type="hidden" value="${user.nickname}" name="bwriter">
     <input type="hidden" value="${user.idx}" name="idx">
-    <br><br>
-
-
     <a href="/list">뒤로가기</a>
 </form>
 

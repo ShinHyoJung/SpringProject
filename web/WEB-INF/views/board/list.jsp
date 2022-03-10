@@ -12,14 +12,9 @@
 <head>
     <title>게시판 목록</title>
     <style>
-        table {
-            margin-left: 120px;
-        }
-        .paging {
-            list-style: none;
-            display: inline-block;
-            margin: 0px 0 0 25px;
 
+        .navbar-right {
+            background-color: lightgray;
         }
 
         .paging li {
@@ -47,11 +42,26 @@
             margin-left: 100px;
         }
     </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<h1>게시판</h1>
-    <table>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js">
+</script>
+
+<div class="container-fluid">
+    <a class="navbar-brand" href="/">홈</a>
+
+    <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/list">게시판</a></li>
+        </ul>
+
+    </div>
+</div>
+
+
+
+    <table class="table table-hover" style="width:70%; margin-left: 300px;">
         <tr>
             <c:if test="${not empty page.cri.keyword}">
 
@@ -82,7 +92,7 @@
 
 <div class="paging_wrap">
     <div class="paging_area">
-        <ul id="paging" class="paging">
+        <ul id="paging" class="pagination" style="margin-left: 500px;">
             <!--이전 페이지 버튼-->
             <c:if test="${page.prev}">
                 <li class="paging_btn prev"><a class="page" href="/list?pageNum=${page.startPage-1}&keyword=${page.cri.keyword}&type=${page.cri.type}" > < </a></li>
@@ -112,26 +122,30 @@
         <input type="hidden" name="type" value="${page.cri.type}">
     </form>
 
-    <div class="search_wrap">
-        <div class="search_area">
-            <select id="type" name="type">
+    <form class="navbar-form navbar-left" style="margin-left: 700px;" role="search">
+        <div class="form-group search_area">
+            <select class="form-control" style="width:30%;" id="type" name="type">
                 <option value="" <c:out value="${page.cri.type == null?'selected':''}"/> >--</option>
                 <option value="T" <c:out value="${page.cri.type eq 'T'?'selected':''}"/> >제목</option>
                 <option value="C" <c:out value="${page.cri.type eq 'C'?'selected':''}"/> >내용</option>
                 <option value="TC" <c:out value="${page.cri.type eq 'TC'?'selected':''}"/>>제목 + 내용</option>
             </select>
-            <input id="keyword" type="text" name="keyword" onkeyup="enterSearch()" value="${page.cri.keyword}">
-            <button type="button" onclick="Search()">검색</button>
+            <input class="form-control" style="width:65%;" id="keyword" type="text" name="keyword" onkeyup="enterSearch()" value="${page.cri.keyword}">
         </div>
-    </div>
+            <button class="btn btn-default" type="button" onclick="Search()">검색</button>
+    </form>
+
 
 <br><br>
-    <button type="button" onclick="location.href='/write'">글쓰기</button> <br> <br>
-    <button type="button" onclick="Logout()">로그아웃</button>
+<button class="btn btn-default" style="margin-left: -790px;" type="button" onclick="location.href='/write'">글쓰기</button> <br> <br>
+
+    <form class="navbar-form navbar-right" style="width: 101%;">
+        <div style="margin-left: 1600px;">
+    <button class = "btn btn-default navbar-btn" type="button" onclick="Logout()">로그아웃</button>
     <a id="logout" href="/Logout"></a>
-    <a href="/info">회원정보</a>
-
-
+    <a class= "btn btn-default" href="/info">회원정보</a>
+        </div>
+    </form>
 <script>
 
         function Logout() {

@@ -9,8 +9,21 @@
 <html>
 <head>
     <title>게시글 수정</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">홈</a>
+
+        <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/list">게시판</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
     <form name="updateForm" method="post" action="/update">
         <table>
             <tr>

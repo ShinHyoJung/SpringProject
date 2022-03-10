@@ -52,8 +52,8 @@ public class MemberDAOImpl implements MemberDAO
     }
 
     @Override
-    public MemberDTO selectMember(String id) throws Exception {
-        return sqlSession.selectOne("selectMember", id);
+    public MemberDTO selectMember(int idx) throws Exception {
+        return sqlSession.selectOne("selectMember", idx);
 
     }
 
@@ -63,8 +63,8 @@ public class MemberDAOImpl implements MemberDAO
     }
 
     @Override
-    public void deleteMember(String id) throws Exception {
-        sqlSession.delete("deleteMember", id);
+    public void deleteMember(int idx) throws Exception {
+        sqlSession.delete("deleteMember", idx);
     }
 
     @Override

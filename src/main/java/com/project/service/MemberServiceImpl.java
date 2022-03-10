@@ -36,7 +36,6 @@ public class MemberServiceImpl implements MemberService
             e.printStackTrace();
         }
 
-
         return member;
     }
 
@@ -62,11 +61,11 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
-    public MemberDTO selectMember(String id) throws Exception {
+    public MemberDTO selectMember(int idx) throws Exception {
        MemberDTO login = null;
 
        try{
-           login = memberDAO.selectMember(id);
+           login = memberDAO.selectMember(idx);
        } catch(Exception e) {
            e.printStackTrace();
        }
@@ -80,8 +79,8 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
-    public void deleteMember(String id) throws Exception {
-        memberDAO.deleteMember(id);
+    public void deleteMember(int idx) throws Exception {
+        memberDAO.deleteMember(idx);
     }
 
     @Override

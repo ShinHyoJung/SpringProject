@@ -60,12 +60,11 @@ public class BoardController {
         return "board/list";
     }
 
-    @Secured("ROLE_USER")
     @RequestMapping("/write") // 게시글 쓰기
     public String writeBoard(MemberDTO member, Model model, HttpSession session) throws Exception {
 
-        String id = (String)session.getAttribute("id");
-        MemberDTO user = memberService.selectMember(id);
+        int idx = (int)session.getAttribute("idx");
+        MemberDTO user = memberService.selectMember(idx);
         model.addAttribute("user", user);
         return "board/write";
     }
@@ -96,11 +95,9 @@ public class BoardController {
 
         BoardDTO board = boardService.selectBoard(bno); //게시글
         model.addAttribute("board", board);
-        String id = (String)session.getAttribute("id");
-        MemberDTO user = memberService.selectMember(id);
+        int idx = (int)session.getAttribute("idx");
+        MemberDTO user = memberService.selectMember(idx);
 
-
-        int idx = (Integer)session.getAttribute("idx");
         HeartDTO heart = heartService.selectHeart(bno, idx);
 
 

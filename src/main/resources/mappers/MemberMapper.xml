@@ -44,7 +44,7 @@
                password AS password,
                idx AS idx
         FROM member
-        WHERE id = #{id}
+        WHERE username = #{username}
     </select>
 
     <select id="readMember" parameterType="String" resultType="com.project.dto.MemberDTO">
@@ -73,7 +73,7 @@
                pnum AS pnum,
                address AS address
         FROM   member
-        WHERE  id = #{id}
+        WHERE  idx = #{idx}
     </select>
 
     <update id="updateMember" parameterType="com.project.dto.MemberDTO">
@@ -84,12 +84,12 @@
                nickname = #{nickname},
                pnum = #{pnum},
                address = #{address}
-        WHERE  id = #{id}
+        WHERE  idx = #{idx}
     </update>
 
     <delete id="deleteMember" parameterType="com.project.dto.MemberDTO">
         DELETE FROM member
-        WHERE   id = #{id}
+        WHERE   idx = #{idx}
     </delete>
 
     <select id="checkMember" parameterType="com.project.dto.MemberDTO" resultType="int">

@@ -25,11 +25,11 @@ public interface MemberDAO
 
         MemberDTO loginMember(MemberDTO member) throws Exception;
 
-        MemberDTO selectMember(String id) throws Exception;
+        MemberDTO selectMember(int idx) throws Exception;
 
         void updateMember(MemberDTO member) throws Exception;
 
-        void deleteMember(String id) throws Exception;
+        void deleteMember(int idx) throws Exception;
 
         int checkMember(MemberDTO member) throws Exception;
 

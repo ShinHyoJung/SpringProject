@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 @org.springframework.stereotype.Controller
 public class MemberController {
 
-    private Logger logger = LoggerFactory.getLogger(Controller.class);
+    private Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     @Autowired // 의존성주입방법
     private MemberService memberService;
@@ -99,9 +99,9 @@ public class MemberController {
     @RequestMapping("/info") // 회원정보 조회
     public String selectInfo(MemberDTO member, HttpSession session, Model model) throws Exception {
 
-        String id = (String)session.getAttribute("id");
+        int idx = (int) session.getAttribute("idx");
         // 세션 아이디 애트리뷰트에서 아이디값을 가져옴
-        MemberDTO user = memberService.selectMember(id);
+        MemberDTO user = memberService.selectMember(idx);
         model.addAttribute("user", user);
 
         return "member/info";
@@ -119,9 +119,9 @@ public class MemberController {
     @RequestMapping("/quitSignup") // 회원탈퇴
     public String quitSignup(MemberDTO member, HttpSession session) throws Exception {
 
-        String id = (String)session.getAttribute("id");
+        int idx = (int)session.getAttribute("idx");
 
-        memberService.deleteMember(id);
+        memberService.deleteMember(idx);
         return "home";
     }
 

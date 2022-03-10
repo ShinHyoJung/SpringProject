@@ -12,19 +12,24 @@
 <head>
     <title>게시글읽기</title>
 
-    <style>
-        .read
-        {
-            border: 1px solid #444444;
-            width:300px;
-            height:50px;
-        }
-
-    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">홈</a>
+
+        <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/list">게시판</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <table class="read">
+    <table class="table table-bordered" style="width: 70%; margin-left: 300px;">
         <tr>
             <td class="read">제목: <c:out value="${board.btitle}" escapeXml="true"/></td>
         <tr>
@@ -48,6 +53,8 @@
             </form>
         </tr>
     </table>
+
+<div style="margin-left: 300px;">
 <svg class="heart" id="fill_heart" style="display: none;" heart_no = "${heart.hno}" idx = "${user.idx}" heart_idx = "${heart.idx}" board_no = "${board.bno}" check="${heart.hcheck}" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 512 512">
     <path d="M0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84.02L256 96L267.1
     84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1
@@ -61,30 +68,33 @@
     44.1C164.1 36.51 211.4 51.37 244 84C243.1 84 244 84.01 244 84L244 84zM255.1 163.9L210.1 117.1C188.4 96.28 157.6 86.4
     127.3 91.44C81.55 99.07 48 138.7 48 185.1V190.9C48 219.1 59.71 246.1 80.34 265.3L256
     429.3L431.7 265.3C452.3 246.1 464 219.1 464 190.9V185.1C464 138.7
-430.4 99.07 384.7 91.44C354.4 86.4 323.6 96.28 301.9 117.1L255.1 163.9z"/></svg>
-    <div id="heart">${board.bheart} <br>
+430.4 99.07 384.7 91.44C354.4 86.4 323.6 96.28 301.9 117.1L255.1 163.9z"/>   </svg>
+
+    <div id="heart">${board.bheart}</div> </div> <br>
 
     <c:if test="${board.idx eq user.idx}">
-    <button onclick="location.href='/modify/${board.bno}'">수정</button>
+    <div style="margin-left: 300px;">
+    <button class="btn btn-default"  onclick="location.href='/modify/${board.bno}'">수정</button>
 
     <form name = "removeForm" method="post" action="/delete">
         <input type="hidden" value="${board.bno}" name="bno">
-        <button type="button" onclick="remove()">삭제</button>
+        <button class="btn btn-default" type="button" onclick="remove()">삭제</button>
     </form>
-    </c:if>
     </div>
-    <a href="/list">목록</a> <br>
+    </c:if>
 
-    <form name="commentForm" method="post" action="/writeComment">
-        <textarea id="text" name="ctext" onkeyup="enterComment()"></textarea>
+    <a href="/list" style="margin-left: 300px;">목록</a> <br>
+
+    <form name="commentForm" style="margin-left: 300px;"  method="post" action="/writeComment">
+        <textarea class="form-control" style="width: 40%;" id="text" name="ctext" onkeyup="enterComment()"></textarea>
         <input type="hidden" name="cwriter" value="${user.nickname}">
         <input type="hidden" name="bno" value="${board.bno}">
         <input type="hidden" name="idx" value="${user.idx}">
-        <button type="button" onclick="enroll()">등록</button>
+        <button class= "btn btn-default" type="button" onclick="enroll()">등록</button>
     </form>
 
 <c:if test="${not empty comments}">
-    <table>
+    <table class="table" style="width: 50%; margin-left: 300px;">
         <thead>
         <th>작성자</th>
         <th>내용</th>
@@ -92,17 +102,16 @@
         <tbody id="tbody_comment">
         <c:forEach items="${comments}" var="comments">
             <tr>
-                <td>${comments.cwriter}</td>
+                <td style="width:10%;">${comments.cwriter}</td>
 
                 <td class="comment_content" user_idx="${user.idx}" comments_idx = "${comments.idx}" style="display: block;">${comments.ctext}</td>
-                <td class="modify_comment" style="display: none;"><textarea >${comments.ctext}</textarea></td>
+                <td class="modify_comment" style="display: none;"><textarea class="form-control" style="width: 90%;">${comments.ctext}</textarea></td>
                 <c:if test="${user.idx eq comments.idx}">
-                <td>
-                    <button class="select_comment" comment_idx = "${comments.idx}" style="display: block;">수정</button>
-                    <button class="update_comment" comment_cno = "${comments.cno}" comment_bno="${comments.bno}" style="display: none;">등록</button>
-                </td>
-                <td>
-                    <button class="delete_comment" comment_idx="${comments.idx}" value="${comments.cno}" style="display: block;">삭제</button>
+                <td style="width:10%;">
+                    <button class="btn btn-default select_comment" comment_idx = "${comments.idx}" style="display: block;">수정</button>
+                    <button class="btn btn-default update_comment" comment_cno = "${comments.cno}" comment_bno="${comments.bno}" style="display: none;">등록</button>
+
+                    <button class="btn btn-default delete_comment" comment_idx="${comments.idx}" value="${comments.cno}" style="display: block;">삭제</button>
                 </td>
                 </c:if>
             <tr>

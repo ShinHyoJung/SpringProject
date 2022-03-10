@@ -14,6 +14,9 @@ import java.util.Collection;
  */
 public class MemberDTO implements UserDetails {
 
+
+    private static final long serialVersionUID = 1L;
+
     private int idx;
     private String id;
     private String name;
@@ -80,6 +83,7 @@ public class MemberDTO implements UserDetails {
         this.username = username;
     }
 
+    @Override
     public String getPassword()
     {
         return password;
@@ -99,6 +103,7 @@ public class MemberDTO implements UserDetails {
     {
         this.pnum = pnum;
     }
+
     public String getAddress()
     {
         return address;
@@ -153,6 +158,7 @@ public class MemberDTO implements UserDetails {
         isAccountNonLocked = accountNonLocked;
     }
 
+    @Override
     public boolean isCredentialsNonExpired() {
         return isCredentialsNonExpired;
     }
@@ -169,6 +175,7 @@ public class MemberDTO implements UserDetails {
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
     }
+
     @Override
     public String toString() {
         return "MemberDTO [id=" + id + ", password=" + password + ", name=" + name + ", pnum=" + pnum + ", address=" + address +
