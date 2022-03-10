@@ -1,19 +1,9 @@
 package com.project.controller;
 
-import com.project.dto.BoardDTO;
-import com.project.dto.Criteria;
-import com.project.dto.MemberDTO;
-import com.project.dto.PagingDTO;
-import com.project.service.BoardService;
-import com.project.service.MemberService;
-import org.mariadb.jdbc.internal.logging.Logger;
-import org.mariadb.jdbc.internal.logging.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
 
 /**
@@ -26,7 +16,7 @@ import java.util.List;
 @org.springframework.stereotype.Controller
 public class Controller
 {
-    private Logger logger = LoggerFactory.getLogger(Controller.class);
+    private static final Logger logger =  LogManager.getLogger(Controller.class);
 
     @RequestMapping("/") // 홈
     public String Home(Model model) {
