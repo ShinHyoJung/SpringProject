@@ -24,20 +24,20 @@
         </div>
     </div>
 </nav>
-    <form name="updateForm" method="post" action="/update">
-        <table>
+    <form class="form-group" style="margin-left: 270px;width: 70%;" name="updateForm" method="post" action="/update">
+        <table class="table table-bordered">
             <tr>
-                <td style="width:200px; height:30px;"><textarea name="btitle" style="width:200px; height:30px;">${board.btitle}</textarea></td>
+                <td style="width:200px; height:30px;"><textarea class="form-control" rows="20" name="btitle" style="height:30px; ">${board.btitle}</textarea></td>
             <tr>
                 <td style="width:200px; height:30px;">${board.bwriter}</td>
             <tr>
-            <td style="width:200px; height:300px;"><textarea name="bcontent" style="width:200px; height:300px;">${board.bcontent}</textarea></td>
+            <td style="width:200px; height:300px;"><textarea class="form-control" rows="20" name="bcontent" style="height:300px;">${board.bcontent}</textarea></td>
             <tr>
                 <td style="width:200px; height:30px;">${board.bhit}</td>
         </table>
         <input type="hidden" name="bno" value="${board.bno}">
         <input type="hidden" name="idx" value="${board.idx}">
-        <button type="button" onclick="restore()">저장</button>
+        <button class="btn btn-default" type="button" onclick="restore()">저장</button>
     </form>
 </body>
 

@@ -13,8 +13,20 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
-<table>
-    <h1>${writer}</h1>
+
+<div class="container-fluid">
+    <a class="navbar-brand" href="/">홈</a>
+
+    <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/list">게시판</a></li>
+        </ul>
+
+    </div>
+</div>
+
+<table class="table table-hover" style="width:70%; margin-left: 300px;" >
+    <h1 style="margin-left: 300px;">${writer}</h1>
     <tr>
         <th>글번호</th>
         <th>제목</th>
@@ -32,6 +44,6 @@
     </c:forEach>
 </table>
 
-<a href="/list">목록</a>
+<a href="/list" style="margin-left: 305px;">목록</a>
 </body>
 </html>

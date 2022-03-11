@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>게시판 목록</title>
@@ -58,8 +58,6 @@
 
     </div>
 </div>
-
-
 
     <table class="table table-hover" style="width:70%; margin-left: 300px;">
         <tr>
@@ -125,7 +123,6 @@
     <form class="navbar-form navbar-left" style="margin-left: 700px;" role="search">
         <div class="form-group search_area">
             <select class="form-control" style="width:30%;" id="type" name="type">
-                <option value="" <c:out value="${page.cri.type == null?'selected':''}"/> >--</option>
                 <option value="T" <c:out value="${page.cri.type eq 'T'?'selected':''}"/> >제목</option>
                 <option value="C" <c:out value="${page.cri.type eq 'C'?'selected':''}"/> >내용</option>
                 <option value="TC" <c:out value="${page.cri.type eq 'TC'?'selected':''}"/>>제목 + 내용</option>
@@ -137,6 +134,8 @@
 
 
 <br><br>
+
+
 <button class="btn btn-default" style="margin-left: -790px;" type="button" onclick="location.href='/write'">글쓰기</button> <br> <br>
 
     <form class="navbar-form navbar-right" style="width: 101%;">

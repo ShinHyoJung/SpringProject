@@ -51,6 +51,7 @@
         <label for="address">주소</label>
         <input id = "address" class="form-control" name="address" value="${user.address}">
     </div>
+    <input type="hidden" name = "idx" value="${user.idx}">
     <button class= "btn btn-default" type="button" onclick="update()">수정 </button>
 </form>
 
@@ -65,6 +66,7 @@
 
         if (confirm("수정하시겠습니까?")) {
             updateForm.submit();
+            alert("수정되었습니다.");
         }else {
         }
     }

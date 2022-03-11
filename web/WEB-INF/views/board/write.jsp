@@ -25,6 +25,7 @@
         </div>
     </div>
 </nav>
+
 <form class="form-group" style="margin-left: 270px;width: 70%;" name= "writeForm" method="post" action="/enroll" enctype="multipart/form-data">
     <table class="table table-bordered">
         <tr>

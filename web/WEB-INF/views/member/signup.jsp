@@ -62,6 +62,33 @@
 <a href="/" style="margin-left: 700px;">홈으로</a>
 <script>
 
+    var form = document.signupForm;
+    let signupCheck = 0;
+
+    //정보입력 유효성 체크
+    function infoCheck() {
+
+        if(!form.id.value && !form.password.value && !form.name.value && !form.nickname.value && !form.pnum.value && !form.address.value) {
+            alert("정보를 입력해주세요.");
+        } else if(!form.password.value) {
+            alert("비밀번호를 입력해주세요.");
+        } else if(!form.name.value) {
+            alert("이름을 입력해주세요.");
+        } else if(!form.nickname.value) {
+            alert("닉네임을 입력해주세요.");
+        } else if(!form.pnum.value) {
+            alert("전화번호를 입력해주세요.");
+        } else if(!form.address.value) {
+            alert("주소를 입력해주세요.");
+        } else if (!form.id.value) {
+            alert("아이디를 입력해주세요.");
+        } else if (form.id.value && form.password.value&& form.name.value&& form.nickname.value&& form.pnum.value && form.address.value) {
+            signupCheck =1;
+        }
+
+    }
+
+    // 아이디 중복체크
     function idCheck() {
 
         const id = document.getElementById("id").value;
@@ -89,11 +116,15 @@
 
         const check = document.getElementById("check").value;
 
-        if(check == 1) {
+        infoCheck();
+
+        if(signupCheck==1 && check == 1) {
             signupForm.submit();
             alert("가입이 완료되었습니다.");
-        } else {
+        } else if(signupCheck==1 && check ==0) {
             alert("아이디 중복체크를 해주세요.");
+        } else if(signupCheck ==0 && check==1) {
+            alert("정보를 입력해주세요.");
         }
 
     }

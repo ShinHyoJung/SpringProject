@@ -19,11 +19,11 @@ import java.util.*;
 public class FileUtils {
     private static final String filePath = "D:\\file\\"; // 상수로 값이 고정됨
 
-    public List<Map<String, Object>> parseInsertFileInfo(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception {
+    public List<Map<String, Object>> parseInsertFileInfo(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception { // 스프링이 제공하는 파일 업로드 인터페이스
 
         Iterator<String> iterator = mpRequest.getFileNames(); // 리스트를 저장하기위한 컬렉션 프레임워크 인터페이스
 
-        MultipartFile multipartFile = null;
+        MultipartFile multipartFile = null; // 사용자가 업로드한 파일을 핸들러에서 손쉽게 다룰 수 있도록 도와주는 handler 매개변수 중 하나
         String originalFileName = null;
         String originalFileExtension = null;
         String storedFileName = null;
@@ -35,7 +35,7 @@ public class FileUtils {
 
         File file = new File(filePath);
         if(file.exists() == false) {
-            file.mkdirs(); //파일이 존재하지않으면 경로에 디렉토리만듬
+            file.mkdirs(); // 디렉토리가 존재하지않으면 경로에 디렉토리만듬
         }
 
         while(iterator.hasNext()) { // 값이 없어서 false가 나올때까지 값을 계속 받음

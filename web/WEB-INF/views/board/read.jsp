@@ -105,11 +105,11 @@
                 <td style="width:10%;">${comments.cwriter}</td>
 
                 <td class="comment_content" user_idx="${user.idx}" comments_idx = "${comments.idx}" style="display: block;">${comments.ctext}</td>
-                <td class="modify_comment" style="display: none;"><textarea class="form-control" style="width: 90%;">${comments.ctext}</textarea></td>
+                <td class="modify_comment" style="display: none;"><textarea id = "comment_ctext" class="form-control" style="width: 90%;">${comments.ctext}</textarea></td>
                 <c:if test="${user.idx eq comments.idx}">
                 <td style="width:10%;">
                     <button class="btn btn-default select_comment" comment_idx = "${comments.idx}" style="display: block;">수정</button>
-                    <button class="btn btn-default update_comment" comment_cno = "${comments.cno}" comment_bno="${comments.bno}" style="display: none;">등록</button>
+                    <button class="btn btn-default update_comment" type="button" onclick="update()" comment_cno = "${comments.cno}" comment_bno="${comments.bno}" style="display: none;">등록</button>
 
                     <button class="btn btn-default delete_comment" comment_idx="${comments.idx}" value="${comments.cno}" style="display: block;">삭제</button>
                 </td>
@@ -147,7 +147,12 @@
     }
 
     function enroll() {
-        commentForm.submit();
+        
+        if(!commentForm.text.value) {
+            alert("내용을 입력해주세요.");
+        }else if(commentForm.text.value) {
+            commentForm.submit();
+        }
     }
 
     $(".delete_comment").on("click", function () { // 댓글 삭제
@@ -173,25 +178,34 @@
         $(this).parent().parent().find(".update_comment").css("display", "block");
     });
 
-    $(".update_comment").on("click", function () { // 수정
-        let comment_cno = $(this).parent().parent().find('.update_comment').attr("comment_cno");
-        let comment_content = $(this).parent().parent().find('td > textarea').val();
-        let comment_bno = $(this).parent().parent().find('.update_comment').attr("comment_bno");
+    function update() {
 
-        $.ajax({
-            method: "post",
-            url: "/updateComment",
-            data: {cno: comment_cno, ctext: comment_content, bno: comment_bno}
-        })
-        .done (data=> {
-            $('#tbody_comment').html(html); // 선택 요소 안의 내용을 가져오거나 바꿈
+        var comment_text = $("#comment_ctext").val();
+
+        if(!comment_text) {
+            alert("수정할 내용을 입력해주세요.");
+        } else if (comment_text) {
+            $(".update_comment").on("click", function () { // 수정
+
+            let comment_cno = $(this).parent().parent().find('.update_comment').attr("comment_cno");
+            let comment_content = $(this).parent().parent().find('td > textarea').val();
+            let comment_bno = $(this).parent().parent().find('.update_comment').attr("comment_bno");
+
+            $.ajax({
+                method: "post",
+                url: "/updateComment",
+                data: {cno: comment_cno, ctext: comment_content, bno: comment_bno}
+            })
+                .done(data => {
+                    $('#tbody_comment').html(html); // 선택 요소 안의 내용을 가져오거나 바꿈
+                });
         });
-    });
 
-    $(".update_comment").on("click", function () { // 댓글 수정후, 새로고침
-       location.reload();
-    });
-
+            $(".update_comment").on("click", function () { // 댓글 수정후, 새로고침
+                location.reload();
+            });
+        }
+    }
 
     $("#empty_heart").on("click", function () { // 좋아요
 

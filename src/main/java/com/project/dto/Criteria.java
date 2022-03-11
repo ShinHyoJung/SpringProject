@@ -16,7 +16,7 @@ public class Criteria {
     private int pageNum;
     // 한 페이지당 보여질 게시물 갯수
     private int amount;
-    // 스킵할 게시물의 수 (pageNum-1) * amount)
+    // 스킵할 게시물의 수 ((pageNum-1) * amount)
     private int skip;
     // 검색 키워드
     private String keyword;

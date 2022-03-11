@@ -2,8 +2,8 @@ package com.project.controller;
 
 import com.project.dto.MemberDTO;
 import com.project.service.MemberService;
-import org.mariadb.jdbc.internal.logging.Logger;
-import org.mariadb.jdbc.internal.logging.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -23,10 +23,10 @@ import javax.servlet.http.HttpSession;
  * Comments:
  */
 
-@org.springframework.stereotype.Controller
+@Controller // 컨트롤러의 역할을 수행한다고 명시해주는 어노테이션
 public class MemberController {
 
-    private Logger logger = LoggerFactory.getLogger(MemberController.class);
+    private final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
     @Autowired // 의존성주입방법
     private MemberService memberService;
@@ -35,13 +35,13 @@ public class MemberController {
     public String Login() {
 
         logger.info("Login Page");
+
         return "member/login";
     }
 
     @RequestMapping(value="/doLogin", method= RequestMethod.POST) //로그인 처리
     public String doLogin(MemberDTO member, HttpSession session) throws Exception {
         logger.info("Login");
-
         //웹에 접근한 사용자 식별하는 방법
         MemberDTO login = memberService.loginMember(member);
 

@@ -5,6 +5,8 @@ import com.project.service.BoardService;
 import com.project.service.CommentService;
 import com.project.service.HeartService;
 import com.project.service.MemberService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -12,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -35,7 +36,7 @@ import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 @Controller
 public class BoardController {
 
-    @Autowired // 의존성주입방법
+    @Autowired // 의존성주입방법 (속성, 메소드, setter을 자동으로 주입)
     private MemberService memberService;
 
     @Autowired
@@ -47,10 +48,13 @@ public class BoardController {
     @Autowired
     private HeartService heartService;
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     @RequestMapping(value="/list", method= RequestMethod.GET) // 게시판 목록
     public String List(Criteria cri, Model model) throws Exception {
 
+        logger.info("board");
         List<BoardDTO> list= boardService.viewBoard(cri);
         model.addAttribute("list", list);
 
@@ -139,7 +143,7 @@ public class BoardController {
     }
 
     @RequestMapping(value="/search/{bwriter}", method=RequestMethod.GET) // 게시글 작성자 검색
-    public String searchBoard(@PathVariable("bwriter")String bwriter, Model model) throws Exception {
+    public String searchBoard(@PathVariable("bwriter")String bwriter, Model model) throws Exception { //
 
         List<BoardDTO> result = boardService.searchBoard(bwriter);
         String writer = bwriter;
