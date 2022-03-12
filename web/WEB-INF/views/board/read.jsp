@@ -147,10 +147,12 @@
     }
 
     function enroll() {
-        
+        commentForm.text.value = commentForm.text.value.trim();
+
         if(!commentForm.text.value) {
             alert("내용을 입력해주세요.");
         }else if(commentForm.text.value) {
+
             commentForm.submit();
         }
     }
@@ -181,10 +183,12 @@
     function update() {
 
         var comment_text = $("#comment_ctext").val();
+        commentForm.text.value = commentForm.text.value.trim();
 
         if(!comment_text) {
             alert("수정할 내용을 입력해주세요.");
         } else if (comment_text) {
+
             $(".update_comment").on("click", function () { // 수정
 
             let comment_cno = $(this).parent().parent().find('.update_comment').attr("comment_cno");

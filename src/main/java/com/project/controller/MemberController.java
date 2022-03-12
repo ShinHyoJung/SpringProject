@@ -45,21 +45,24 @@ public class MemberController {
         //웹에 접근한 사용자 식별하는 방법
         MemberDTO login = memberService.loginMember(member);
 
+        // 아이디가 틀렸을때
+        if(login == null) {
+            return "redirect:/Login";
+        }
         // 로그인정보에서 id값 추출
         boolean passMatch = new BCryptPasswordEncoder().matches(member.getPassword(), login.getPassword());
 
-        if(login!=null && passMatch) {
+        if (login != null && passMatch) {
             session.setAttribute("login", login);
             String id = login.getId();
             int idx = login.getIdx();
             session.setAttribute("id", id);
             session.setAttribute("idx", idx);
             //세션에 로그인정보 애트리뷰트와 아이디 애트리뷰트 저장
-            return "redirect:/list";
+            return "redirect:/";
         } else { // 비밀번호가 틀렸습니다 알림창 구현
             return "redirect:/Login";
-        }// 아이디가 틀린경우 구현
-
+        }
     }
 
     @RequestMapping("/Logout") // 로그아웃

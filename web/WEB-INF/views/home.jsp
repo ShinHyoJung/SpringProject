@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
     <title>홈</title>
@@ -25,7 +27,9 @@
 
         <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-        
+                <c:if test="${not empty sessionScope.idx}">
+                <li class="active"><a href="/list">게시판</a></li>
+                </c:if>
             </ul>
         </div>
     </div>
@@ -33,9 +37,31 @@
 
 <form class="navbar-form navbar-right" style="width:101%;">
     <div style="margin-left: 1500px;">
-    <a class="btn btn-default navbar-btn" href="/Login">로그인</a>
-    <a class="btn btn-default navbar-btn" href="/beforeSignup">회원가입</a>
+    <c:choose>
+        <c:when test="${empty sessionScope.idx}">
+        <a class="btn btn-default navbar-btn" href="/Login">로그인</a>
+        <a class="btn btn-default navbar-btn" href="/beforeSignup">회원가입</a>
+        </c:when>
+        <c:otherwise>
+            <button class = "btn btn-default navbar-btn" type="button" onclick="Logout()">로그아웃</button>
+            <a id="logout" href="/Logout"></a>
+            <a class="btn btn-default navbar-btn" href="/info">회원정보</a>
+        </c:otherwise>
+    </c:choose>
     </div>
 </form>
+
+<script>
+
+    function Logout() {
+
+        if(confirm("로그아웃하시겠습니까?")) {
+            logout.click();
+        } else {
+        }
+
+    }
+
+</script>
 </body>
 </html>

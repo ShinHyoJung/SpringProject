@@ -19,7 +19,7 @@
 
         <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/list">게시판</a></li>
+
             </ul>
         </div>
     </div>
@@ -58,6 +58,8 @@
     }
 
     function loginChk() { // 로그인 유효성 검사
+        form.username.value = form.username.value.trim();
+        form.password.value = form.password.value.trim();
 
         if(!form.username.value) {
             alert("아이디를 입력해주세요.");

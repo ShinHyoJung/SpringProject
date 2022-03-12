@@ -20,7 +20,7 @@
 
         <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/list">게시판</a></li>
+
             </ul>
         </div>
     </div>
@@ -64,6 +64,7 @@
 
     var form = document.signupForm;
     let signupCheck = 0;
+
 
     //정보입력 유효성 체크
     function infoCheck() {
@@ -115,6 +116,14 @@
     function signup() {
 
         const check = document.getElementById("check").value;
+
+        // 공백제거
+        form.id.value = form.id.value.trim();
+        form.password.value = form.password.value.trim();
+        form.name.value = form.name.value.trim();
+        form.nickname.value = form.nickname.value.trim();
+        form.pnum.value = form.pnum.value.trim();
+        form.address.value = form.address.value.trim();
 
         infoCheck();
 

@@ -135,14 +135,23 @@
 
 <br><br>
 
-
+<c:if test="${not empty sessionScope.idx}">
 <button class="btn btn-default" style="margin-left: -790px;" type="button" onclick="location.href='/write'">글쓰기</button> <br> <br>
+</c:if>
 
     <form class="navbar-form navbar-right" style="width: 101%;">
         <div style="margin-left: 1600px;">
-    <button class = "btn btn-default navbar-btn" type="button" onclick="Logout()">로그아웃</button>
-    <a id="logout" href="/Logout"></a>
-    <a class= "btn btn-default" href="/info">회원정보</a>
+            <c:choose>
+            <c:when test="${not empty sessionScope.idx}">
+            <button class = "btn btn-default navbar-btn" type="button" onclick="Logout()">로그아웃</button>
+            <a id="logout" href="/Logout"></a>
+            <a class= "btn btn-default" href="/info">회원정보</a>
+            </c:when>
+            <c:otherwise>
+                <a class="btn btn-default navbar-btn" href="/Login">로그인</a>
+                <a class="btn btn-default navbar-btn" href="/beforeSignup">회원가입</a>
+            </c:otherwise>
+            </c:choose>
         </div>
     </form>
 <script>
