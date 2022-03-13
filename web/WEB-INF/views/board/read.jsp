@@ -42,6 +42,7 @@
             <td class="read">작성날짜: ${board.bdatetime}</td>
         <tr>
             <td class="read">업데이트날짜: ${board.bupdatetime}</td>
+        <c:if test="${not empty file}">
         <tr>
             <form name="downForm" method="post" action="/downFile" >
             <td class="read">파일
@@ -51,6 +52,7 @@
             </c:forEach>
             </td>
             </form>
+         </c:if>
         </tr>
     </table>
 
