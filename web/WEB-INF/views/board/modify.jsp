@@ -43,13 +43,34 @@
 
 <script>
 
+    var update_check = 0;
+
+    function check() {
+
+        updateForm.btitle.value = updateForm.btitle.value.trim();
+        updateForm.bcontent.value = updateForm.btitle.value.trim();
+
+        if(!updateForm.btitle.value) {
+            alert("제목을 입력해주세요.");
+            update_check = 0;
+        }else {
+            update_check =1;
+        }
+    }
+
     function restore() {
         if(confirm("저장하시겠습니까?")) {
-            updateForm.submit();
-            alert("저장이 완료되었습니다.");
-        } else {
+            check();
 
-        }
+                if(update_check ==0) {
+                    location.reload();
+                } else if(update_check==1) {
+                    updateForm.submit();
+                    alert("저장이 완료되었습니다.");
+                }
+            } else {
+
+            }
     }
 
 </script>

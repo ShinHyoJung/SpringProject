@@ -94,4 +94,8 @@ public class MemberServiceImpl implements MemberService
         return memberDAO.readMember(username);
     }
 
+    @Override
+    public MemberDTO findId(MemberDTO member) throws Exception {
+        return memberDAO.findId(member);
+    }
 }

@@ -78,4 +78,8 @@ public class MemberDAOImpl implements MemberDAO
         return sqlSession.selectOne("readMember", username);
     }
 
+    @Override
+    public MemberDTO findId(MemberDTO member) throws Exception {
+        return sqlSession.selectOne("findId", member);
+    }
 }

@@ -31,7 +31,11 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <table class="table table-bordered" style="width: 70%; margin-left: 300px;">
         <tr>
-            <td class="read">제목: <c:out value="${board.btitle}" escapeXml="true"/></td>
+            <td class="read">
+                <c:if test="${board.bpin ==1}">
+                    [공지]
+                </c:if>
+                <c:out value="${board.btitle}" escapeXml="true"/></td>
         <tr>
             <td class="read">작성자: ${board.bwriter}</td>
         <tr>
@@ -72,20 +76,23 @@
     429.3L431.7 265.3C452.3 246.1 464 219.1 464 190.9V185.1C464 138.7
 430.4 99.07 384.7 91.44C354.4 86.4 323.6 96.28 301.9 117.1L255.1 163.9z"/>   </svg>
 
-    <div id="heart">${board.bheart}</div> </div> <br>
+    <div style="display: inline-block; margin-left: 35px; margin-top: -20px;" id="heart">${board.bheart}</div> </div> <br>
 
     <c:if test="${board.idx eq user.idx}">
-    <div style="margin-left: 300px;">
-    <button class="btn btn-default"  onclick="location.href='/modify/${board.bno}'">수정</button>
-
-    <form name = "removeForm" method="post" action="/delete">
-        <input type="hidden" value="${board.bno}" name="bno">
-        <button class="btn btn-default" type="button" onclick="remove()">삭제</button>
-    </form>
-    </div>
+     <div style="margin-left: 300px;">
+         <div style="display: inline-block">
+        <button class="btn btn-default"  onclick="location.href='/modify/${board.bno}'">수정</button>
+         </div>
+        <div style="display: inline-block">
+        <form name = "removeForm" method="post" action="/delete">
+            <input type="hidden" value="${board.bno}" name="bno">
+            <button class="btn btn-default" type="button" onclick="remove()">삭제</button>
+        </form>
+        </div>
+     </div>
     </c:if>
 
-    <a href="/list" style="margin-left: 300px;">목록</a> <br>
+    <a href="/list" class= "btn btn-primary" style="margin-left: 1500px; margin-top: -30px; display: inline-block;">목록</a> <br>
 
     <form name="commentForm" style="margin-left: 300px;"  method="post" action="/writeComment">
         <textarea class="form-control" style="width: 40%;" id="text" name="ctext" onkeyup="enterComment()"></textarea>

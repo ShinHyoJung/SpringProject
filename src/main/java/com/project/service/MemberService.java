@@ -38,4 +38,6 @@ public interface MemberService extends UserDetailsService
    int checkMember(MemberDTO member) throws Exception;
 
    MemberDTO readMember(String username) throws Exception;
+
+   MemberDTO findId(MemberDTO member) throws Exception;
 }

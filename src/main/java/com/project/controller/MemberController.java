@@ -40,13 +40,14 @@ public class MemberController {
     }
 
     @RequestMapping(value="/doLogin", method= RequestMethod.POST) //로그인 처리
-    public String doLogin(MemberDTO member, HttpSession session) throws Exception {
+    public String doLogin(MemberDTO member, HttpSession session, Model model) throws Exception {
         logger.info("Login");
         //웹에 접근한 사용자 식별하는 방법
         MemberDTO login = memberService.loginMember(member);
 
         // 아이디가 틀렸을때
         if(login == null) {
+            model.addAttribute("message", "아이디가 틀렸습니다.");
             return "redirect:/Login";
         }
         // 로그인정보에서 id값 추출
@@ -61,6 +62,7 @@ public class MemberController {
             //세션에 로그인정보 애트리뷰트와 아이디 애트리뷰트 저장
             return "redirect:/";
         } else { // 비밀번호가 틀렸습니다 알림창 구현
+            model.addAttribute("message", "비밀번호가 틀렸습니다.");
             return "redirect:/Login";
         }
     }
@@ -128,18 +130,36 @@ public class MemberController {
         return "home";
     }
 
-    @ResponseBody
+    @ResponseBody // 아이디중복체크
     @RequestMapping(value="/checkMember", method=RequestMethod.POST)
     public int checkMember(MemberDTO member) throws Exception {
         int result = memberService.checkMember(member);
         return result;
     }
 
-    @RequestMapping("/denied")
+    @RequestMapping("/denied") // 페이지권한이 없을때,
     public String denied(Model model) throws Exception {
         return "member/denied";
     }
 
+    @RequestMapping("/findId_page")
+    public String findIdPage() throws Exception{
 
+        return "member/find_id";
+    }
+
+    @RequestMapping("/findId")
+    public String findId(MemberDTO member, Model model) throws Exception {
+        MemberDTO user = memberService.findId(member);
+
+        if(user == null) {
+            model.addAttribute("check", 1);
+        } else {
+            model.addAttribute("check",0);
+            model.addAttribute("username", user.getUsername());
+        }
+
+        return "member/find_id";
+    }
 
 }

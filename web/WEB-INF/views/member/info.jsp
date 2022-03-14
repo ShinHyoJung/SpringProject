@@ -48,8 +48,8 @@
         <input id="pnum" class="form-control" name="pnum" value="${user.pnum}">
     </div>
     <div class="form-group">
-        <label for="address">주소</label>
-        <input id = "address" class="form-control" name="address" value="${user.address}">
+        <label for="email">이메일주소</label>
+        <input id = "email" class="form-control" name="email" value="${user.email}">
     </div>
     <input type="hidden" name = "idx" value="${user.idx}">
     <button class= "btn btn-default" type="button" onclick="update()">수정 </button>

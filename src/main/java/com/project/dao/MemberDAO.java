@@ -35,4 +35,6 @@ public interface MemberDAO
 
         MemberDTO readMember(String username) throws Exception;
 
+        MemberDTO findId(MemberDTO member) throws Exception;
+
     }

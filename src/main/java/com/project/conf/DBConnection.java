@@ -1,6 +1,5 @@
 package com.project.conf;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
@@ -14,7 +13,7 @@ import javax.sql.DataSource;
  */
 
 
-public class Configuration
+public class DBConnection
 {
 
     @Bean

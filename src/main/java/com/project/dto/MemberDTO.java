@@ -24,7 +24,7 @@ public class MemberDTO implements UserDetails {
     private String username;
     private String password;
     private String pnum;
-    private String address;
+    private String email;
     private String datetime;
     private String updatetime;
     private Collection<? extends GrantedAuthority> authorities;
@@ -104,14 +104,14 @@ public class MemberDTO implements UserDetails {
         this.pnum = pnum;
     }
 
-    public String getAddress()
+    public String getEmail()
     {
-        return address;
+        return email;
     }
 
-    public void setAddress(String address)
+    public void setEmail(String address)
     {
-        this.address = address;
+        this.email = email;
     }
 
     public String getDatetime()
@@ -178,7 +178,7 @@ public class MemberDTO implements UserDetails {
 
     @Override
     public String toString() {
-        return "MemberDTO [id=" + id + ", password=" + password + ", name=" + name + ", pnum=" + pnum + ", address=" + address +
+        return "MemberDTO [id=" + id + ", password=" + password + ", name=" + name + ", pnum=" + pnum + ", email=" + email +
                 ", datetime=" + datetime + ", updatetime=" + updatetime + ", authorities=" + authorities + ", isAccountNonExpired=" +
                 isAccountNonExpired() + ", isAccountNonLocked=" + isAccountNonLocked() + ", isCredentialNonExpired=" +
                 isCredentialsNonExpired() + ", isEnabled=" + isEnabled() + "]";

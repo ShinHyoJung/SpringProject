@@ -11,6 +11,7 @@
             board_writer,
             board_hit,
             board_heart,
+            board_pin,
             idx
         ) VALUES (
             #{btitle},
@@ -18,6 +19,7 @@
             #{bwriter},
             0,
             0,
+            #{bpin},
             #{idx}
         )
         ]]>
@@ -29,13 +31,14 @@
                board_writer AS bwriter,
                board_hit AS bhit,
                board_heart AS bheart,
+               board_pin AS bpin,
                DATE_FORMAT(board_updatetime,'%Y-%m-%d') as bupdatetime,
                idx AS idx
         FROM   board
         <if test = "keyword != null">
             <include refid="criteria"></include>
         </if>
-        ORDER BY board_no DESC
+        ORDER BY board_pin DESC, board_no DESC
         LIMIT  #{skip}, #{amount}
     </select>
 
@@ -46,6 +49,7 @@
                board_content AS bcontent,
                board_hit AS bhit,
                board_heart AS bheart,
+               board_pin AS bpin,
                DATE_FORMAT(board_datetime,'%Y-%m-%d-%H:%i') AS bdatetime,
                DATE_FORMAT(board_updatetime,'%Y-%m-%d-%H:%i') AS bupdatetime,
                idx AS idx

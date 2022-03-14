@@ -18,7 +18,7 @@
             username,
             nickname,
             pnum,
-            address,
+            email,
             isAccountNonExpired,
             isAccountNonLocked,
             isCredentialsNonExpired,
@@ -31,7 +31,7 @@
             #{username},
             #{nickname},
             #{pnum},
-            #{address},
+            #{email},
             #{isAccountNonExpired},
             #{isAccountNonLocked},
             #{isCredentialsNonExpired},
@@ -54,7 +54,7 @@
                name AS name,
                nickname AS nickname,
                pnum AS pnum,
-               address AS address,
+               email AS email,
                isAccountNonExpired AS isAccountNonExpired,
                isAccountNonLocked AS isAccountNonLocked,
                isCredentialsNonExpired AS isCredentialsNonExpired,
@@ -71,7 +71,7 @@
                name AS name,
                nickname AS nickname,
                pnum AS pnum,
-               address AS address
+               email AS email
         FROM   member
         WHERE  idx = #{idx}
     </select>
@@ -83,7 +83,7 @@
                name = #{name},
                nickname = #{nickname},
                pnum = #{pnum},
-               address = #{address}
+               email = #{email}
         WHERE  idx = #{idx}
     </update>
 
@@ -111,4 +111,10 @@
         username = #{username}
     </insert>
 
+    <select id="findId" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
+        SELECT username as username
+        FROM  member
+        WHERE name = #{name}
+        AND pnum = #{pnum}
+    </select>
 </mapper>

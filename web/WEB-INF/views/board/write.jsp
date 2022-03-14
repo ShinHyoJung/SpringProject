@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
-
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <body>
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -30,6 +30,8 @@
     <table class="table table-bordered">
         <tr>
             <td>
+                <input type="checkbox" id="bpin" name="bpin" value="1">
+                <label for="bpin">공지글 <span></span></label> <br>
                 제목 <textarea class="form-control" rows="1" name="btitle" id="btitle" style="height:30px; "></textarea>
             </td>
         <tr>

@@ -51,8 +51,8 @@
             <input id="pnum" type="text" class="form-control" style="width:50%;" name="pnum" placeholder="전화번호를 입력해주세요."/> <br> <br>
         </div>
         <div class="form-group">
-            <label for="address">주소</label>
-            <input id="address" type="text" class= "form-control" style="width:50%;" name="address" placeholder="주소를 입력해주세요."/>
+            <label for="email">이메일주소</label>
+            <input id="email" type="text" class= "form-control" style="width:50%;" name="email" placeholder="주소를 입력해주세요."/>
         </div>    <br>
         <div class="form-group">
         <button class="btn btn-default" type="button" onclick="signup()">가입하기</button>
@@ -79,8 +79,8 @@
             alert("닉네임을 입력해주세요.");
         } else if(!form.pnum.value) {
             alert("전화번호를 입력해주세요.");
-        } else if(!form.address.value) {
-            alert("주소를 입력해주세요.");
+        } else if(!form.email.value) {
+            alert("이메일을 입력해주세요.");
         } else if (!form.id.value) {
             alert("아이디를 입력해주세요.");
         } else if (form.id.value && form.password.value&& form.name.value&& form.nickname.value&& form.pnum.value && form.address.value) {
@@ -123,7 +123,7 @@
         form.name.value = form.name.value.trim();
         form.nickname.value = form.nickname.value.trim();
         form.pnum.value = form.pnum.value.trim();
-        form.address.value = form.address.value.trim();
+        form.address.value = form.email.value.trim();
 
         infoCheck();
 

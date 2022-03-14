@@ -17,6 +17,7 @@ public class BoardDTO {
     private int bheart;
     private String bdatetime;
     private String bupdatetime;
+    private int bpin;
     private int idx;
 
 
@@ -93,6 +94,14 @@ public class BoardDTO {
 
     public void setBupdatetime(String bupdatetime) {
         this.bupdatetime = bupdatetime;
+    }
+
+    public int getBpin() {
+        return bpin;
+    }
+
+    public void setBpin(int bpin) {
+        this.bpin = bpin;
     }
 
     public int getIdx()
