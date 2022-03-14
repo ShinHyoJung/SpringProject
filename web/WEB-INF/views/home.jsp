@@ -41,7 +41,7 @@
             transform: translateX(-50%);
             width: 0;
             height: 4px;
-            background: black;
+            background: thistle;
             transition: all .5s ease-out;
         }
 
@@ -54,11 +54,11 @@
 </head>
 <body style="background-color: ghostwhite; ">
 <nav class="navbar navbar-default"  style="background-color: ghostwhite; border: 0; max-width: 800px; margin: 25px auto;">
-        <a class="navbar-brand">Board</a>
+        <a class="navbar-brand" style="color: thistle">Board</a>
 
         <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav" style="float:right;">
-                    <li class="active"><a class = "nav-menu" href="/">홈</a></li>
+                    <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
                 <c:if test="${not empty sessionScope.idx}">
                     <li class="active"><a class = "nav-menu" href="/list" style=""> 게시판 </a></li>
                     <div class="nav-underline"></div>

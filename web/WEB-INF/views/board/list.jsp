@@ -61,6 +61,7 @@
 
     <table class="table table-hover" style="width:70%; margin-left: 300px;">
         <tr>
+            <div style="margin-left: 300px;">
             <c:if test="${not empty page.cri.keyword}">
 
                 검색결과 : '${page.cri.keyword}'
@@ -70,7 +71,7 @@
                 <br>
                 <a href="/list">이전</a>
             </c:if>
-
+            </div>
               <th>글번호</th>
               <th>제목</th>
               <th>작성자</th>
