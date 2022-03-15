@@ -12,24 +12,29 @@
 <head>
     <title>게시글읽기</title>
 
+    <link rel="stylesheet" href="<c:url value="/resources/css/background.css"/>" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
 </head>
-<body>
+<body class="background">
 
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">홈</a>
+<nav class="navbar navbar-default"  style="background-color: ghostwhite; border: 0; max-width: 800px; margin: 25px auto;">
+    <a class="navbar-brand" style="color: thistle">Board</a>
 
-        <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="/list">게시판</a></li>
-            </ul>
-        </div>
+    <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav" style="float:right;">
+            <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
+            <c:if test="${not empty sessionScope.idx}">
+                <li class="active"><a class = "nav-menu" href="/list"> 게시판 </a></li>
+                <div class="nav-underline"></div>
+            </c:if>
+        </ul>
+    </div>
     </div>
 </nav>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <table class="table table-bordered" style="width: 70%; margin-left: 300px;">
+    <table class="table table-bordered" style="width: 50%; margin-left: 450px;">
         <tr>
             <td class="read">
                 <c:if test="${board.bpin ==1}">
@@ -60,7 +65,7 @@
         </tr>
     </table>
 
-<div style="margin-left: 300px;">
+<div style="margin-left: 450px;">
 <svg class="heart" id="fill_heart" style="display: none;" heart_no = "${heart.hno}" idx = "${user.idx}" heart_idx = "${heart.idx}" board_no = "${board.bno}" check="${heart.hcheck}" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 512 512">
     <path d="M0 190.9V185.1C0 115.2 50.52 55.58 119.4 44.1C164.1 36.51 211.4 51.37 244 84.02L256 96L267.1
     84.02C300.6 51.37 347 36.51 392.6 44.1C461.5 55.58 512 115.2 512 185.1V190.9C512 232.4 494.8 272.1
@@ -76,10 +81,10 @@
     429.3L431.7 265.3C452.3 246.1 464 219.1 464 190.9V185.1C464 138.7
 430.4 99.07 384.7 91.44C354.4 86.4 323.6 96.28 301.9 117.1L255.1 163.9z"/>   </svg>
 
-    <div style="display: inline-block; margin-left: 35px; margin-top: -20px;" id="heart">${board.bheart}</div> </div> <br>
+    <div style="display: inline-block; margin-left: 40px; margin-top: -20px;" id="heart">${board.bheart}</div> </div> <br>
 
     <c:if test="${board.idx eq user.idx}">
-     <div style="margin-left: 300px;">
+     <div style="margin-left: 450px;">
          <div style="display: inline-block">
         <button class="btn btn-default"  onclick="location.href='/modify/${board.bno}'">수정</button>
          </div>
@@ -92,18 +97,18 @@
      </div>
     </c:if>
 
-    <a href="/list" class= "btn btn-primary" style="margin-left: 1500px; margin-top: -30px; display: inline-block;">목록</a> <br>
+    <a href="/list" class= "btn btn-primary" style="margin-left: 1300px; margin-top: -55px; display: inline-block;">목록</a> <br>
 
-    <form name="commentForm" style="margin-left: 300px;"  method="post" action="/writeComment">
-        <textarea class="form-control" style="width: 40%;" id="text" name="ctext" onkeyup="enterComment()"></textarea>
+    <form name="commentForm" style="margin-left:450px; margin-top: 20px;"  method="post" action="/writeComment">
+        <textarea class="form-control" style="width: 40%; display: inline-block;" id="text" name="ctext" onkeyup="enterComment()"></textarea>
         <input type="hidden" name="cwriter" value="${user.nickname}">
         <input type="hidden" name="bno" value="${board.bno}">
         <input type="hidden" name="idx" value="${user.idx}">
-        <button class= "btn btn-default" type="button" onclick="enroll()">등록</button>
+        <button class= "btn btn-default" type="button" style="margin-bottom: 40px; margin-left: 5px;" onclick="enroll()">등록</button>
     </form>
 
 <c:if test="${not empty comments}">
-    <table class="table" style="width: 50%; margin-left: 300px;">
+    <table class="table" style="width: 50%; margin-left: 470px;">
         <thead>
         <th>작성자</th>
         <th>내용</th>

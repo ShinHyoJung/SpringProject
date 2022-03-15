@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <html>
 <head>
     <title>게시판 목록</title>
@@ -39,7 +40,7 @@
             margin-left: 100px;
         }
     </style>
-    <link rel="stylesheet" href="\resources\css\background.css">
+    <link rel="stylesheet" href="<c:url value="/resources/css/background.css"/>" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body style="background-color: ghostwhite;">
@@ -53,7 +54,7 @@
         <ul class="nav navbar-nav" style="float:right;">
             <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
             <c:if test="${not empty sessionScope.idx}">
-                <li class="active"><a class = "nav-menu" href="/list" style=""> 게시판 </a></li>
+                <li class="active"><a class = "nav-menu" href="/list"> 게시판 </a></li>
                 <div class="nav-underline"></div>
             </c:if>
         </ul>
@@ -61,7 +62,7 @@
     </div>
 </nav>
 
-    <table class="table table-hover" style="width:50%;  margin-top: 100px; margin-left: 300px;">
+    <table class="table table-hover" style="width:50%;  margin-top: 100px; margin-left: 450px;">
         <tr>
             <div style="margin-left: 300px;">
             <c:if test="${not empty page.cri.keyword}">
@@ -94,7 +95,7 @@
         </c:forEach>
     </table>
 
-<div class="paging_wrap">
+<div class="paging_wrap" style="margin-left: 200px;">
     <div class="paging_area">
         <ul id="paging" class="pagination" style="margin-left: 500px;">
             <!--이전 페이지 버튼-->

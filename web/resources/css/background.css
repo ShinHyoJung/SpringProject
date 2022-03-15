@@ -5,9 +5,11 @@
 }
 .navbar-default .navbar-nav .active a.nav-menu {
     background-color: transparent;
+    background-color: ghostwhite;
 }
 .navbar-default .navbar-nav .active a.nav-menu:hover {
     background-color: transparent;
+    background-color: ghostwhite;
 }
 .nav-menu {
     font-size: 15px;
@@ -15,6 +17,7 @@
     text-decoration: none;
     position: relative;
     padding: 6px 12px;
+    background-color: ghostwhite;
 }
 
 .nav-menu::after {
@@ -33,6 +36,11 @@
     width:100%;
 }
 
-body {
+.background {
     background-color: ghostwhite;
+}
+
+.navbar-form .navbar-right {
+    display: block;
+    width:100%;
 }

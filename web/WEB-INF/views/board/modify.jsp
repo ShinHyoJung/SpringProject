@@ -6,25 +6,30 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>게시글 수정</title>
-
+    <link rel="stylesheet" href="<c:url value="/resources/css/background.css"/>" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
-<body>
-<nav class="navbar navbar-default">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/">홈</a>
+<body class="background">
+<nav class="navbar navbar-default"  style="background-color: ghostwhite; border: 0; max-width: 800px; margin: 25px auto;">
+    <a class="navbar-brand" style="color: thistle">Board</a>
 
-        <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="/list">게시판</a></li>
-            </ul>
-        </div>
+    <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav" style="float:right;">
+            <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
+            <c:if test="${not empty sessionScope.idx}">
+                <li class="active"><a class = "nav-menu" href="/list"> 게시판 </a></li>
+                <div class="nav-underline"></div>
+            </c:if>
+        </ul>
+    </div>
     </div>
 </nav>
-    <form class="form-group" style="margin-left: 270px;width: 70%;" name="updateForm" method="post" action="/update">
+
+    <form class="form-group" style="margin-left: 450px;width:50%;" name="updateForm" method="post" action="/update">
         <table class="table table-bordered">
             <tr>
                 <td style="width:200px; height:30px;"><textarea class="form-control" rows="20" name="btitle" style="height:30px; ">${board.btitle}</textarea></td>

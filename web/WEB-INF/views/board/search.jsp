@@ -10,23 +10,29 @@
 <html>
 <head>
     <title>작성자가 쓴글</title>
+
+    <link rel="stylesheet" href="<c:url value="/resources/css/background.css"/>" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
-<body>
+<body class="background">
 
-<div class="container-fluid">
-    <a class="navbar-brand" href="/">홈</a>
+<nav class="navbar navbar-default"  style="background-color: ghostwhite; border: 0; max-width: 800px; margin: 25px auto;">
+    <a class="navbar-brand" style="color: thistle">Board</a>
 
     <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="/list">게시판</a></li>
+        <ul class="nav navbar-nav" style="float:right;">
+            <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
+            <c:if test="${not empty sessionScope.idx}">
+                <li class="active"><a class = "nav-menu" href="/list"> 게시판 </a></li>
+                <div class="nav-underline"></div>
+            </c:if>
         </ul>
-
     </div>
-</div>
+    </div>
+</nav>
 
-<table class="table table-hover" style="width:70%; margin-left: 300px;" >
-    <h1 style="margin-left: 300px;">${writer}</h1>
+<table class="table table-hover" style="width:50%; margin-left: 450px; margin-top: 70px;" >
+    <h2 style="margin-left: 600px; margin-top: 50px; display: inline-block;">${writer}</h2>
     <tr>
         <th>글번호</th>
         <th>제목</th>
@@ -44,6 +50,6 @@
     </c:forEach>
 </table>
 
-<a href="/list" style="margin-left: 305px;">목록</a>
+<a href="/list" class="btn btn-primary" style="margin-left: 1300px;">목록</a>
 </body>
 </html>
