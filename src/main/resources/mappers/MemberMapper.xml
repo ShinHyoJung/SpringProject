@@ -42,7 +42,8 @@
     <select id="loginMember" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
         SELECT id AS id,
                password AS password,
-               idx AS idx
+               idx AS idx,
+               authkey AS authkey
         FROM member
         WHERE username = #{username}
     </select>
@@ -92,7 +93,7 @@
         WHERE   idx = #{idx}
     </delete>
 
-    <select id="checkMember" parameterType="com.project.dto.MemberDTO" resultType="int">
+    <select id="checkId" parameterType="com.project.dto.MemberDTO" resultType="int">
         SELECT COUNT(*)
         FROM   member
         WHERE  id = #{id}
@@ -117,4 +118,38 @@
         WHERE name = #{name}
         AND pnum = #{pnum}
     </select>
+
+    <select id="findPwd" parameterType="com.project.dto.MemberDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM member
+        WHERE id = #{id}
+        AND   name = #{name}
+    </select>
+
+    <update id="updatePwd" parameterType="com.project.dto.MemberDTO">
+        UPDATE member
+        SET
+               password = #{password}
+        WHERE  id = #{id}
+        AND    name = #{name}
+    </update>
+
+    <insert id="insertAuthKey" parameterType="com.project.dto.AuthDTO">
+        INSERT INTO emailauth (
+            email,
+            authkey
+        ) VALUES (
+            #{email},
+            #{authkey}
+        )
+    </insert>
+
+    <update id="updateAuthKey" parameterType="com.project.dto.AuthDTO">
+        <![CDATA[
+        UPDATE member
+        SET  authkey =1
+        WHERE (SELECT COUNT(*) FROM emailauth
+                WHERE email = #{email}) > 0
+        ]]>
+    </update>
 </mapper>

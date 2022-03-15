@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+.navbar-right{
+    background-color: thistle;
+}
+.navbar-default .navbar-nav .active a.nav-menu {
+    background-color: transparent;
+}
+.navbar-default .navbar-nav .active a.nav-menu:hover {
+    background-color: transparent;
+}
+.nav-menu {
+    font-size: 15px;
+    color: black;
+    text-decoration: none;
+    position: relative;
+    padding: 6px 12px;
+}
+
+.nav-menu::after {
+    content:"";
+    position:absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 4px;
+    background: thistle;
+    transition: all .5s ease-out;
+}
+
+.nav-menu:hover::after {
+    width:100%;
+}
+
+body {
+    background-color: ghostwhite;
+}

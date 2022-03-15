@@ -25,6 +25,7 @@ public class MemberDTO implements UserDetails {
     private String password;
     private String pnum;
     private String email;
+    private int authkey;
     private String datetime;
     private String updatetime;
     private Collection<? extends GrantedAuthority> authorities;
@@ -109,9 +110,17 @@ public class MemberDTO implements UserDetails {
         return email;
     }
 
-    public void setEmail(String address)
+    public void setEmail(String email)
     {
         this.email = email;
+    }
+
+    public int getAuthkey() {
+        return authkey;
+    }
+
+    public void setAuthkey(int authkey) {
+        this.authkey = authkey;
     }
 
     public String getDatetime()

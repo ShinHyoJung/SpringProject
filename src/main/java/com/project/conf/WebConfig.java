@@ -12,17 +12,15 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 
         // TODO Auto-generated method stub
         return new Class[] {
-           RootConfig.class , //SecurityConfig.class
+           RootConfig.class //, SecurityConfig.class
         };
-
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
 
         // TODO Auto-generated method stub
-        return new Class[] {ServletConfig.class, commonConfig.class};
-
+        return new Class[] {ServletConfig.class, commonConfig.class, };
     }
 
     @Override
@@ -40,6 +38,5 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 
         return new Filter[] { characterEncodingFilter };
     }
-
 
 }

@@ -11,11 +11,8 @@
 <html>
 <head>
     <title>게시판 목록</title>
-    <style>
 
-        .navbar-right {
-            background-color: lightgray;
-        }
+    <style>
 
         .paging li {
             float: left;
@@ -42,24 +39,29 @@
             margin-left: 100px;
         }
     </style>
+    <link rel="stylesheet" href="\resources\css\background.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
-<body>
+<body style="background-color: ghostwhite;">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js">
 </script>
 
-<div class="container-fluid">
-    <a class="navbar-brand" href="/">홈</a>
+<nav class="navbar navbar-default"  style="background-color: ghostwhite; border: 0; max-width: 800px; margin: 25px auto;">
+    <a class="navbar-brand" style="color: thistle">Board</a>
 
     <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-            <li class="active"><a href="/list">게시판</a></li>
+        <ul class="nav navbar-nav" style="float:right;">
+            <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
+            <c:if test="${not empty sessionScope.idx}">
+                <li class="active"><a class = "nav-menu" href="/list" style=""> 게시판 </a></li>
+                <div class="nav-underline"></div>
+            </c:if>
         </ul>
-
     </div>
-</div>
+    </div>
+</nav>
 
-    <table class="table table-hover" style="width:70%; margin-left: 300px;">
+    <table class="table table-hover" style="width:50%;  margin-top: 100px; margin-left: 300px;">
         <tr>
             <div style="margin-left: 300px;">
             <c:if test="${not empty page.cri.keyword}">

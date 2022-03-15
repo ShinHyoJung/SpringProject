@@ -1,4 +1,4 @@
-package com.project.conf;
+package com.project.util;
 
 import com.project.dto.BoardDTO;
 import org.springframework.stereotype.Component;

@@ -1,10 +1,9 @@
 package com.project.service;
 
-import com.project.conf.FileUtils;
+import com.project.util.FileUtils;
 import com.project.dao.BoardDAO;
 import com.project.dto.BoardDTO;
 import com.project.dto.Criteria;
-import com.project.dto.PagingDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;

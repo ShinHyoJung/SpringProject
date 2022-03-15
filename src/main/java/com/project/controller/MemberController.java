@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.servlet.http.HttpSession;
 
 /**
@@ -44,12 +46,19 @@ public class MemberController {
         logger.info("Login");
         //웹에 접근한 사용자 식별하는 방법
         MemberDTO login = memberService.loginMember(member);
+        int authkey = login.getAuthkey();
 
         // 아이디가 틀렸을때
         if(login == null) {
             model.addAttribute("message", "아이디가 틀렸습니다.");
             return "redirect:/Login";
         }
+
+        // 이메일 인증을 안했을때,
+        if(authkey == 0) {
+            return "redirect:/Login";
+        }
+
         // 로그인정보에서 id값 추출
         boolean passMatch = new BCryptPasswordEncoder().matches(member.getPassword(), login.getPassword());
 
@@ -82,7 +91,7 @@ public class MemberController {
     }
 
     @RequestMapping("/Signup") // 회원가입 처리
-    public String Signup(@ModelAttribute MemberDTO member) throws Exception {
+    public String Signup(@ModelAttribute MemberDTO member, RedirectAttributes rttr) throws Exception {
 
         String pwdbCrypt = new BCryptPasswordEncoder().encode(member.getPassword()); //비밀번호 암호화
 
@@ -95,11 +104,23 @@ public class MemberController {
         member.setAuthorities(AuthorityUtils.createAuthorityList("ROLE_USER"));
 
         memberService.insertMember(member);
-
         memberService.createAuthorities(member);
+
+
+        rttr.addFlashAttribute("msg", "가입이 완료되었습니다.");
+        rttr.addAttribute("email", member.getEmail());
+        rttr.addAttribute("name", member.getName());
+
         return "home";
     }
 
+    @RequestMapping(value="SignupEmail", method = RequestMethod.GET)
+    public String emailConfirm(String email, Model model) throws Exception {
+        memberService.updateAuthKey(email);
+        model.addAttribute("email", email);
+
+        return"/member/email_confirm";
+    }
 
     @RequestMapping("/info") // 회원정보 조회
     public String selectInfo(MemberDTO member, HttpSession session, Model model) throws Exception {
@@ -133,8 +154,8 @@ public class MemberController {
     @ResponseBody // 아이디중복체크
     @RequestMapping(value="/checkMember", method=RequestMethod.POST)
     public int checkMember(MemberDTO member) throws Exception {
-        int result = memberService.checkMember(member);
-        return result;
+        int id = memberService.checkId(member);
+        return id;
     }
 
     @RequestMapping("/denied") // 페이지권한이 없을때,
@@ -162,4 +183,26 @@ public class MemberController {
         return "member/find_id";
     }
 
+    @RequestMapping("/findPwd_page")
+    public String findPwdPage() throws Exception {
+
+        return "/member/find_pwd";
+    }
+
+    @RequestMapping("/findPwd")
+    @ResponseBody
+    public int findPwd(MemberDTO member) throws Exception {
+
+        int pwd = memberService.findPwd(member);
+        return pwd;
+    }
+
+    @RequestMapping("/updatePwd")
+    public String updatePwd(MemberDTO member) throws Exception {
+        String pwdbCrypt = new BCryptPasswordEncoder().encode(member.getPassword()); // 수정된 비밀번호 암호화
+        member.setPassword(pwdbCrypt);
+        memberService.updatePwd(member);
+
+        return "redirect:/Login";
+    }
 }

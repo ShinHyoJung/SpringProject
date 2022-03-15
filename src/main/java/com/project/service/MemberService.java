@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Created with IntellliJ IDEA.
@@ -35,9 +36,15 @@ public interface MemberService extends UserDetailsService
 
    void deleteMember(int idx) throws Exception;
 
-   int checkMember(MemberDTO member) throws Exception;
+   int checkId(MemberDTO member) throws Exception;
 
    MemberDTO readMember(String username) throws Exception;
 
    MemberDTO findId(MemberDTO member) throws Exception;
+
+   void updateAuthKey(String email) throws Exception;
+
+   int findPwd(MemberDTO member) throws Exception;
+
+   void updatePwd(MemberDTO member) throws Exception;
 }

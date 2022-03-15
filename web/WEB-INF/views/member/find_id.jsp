@@ -19,8 +19,8 @@
         <form method="post" action="/findId" style="max-width: 300px; margin-left: 700px; margin-top: 200px;">
             <label for="name">이름</label>
             <input class="form-control" type="text" id="name" name="name"/>
-            <label for="pnum">전화번호</label>
-            <input class="form-control" type="text" id="pnum" name="pnum"/>
+            <label for="email">이메일</label>
+            <input class="form-control" type="text" id="email" name="email"/>
             <button type="submit" class="btn btn-default" value="check">아이디찾기</button>
         </form>
 

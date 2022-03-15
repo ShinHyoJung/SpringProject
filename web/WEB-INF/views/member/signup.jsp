@@ -28,7 +28,7 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-    <form name="signupForm" style="width:50%; margin-left: 700px;"action="/Signup" method="post" >
+    <form name="signupForm" style="width:50%; margin-left: 700px;" action="/Signup" method="post" >
         <h1>회원 가입</h1> <br>
         <div class="form-group">
             <label for="id">아이디</label>
@@ -48,11 +48,11 @@
         </div> <br>
         <div class="form-group">
             <label for="pnum">전화번호</label>
-            <input id="pnum" type="text" class="form-control" style="width:50%;" name="pnum" placeholder="전화번호를 입력해주세요."/> <br> <br>
+            <input id="pnum" type="text" class="form-control" style="width:50%;" name="pnum" placeholder="전화번호를 입력해주세요."/> <br>
         </div>
         <div class="form-group">
-            <label for="email">이메일주소</label>
-            <input id="email" type="text" class= "form-control" style="width:50%;" name="email" placeholder="주소를 입력해주세요."/>
+            <label for="email">이메일</label>
+            <input id="email" type="text" class= "form-control" style="width:50%;" name="email" placeholder="이메일을 입력해주세요."/>
         </div>    <br>
         <div class="form-group">
         <button class="btn btn-default" type="button" onclick="signup()">가입하기</button>
@@ -69,7 +69,7 @@
     //정보입력 유효성 체크
     function infoCheck() {
 
-        if(!form.id.value && !form.password.value && !form.name.value && !form.nickname.value && !form.pnum.value && !form.address.value) {
+        if(!form.id.value && !form.password.value && !form.name.value && !form.nickname.value && !form.pnum.value && !form.email.value) {
             alert("정보를 입력해주세요.");
         } else if(!form.password.value) {
             alert("비밀번호를 입력해주세요.");
@@ -83,7 +83,7 @@
             alert("이메일을 입력해주세요.");
         } else if (!form.id.value) {
             alert("아이디를 입력해주세요.");
-        } else if (form.id.value && form.password.value&& form.name.value&& form.nickname.value&& form.pnum.value && form.address.value) {
+        } else if (form.id.value && form.password.value&& form.name.value&& form.nickname.value&& form.pnum.value && form.email.value) {
             signupCheck =1;
         }
 
@@ -123,13 +123,13 @@
         form.name.value = form.name.value.trim();
         form.nickname.value = form.nickname.value.trim();
         form.pnum.value = form.pnum.value.trim();
-        form.address.value = form.email.value.trim();
+        form.email.value = form.email.value.trim();
 
         infoCheck();
 
         if(signupCheck==1 && check == 1) {
-            signupForm.submit();
-            alert("가입이 완료되었습니다.");
+            form.submit();
+            alert("가입이 완료되었습니다. 이메일 인증 후 로그인해주세요.");
         } else if(signupCheck==1 && check ==0) {
             alert("아이디 중복체크를 해주세요.");
         } else if(signupCheck ==0 && check==1) {
@@ -137,7 +137,6 @@
         }
 
     }
-
 
 </script>
 </body>

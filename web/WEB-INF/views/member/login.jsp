@@ -53,7 +53,7 @@
 
     <a href="/beforeSignup" style="margin-left: 900px;">회원이 아니신가요?</a> <br>
     <a href="/findId_page" style="margin-left: 860px;">아이디 찾기</a>
-    <a href="findPwd" style="margin-left: 10px;">비밀번호 찾기</a>
+    <a href="/findPwd_page" style="margin-left: 10px;">비밀번호 찾기</a>
 <script>
     var form = document.loginForm;
 

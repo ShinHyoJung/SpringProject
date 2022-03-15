@@ -20,7 +20,6 @@ public class RootConfig {
     public DriverManagerDataSource dataSource() {
         DriverManagerDataSource source = new DriverManagerDataSource();
         source.setDriverClassName("org.mariadb.jdbc.Driver");
-        // 자바 설정으로 쓸 때에는 url에 &을 &amp; 로 치환하면 에러나더라.
         source.setUrl("jdbc:mariadb://127.0.0.1:3306/db");
         source.setUsername("root");
         source.setPassword("1111");

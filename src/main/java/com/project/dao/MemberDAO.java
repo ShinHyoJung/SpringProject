@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.lang.reflect.Member;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntellliJ IDEA.
@@ -31,10 +32,17 @@ public interface MemberDAO
 
         void deleteMember(int idx) throws Exception;
 
-        int checkMember(MemberDTO member) throws Exception;
+        int checkId(MemberDTO member) throws Exception;
 
         MemberDTO readMember(String username) throws Exception;
 
         MemberDTO findId(MemberDTO member) throws Exception;
 
+        void insertAuthKey(String email, String authkey) throws Exception;
+
+        void updateAuthKey(String email) throws Exception;
+
+        int findPwd(MemberDTO member) throws Exception;
+
+        void updatePwd(MemberDTO member) throws Exception;
     }

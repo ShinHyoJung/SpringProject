@@ -8,7 +8,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.Member;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -68,9 +70,9 @@ public class MemberDAOImpl implements MemberDAO
     }
 
     @Override
-    public int checkMember(MemberDTO member) throws Exception {
-        int result = sqlSession.selectOne("checkMember", member);
-        return result;
+    public int checkId(MemberDTO member) throws Exception {
+        int id = sqlSession.selectOne("checkId", member);
+        return id;
     }
 
     @Override
@@ -81,5 +83,31 @@ public class MemberDAOImpl implements MemberDAO
     @Override
     public MemberDTO findId(MemberDTO member) throws Exception {
         return sqlSession.selectOne("findId", member);
+    }
+
+    @Override
+    public void insertAuthKey(String email, String authkey) throws Exception {
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("email", email);
+        map.put("authkey", authkey);
+        sqlSession.selectOne("insertAuthKey", map);
+    }
+
+    @Override
+    public void updateAuthKey(String email) throws Exception {
+
+        sqlSession.update("updateAuthKey", email);
+    }
+
+    @Override
+    public int findPwd(MemberDTO member) throws Exception {
+        int pwd = sqlSession.selectOne("findPwd", member);
+        return pwd;
+    }
+
+    @Override
+    public void updatePwd(MemberDTO member) throws Exception {
+        sqlSession.update("updatePwd", member);
     }
 }

@@ -1,4 +1,4 @@
-package com.project.conf;
+package com.project.util;
 
 import java.util.UUID;
 

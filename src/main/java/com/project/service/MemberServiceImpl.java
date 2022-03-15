@@ -2,6 +2,9 @@ package com.project.service;
 
 import com.project.dao.MemberDAO;
 import com.project.dto.MemberDTO;
+import com.project.dto.TempKey;
+import com.project.util.MailUtils;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,7 +12,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntellliJ IDEA.
@@ -24,6 +29,9 @@ public class MemberServiceImpl implements MemberService
 
     @Autowired
     MemberDAO memberDAO;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -53,6 +61,21 @@ public class MemberServiceImpl implements MemberService
     @Override
     public void insertMember(MemberDTO member) throws Exception {
         memberDAO.insertMember(member);
+
+        String key = new TempKey().getKey(50, false);
+        memberDAO.insertAuthKey(member.getEmail(), key);
+        MailUtils sendMail = new MailUtils(mailSender);
+        sendMail.setSubject("인증메일입니다.");
+        sendMail.setText("<h1> 이메일 인증</h1>" +
+                "<br>" + member.getName()+"님"+
+                "<br> 아래 [이메일 인증확인]을 눌러주세요." +
+                "<a href='http://localhost:8080/SignupEmail?email=" +
+                member.getEmail() + "&key=" + key +
+                " ' target='_blenk'>이메일 인증 확인</a>");
+        sendMail.setFrom("sljh1020@gmail.com", "admin");
+        sendMail.setTo(member.getEmail());
+        sendMail.send();
+
     }
 
     @Override
@@ -84,9 +107,9 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
-    public int checkMember(MemberDTO member) throws Exception {
-        int result = memberDAO.checkMember(member);
-        return result;
+    public int checkId(MemberDTO member) throws Exception {
+        int id = memberDAO.checkId(member);
+        return id;
     }
 
     @Override
@@ -97,5 +120,21 @@ public class MemberServiceImpl implements MemberService
     @Override
     public MemberDTO findId(MemberDTO member) throws Exception {
         return memberDAO.findId(member);
+    }
+
+    @Override
+    public void updateAuthKey(String email) throws Exception {
+        memberDAO.updateAuthKey(email);
+    }
+
+    @Override
+    public int findPwd(MemberDTO member) throws Exception {
+        int pwd = memberDAO.findPwd(member);
+        return pwd;
+    }
+
+    @Override
+    public void updatePwd(MemberDTO member) throws Exception {
+        memberDAO.updatePwd(member);
     }
 }
