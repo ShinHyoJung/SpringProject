@@ -39,8 +39,8 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
 
-        return new Filter[] { characterEncodingFilter,
-        new DelegatingFilterProxy("springSecurityFilterChain")
+        return new Filter[] { characterEncodingFilter
+        //,new DelegatingFilterProxy("springSecurityFilterChain")
                 };
     }
 

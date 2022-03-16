@@ -5,6 +5,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
 
+
 public class CustomAuthenticationToken extends AbstractAuthenticationToken {
     private String email;
     private String credentials;
