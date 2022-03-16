@@ -35,7 +35,7 @@ public class MemberDAOImpl implements MemberDAO
     }
 
     @Override
-    public List<GrantedAuthority>readAuthorities(String username) throws Exception {
+    public List<GrantedAuthority>readAuthorities(String username) {
         return sqlSession.selectOne("readAuthorities", username);
     }
 
@@ -76,7 +76,7 @@ public class MemberDAOImpl implements MemberDAO
     }
 
     @Override
-    public MemberDTO readMember(String username) throws Exception {
+    public MemberDTO readMember(String username) {
         return sqlSession.selectOne("readMember", username);
     }
 

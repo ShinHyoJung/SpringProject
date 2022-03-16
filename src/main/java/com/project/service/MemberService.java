@@ -20,9 +20,9 @@ import java.util.Map;
 
 public interface MemberService extends UserDetailsService
 {
-   UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+   UserDetails loadUserByUsername(String username);
 
-   Collection<GrantedAuthority> getAuthorities(String username)  throws Exception;
+   Collection<GrantedAuthority> getAuthorities(String username);
 
    void createAuthorities(MemberDTO member) throws Exception;
 
@@ -37,8 +37,6 @@ public interface MemberService extends UserDetailsService
    void deleteMember(int idx) throws Exception;
 
    int checkId(MemberDTO member) throws Exception;
-
-   MemberDTO readMember(String username) throws Exception;
 
    MemberDTO findId(MemberDTO member) throws Exception;
 

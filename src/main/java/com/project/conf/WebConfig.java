@@ -1,10 +1,13 @@
 package com.project.conf;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.Filter;
 
+@Configuration
 public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
@@ -12,7 +15,7 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 
         // TODO Auto-generated method stub
         return new Class[] {
-           RootConfig.class //, SecurityConfig.class
+           RootConfig.class, SecurityConfig.class
         };
     }
 
@@ -20,7 +23,7 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
     protected Class<?>[] getServletConfigClasses() {
 
         // TODO Auto-generated method stub
-        return new Class[] {ServletConfig.class, commonConfig.class, };
+        return new Class[] {ServletConfig.class, commonConfig.class };
     }
 
     @Override
@@ -36,7 +39,9 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
 
-        return new Filter[] { characterEncodingFilter };
+        return new Filter[] { characterEncodingFilter,
+        new DelegatingFilterProxy("springSecurityFilterChain")
+                };
     }
 
 }

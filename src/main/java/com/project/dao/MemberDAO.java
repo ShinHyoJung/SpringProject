@@ -18,7 +18,7 @@ import java.util.Map;
 public interface MemberDAO
     {
 
-        List<GrantedAuthority> readAuthorities(String username) throws Exception;
+        List<GrantedAuthority> readAuthorities(String username);
 
         void createAuthorities(MemberDTO member) throws Exception;
 
@@ -34,7 +34,7 @@ public interface MemberDAO
 
         int checkId(MemberDTO member) throws Exception;
 
-        MemberDTO readMember(String username) throws Exception;
+        MemberDTO readMember(String username);
 
         MemberDTO findId(MemberDTO member) throws Exception;
 

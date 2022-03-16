@@ -11,7 +11,7 @@
 <head>
     <title>작성자가 쓴글</title>
 
-    <link rel="stylesheet" href="<c:url value="/resources/css/background.css"/>" >
+    <link rel="stylesheet" href="<c:url value="/css/background.css"/>" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body class="background">

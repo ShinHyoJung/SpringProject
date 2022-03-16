@@ -54,6 +54,7 @@
                password AS password,
                name AS name,
                nickname AS nickname,
+               useranem AS username,
                pnum AS pnum,
                email AS email,
                isAccountNonExpired AS isAccountNonExpired,

@@ -1,9 +1,12 @@
 package com.project.conf;
 
 import com.project.service.MemberService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 import javax.sql.DataSource;
 
 @Configuration
@@ -24,11 +26,18 @@ import javax.sql.DataSource;
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private MemberService memberService;
+    static Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
+
+    public SecurityConfig()
+    {
+        SecurityConfig.logger.debug("SecurityConfig");
+    }
+
+    //@Autowired
+    //private MemberService memberService;
 
     @Autowired
-    private DataSource dataSource;
+   private DataSource dataSource;
 
     @Bean
     public PasswordEncoder passwordEncoder()
@@ -42,6 +51,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     {
 
 //     인증과 권한
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/","/Login","/doLogin", "/beforeSignup","/Signup").permitAll()
+                .anyRequest().authenticated();
+/*
+
         http
                 .authorizeRequests()
                 .antMatchers("/user/**").authenticated()
@@ -79,8 +95,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 //	    csrf
                 .csrf().disable();
-    }
 
+*/
+    }
     @Bean
     public PersistentTokenRepository persistentTokenRepository()
     {
@@ -89,14 +106,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return db;
     }
 
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        return new CustomAuthenticationProvider(userDetailsService(), passwordEncoder());
+    }
 
     //security 기본설정
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception
     {
-        auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
+      //auth.userDetailsService.passwordEncoder(passwordEncoder());
     }
 
 }
-
-

@@ -12,9 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntellliJ IDEA.
@@ -23,6 +21,7 @@ import java.util.Map;
  * Time: 오후 3:37
  * Comments:
  */
+
 @Service
 public class MemberServiceImpl implements MemberService
 {
@@ -34,21 +33,14 @@ public class MemberServiceImpl implements MemberService
     private JavaMailSender mailSender;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        MemberDTO member = null;
-        try {
-            member = memberDAO.readMember(username);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+            MemberDTO member = memberDAO.readMember(username);
             member.setAuthorities(getAuthorities(username));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return member;
+            return member;
     }
 
     @Override
-    public Collection<GrantedAuthority> getAuthorities(String username)  throws Exception {
+    public Collection<GrantedAuthority> getAuthorities(String username)  {
         List<GrantedAuthority> authorities = memberDAO.readAuthorities(username);
         return authorities;
     }
@@ -110,11 +102,6 @@ public class MemberServiceImpl implements MemberService
     public int checkId(MemberDTO member) throws Exception {
         int id = memberDAO.checkId(member);
         return id;
-    }
-
-    @Override
-    public MemberDTO readMember(String username) throws Exception {
-        return memberDAO.readMember(username);
     }
 
     @Override

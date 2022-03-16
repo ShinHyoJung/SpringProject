@@ -15,10 +15,56 @@
     <meta name="viewport" content = "width=device-width, initial-scale=1.0">
     <title>홈</title>
 
-    <link rel="stylesheet" href="<c:url value="/resources/css/background.css"/>" >
+    <style>
+        .navbar-right{
+            background-color: thistle;
+        }
+        .navbar-default .navbar-nav .active a.nav-menu {
+            background-color: transparent;
+            background-color: ghostwhite;
+        }
+        .navbar-default .navbar-nav .active a.nav-menu:hover {
+            background-color: transparent;
+            background-color: ghostwhite;
+        }
+        .nav-menu {
+            font-size: 15px;
+            color: black;
+            text-decoration: none;
+            position: relative;
+            padding: 6px 12px;
+            background-color: ghostwhite;
+        }
+
+        .nav-menu::after {
+            content:"";
+            position:absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background: thistle;
+            transition: all .5s ease-out;
+        }
+
+        .nav-menu:hover::after {
+            width:100%;
+        }
+
+        .background {
+            background-color: ghostwhite;
+        }
+
+        .navbar-form .navbar-right {
+            display: block;
+            width:100%;
+        }
+    </style>
+    <link rel="stylesheet" href="<c:url value="/css/background.css"/>" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
-<body class="background">
+<body class="background" style="background-color: ghostwhite;">
 <nav class="navbar navbar-default"  style="background-color: ghostwhite; border: 0; max-width: 800px; margin: 25px auto;">
         <a class="navbar-brand" style="color: thistle">Board</a>
 
