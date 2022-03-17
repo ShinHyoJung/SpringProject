@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,9 +36,15 @@ public class MemberServiceImpl implements MemberService
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-            MemberDTO member = memberDAO.readMember(username);
-            member.setAuthorities(getAuthorities(username));
-            return member;
+            MemberDTO member = memberDAO.loginMember(username);
+
+            int authkey = member.getAuthkey();
+            if(authkey==1) { //인증키가 1이면
+                member.setAuthorities(getAuthorities(username));
+                return member; // 로그인실행
+            }
+
+            return null; // 인증키가 1이아니면 로그인 안함
     }
 
     @Override
@@ -72,21 +79,13 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
-    public MemberDTO loginMember(MemberDTO member) throws Exception {
-       return memberDAO.loginMember(member);
+    public MemberDTO loginMember(String username) {
+       return memberDAO.loginMember(username);
     }
 
     @Override
-    public MemberDTO selectMember(int idx) throws Exception {
-       MemberDTO login = null;
-
-       try{
-           login = memberDAO.selectMember(idx);
-       } catch(Exception e) {
-           e.printStackTrace();
-       }
-
-       return login;
+    public MemberDTO selectMember(MemberDTO member) throws Exception {
+           return memberDAO.selectMember(member);
     }
 
     @Override

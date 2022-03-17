@@ -64,12 +64,13 @@ public class BoardController {
         return "board/list";
     }
 
+    @Secured("ROLE_USER")
     @RequestMapping("/write") // 게시글 쓰기
     public String writeBoard(MemberDTO member, Model model, HttpSession session) throws Exception {
 
         int idx = (int)session.getAttribute("idx");
-        MemberDTO user = memberService.selectMember(idx);
-        model.addAttribute("user", user);
+       // MemberDTO user = memberService.selectMember();
+       // model.addAttribute("user", user);
         return "board/write";
     }
 
@@ -100,7 +101,7 @@ public class BoardController {
         BoardDTO board = boardService.selectBoard(bno); //게시글
         model.addAttribute("board", board);
         int idx = (int)session.getAttribute("idx");
-        MemberDTO user = memberService.selectMember(idx);
+       // MemberDTO user = memberService.selectMember(idx);
 
         HeartDTO heart = heartService.selectHeart(bno, idx);
 
@@ -111,7 +112,7 @@ public class BoardController {
 
         List<Map<String, Object>> file = boardService.selectFile(bno);
 
-        model.addAttribute("user", user);
+      //  model.addAttribute("user", user);
         model.addAttribute("heart", heart);
         model.addAttribute("comments", comments);
         model.addAttribute("file", file);

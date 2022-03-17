@@ -1,11 +1,18 @@
 package com.project.controller;
 
+import com.project.conf.CustomAuthenticationToken;
 import com.project.dto.MemberDTO;
 import com.project.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 /**
  * Created with IntellliJ IDEA.
@@ -41,11 +49,12 @@ public class MemberController {
         return "member/login";
     }
 
-    @RequestMapping(value="/doLogin", method= RequestMethod.POST) //로그인 처리
+/*
+    @RequestMapping(value="/doLogin", method= RequestMethod.GET) //로그인 처리
     public String doLogin(MemberDTO member, HttpSession session, Model model) throws Exception {
         logger.info("Login");
         //웹에 접근한 사용자 식별하는 방법
-        MemberDTO login = memberService.loginMember(member);
+        //MemberDTO login = memberService.loginMember(member.getUsername());
         int authkey = login.getAuthkey();
 
         // 아이디가 틀렸을때
@@ -75,7 +84,7 @@ public class MemberController {
             return "redirect:/Login";
         }
     }
-
+*/
     @RequestMapping("/Logout") // 로그아웃
     public String Logout(HttpSession session) {
 
@@ -122,13 +131,14 @@ public class MemberController {
         return"/member/email_confirm";
     }
 
-    @RequestMapping("/info") // 회원정보 조회
-    public String selectInfo(MemberDTO member, HttpSession session, Model model) throws Exception {
+    @RequestMapping("/Info") // 회원정보 조회
+    public String selectInfo(Principal principal, Model model) throws Exception {
 
-        int idx = (int) session.getAttribute("idx");
+        String username = principal.getName();
+        System.out.println(username);
         // 세션 아이디 애트리뷰트에서 아이디값을 가져옴
-        MemberDTO user = memberService.selectMember(idx);
-        model.addAttribute("user", user);
+        //MemberDTO user = memberService.selectMember(member);
+        //model.addAttribute("user", user);
 
         return "member/info";
     }

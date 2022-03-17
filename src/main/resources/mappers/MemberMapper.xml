@@ -40,30 +40,18 @@
     </insert>
 
     <select id="loginMember" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
-        SELECT id AS id,
-               password AS password,
-               idx AS idx,
-               authkey AS authkey
-        FROM member
-        WHERE username = #{username}
-    </select>
-
-    <select id="readMember" parameterType="String" resultType="com.project.dto.MemberDTO">
         SELECT idx AS idx,
                id AS id,
                password AS password,
                name AS name,
                nickname AS nickname,
-               useranem AS username,
-               pnum AS pnum,
-               email AS email,
+               authkey AS authkey,
                isAccountNonExpired AS isAccountNonExpired,
                isAccountNonLocked AS isAccountNonLocked,
                isCredentialsNonExpired AS isCredentialsNonExpired,
                isEnabled AS isEnabled
-        FROM member
-        WHERE 1=1
-        AND username = #{username}
+        FROM   member
+        WHERE  username = #{username}
     </select>
 
     <select id="selectMember" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
@@ -75,7 +63,7 @@
                pnum AS pnum,
                email AS email
         FROM   member
-        WHERE  idx = #{idx}
+        WHERE  username=#{username}
     </select>
 
     <update id="updateMember" parameterType="com.project.dto.MemberDTO">

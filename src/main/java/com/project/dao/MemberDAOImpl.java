@@ -36,7 +36,7 @@ public class MemberDAOImpl implements MemberDAO
 
     @Override
     public List<GrantedAuthority>readAuthorities(String username) {
-        return sqlSession.selectOne("readAuthorities", username);
+        return sqlSession.selectList("readAuthorities", username);
     }
 
 
@@ -47,15 +47,15 @@ public class MemberDAOImpl implements MemberDAO
 
 
     @Override
-    public MemberDTO loginMember(MemberDTO member) throws Exception
+    public MemberDTO loginMember(String username)
     {
-       return sqlSession.selectOne("loginMember", member);
+       return sqlSession.selectOne("loginMember", username);
 
     }
 
     @Override
-    public MemberDTO selectMember(int idx) throws Exception {
-        return sqlSession.selectOne("selectMember", idx);
+    public MemberDTO selectMember(MemberDTO member) throws Exception {
+        return sqlSession.selectOne("selectMember", member);
 
     }
 
@@ -73,11 +73,6 @@ public class MemberDAOImpl implements MemberDAO
     public int checkId(MemberDTO member) throws Exception {
         int id = sqlSession.selectOne("checkId", member);
         return id;
-    }
-
-    @Override
-    public MemberDTO readMember(String username) {
-        return sqlSession.selectOne("readMember", username);
     }
 
     @Override

@@ -1,23 +1,22 @@
 package com.project.conf;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.security.Principal;
 import java.util.Collection;
 
 
 public class CustomAuthenticationToken extends AbstractAuthenticationToken {
-    private String email;
+    private String username;
     private String credentials;
 
-    public CustomAuthenticationToken(String email, String credentials, Collection<? extends GrantedAuthority> authorities) {
+    public CustomAuthenticationToken(String username, String credentials, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
-        this.email = email;
+        this.username = username;
         this.credentials = credentials;
-    }
-
-    public CustomAuthenticationToken(Collection<? extends GrantedAuthority> authorities) {
-        super(authorities);
     }
 
     @Override
@@ -27,6 +26,17 @@ public class CustomAuthenticationToken extends AbstractAuthenticationToken {
 
     @Override
     public Object getPrincipal() {
-        return this.email;
+        return this.username;
+    }
+
+    @Override
+    public String getName() {
+        if (this.getPrincipal() instanceof UserDetails) {
+            return ((UserDetails)this.getPrincipal()).getUsername();
+        } else if (this.getPrincipal() instanceof Principal) {
+            return ((Principal)this.getPrincipal()).getName();
+        } else {
+            return this.getPrincipal() == null ? "" : this.getPrincipal().toString();
+        }
     }
 }

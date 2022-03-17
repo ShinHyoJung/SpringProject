@@ -28,9 +28,8 @@ public interface MemberService extends UserDetailsService
 
    void insertMember(MemberDTO member) throws Exception;
 
-   MemberDTO loginMember(MemberDTO member) throws Exception;
-
-   MemberDTO selectMember(int idx) throws Exception;
+   MemberDTO loginMember(String username);
+   MemberDTO selectMember(MemberDTO member) throws Exception;
 
    void updateMember(MemberDTO member) throws Exception;
 

@@ -57,15 +57,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //     인증과 권한
         http
                 .authorizeRequests()
-                .antMatchers("/user/**").authenticated()
+                .antMatchers("/write","/read","/list","/info").authenticated()
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
                 .and()
-//     폼 로그인 설정
+                .authenticationProvider(authenticationProvider())
+
                 .formLogin()
                 .loginPage("/Login")
                 .loginProcessingUrl("/doLogin")
-                .defaultSuccessUrl("/", true)
                 .permitAll()
                 .and()
 //     로그아웃 설정
@@ -82,9 +82,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenValiditySeconds(86400) //1day
                 .and()
 //     exceptionHandling
-                .exceptionHandling()
-                .accessDeniedPage("/denied")
-                .and()
+                 .exceptionHandling()
+                 .accessDeniedPage("/denied")
+                 .and()
 //     session 관리
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.NEVER)
@@ -92,6 +92,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 //	    csrf
                 .csrf().disable();
+
+//     폼 로그인 설정
 
 
     }
@@ -115,7 +117,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         );
         filter.setAuthenticationManager(authenticationManagerBean());
         filter.setAuthenticationSuccessHandler(new SimpleUrlAuthenticationSuccessHandler("/"));
-        filter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler("/Login"));
+        filter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler("/denied"));
 
         return filter;
     }

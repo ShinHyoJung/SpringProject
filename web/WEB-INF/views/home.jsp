@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html>
 <head>
@@ -71,10 +71,10 @@
         <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav" style="float:right;">
                     <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
-                <c:if test="${not empty sessionScope.idx}">
+                <sec:authorize access="isAuthenticated()">
                     <li class="active"><a class = "nav-menu" href="/list"> 게시판 </a></li>
                     <div class="nav-underline"></div>
-                </c:if>
+                </sec:authorize>
             </ul>
         </div>
     </div>
@@ -83,23 +83,21 @@
     <div class="inner cover" style="margin-top: 300px;">
         <h1 class="cover-heading">페이지</h1>
         <p class="lead">자유롭게 글을 쓰고, 댓글로 의견을 표현하세요.</p>
-
+        <p> <sec:authentication property="principal.username"/> </p>
     </div>
 
 </main>
 <form class="navbar-form navbar-right" style="display: block; width:100%;">
     <div style="text-align: right; max-width: 1000px; margin: 0 auto;">
-        <c:choose>
-            <c:when test="${empty sessionScope.idx}">
+            <sec:authorize access="isAnonymous()">
                 <a class="btn btn-default navbar-btn" href="/Login">로그인</a>
                 <a class="btn btn-default navbar-btn" href="/beforeSignup">회원가입</a>
-            </c:when>
-            <c:otherwise>
+            </sec:authorize>
+            <sec:authorize access="isAuthenticated()">
                 <button class = "btn btn-default navbar-btn" type="button" onclick="Logout()">로그아웃</button>
                 <a id="logout" href="/Logout"></a>
-                <a class="btn btn-default navbar-btn" href="/info">회원정보</a>
-            </c:otherwise>
-        </c:choose>
+                <a class="btn btn-default navbar-btn" href="/Info">회원정보</a>
+            </sec:authorize>
     </div>
 </form>
 <script>

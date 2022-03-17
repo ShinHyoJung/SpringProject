@@ -187,7 +187,7 @@ public class MemberDTO implements UserDetails {
 
     @Override
     public String toString() {
-        return "MemberDTO [id=" + id + ", password=" + password + ", name=" + name + ", pnum=" + pnum + ", email=" + email +
+        return "MemberDTO [idx=" + idx +", id=" + id + ", password=" + password + ", name=" + name + ", pnum=" + pnum + ", email=" + email +
                 ", datetime=" + datetime + ", updatetime=" + updatetime + ", authorities=" + authorities + ", isAccountNonExpired=" +
                 isAccountNonExpired() + ", isAccountNonLocked=" + isAccountNonLocked() + ", isCredentialNonExpired=" +
                 isCredentialsNonExpired() + ", isEnabled=" + isEnabled() + "]";
