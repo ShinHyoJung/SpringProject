@@ -26,26 +26,26 @@ import java.util.List;
 public class MemberServiceImpl implements MemberService
 {
 
-    @Autowired
+    @Autowired // 의존성주입을 하면 결합도가 약해짐, 간접적으로 연결됨 의존성은 단방향성
     MemberDAO memberDAO;
 
     @Autowired
     private JavaMailSender mailSender;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{ // SpringSecurity에서 제공하는 인터페이스로, DB에 접근해서 사용자정보를 가져옴
             MemberDTO member = memberDAO.loginMember(username);
 
             int authkey = member.getAuthkey();
             if(authkey==1) { //인증키가 1이면
-                member.setAuthorities(getAuthorities(username));
-                return member; // 로그인실행
+                member.setAuthorities(getAuthorities(username)); // 권한테이블로부터 권한을 갖게됨
+                return member; // member값 반환함으로써, 로그인실행
             }
 
             return null; // 인증키가 1이아니면 로그인 안함
     }
 
-    @Override
+    @Override // 이미 선언된 함수를 바꿔치기
     public Collection<GrantedAuthority> getAuthorities(String username)  {
         List<GrantedAuthority> authorities = memberDAO.readAuthorities(username);
         return authorities;

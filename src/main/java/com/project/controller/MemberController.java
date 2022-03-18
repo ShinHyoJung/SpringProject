@@ -162,7 +162,7 @@ public class MemberController {
 
     @ResponseBody // 아이디중복체크
     @RequestMapping(value="/checkId", method=RequestMethod.POST)
-    public int checkMember(MemberDTO member) throws Exception {
+    public int checkMember(MemberDTO member) throws Exception { // 파라미터
         int id = memberService.checkId(member);
         return id;
     }

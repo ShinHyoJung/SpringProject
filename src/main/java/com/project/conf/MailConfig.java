@@ -20,7 +20,7 @@ public class MailConfig {
     }
 
     @Bean(name="mailSender")
-    public JavaMailSender getJavaMailSender() {
+    public JavaMailSender getJavaMailSender() { //
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", true);
         properties.put("mail.transport.protocol", "smtp");
