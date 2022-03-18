@@ -1,5 +1,5 @@
 package com.project.conf;
-
+/*
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -33,7 +33,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             throw new BadCredentialsException("username is not found. username=" + username);
         }
 
-        if (!this.passwordEncoder.matches(password, user.getPassword())) { //화면에서 입력한 비밀번호와 db에서 가져온 비밀번호를 비교하는 로직이다.
+        if (!this.passwordEncoder.matches(password, user.getPassword())) { //화면에서 입력한 비밀번호와 DB에서 가져온 비밀번호를 비교하는 로직이다.
             throw new BadCredentialsException("password is not matched");
         }
 
@@ -46,5 +46,5 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     }
 
 }
-
+*/
 

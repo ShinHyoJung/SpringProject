@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>아이디찾기</title>
@@ -20,10 +21,10 @@
     <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav" style="float:right;">
             <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
-            <c:if test="${not empty sessionScope.idx}">
+            <sec:authorize access="isAuthenticated()">
                 <li class="active"><a class = "nav-menu" href="/list"> 게시판 </a></li>
                 <div class="nav-underline"></div>
-            </c:if>
+            </sec:authorize>
         </ul>
     </div>
     </div>
@@ -33,8 +34,8 @@
         <form method="post" action="/findId" style="max-width: 300px; margin-left: 700px; margin-top:100px;">
             <label for="name">이름</label>
             <input class="form-control" type="text" id="name" name="name"/>
-            <label for="email">이메일</label>
-            <input class="form-control" type="text" id="email" name="email"/> <br>
+            <label for="pnum">전화번호</label>
+            <input class="form-control" type="text" id="pnum" name="pnum"/> <br>
             <button type="submit" class="btn btn-default" value="check">아이디찾기</button>
         </form>
 

@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>게시글쓰기</title>
@@ -21,10 +22,10 @@
     <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav" style="float:right;">
             <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
-            <c:if test="${not empty sessionScope.idx}">
+            <sec:authorize access="isAuthenticated()">
                 <li class="active"><a class = "nav-menu" href="/list"> 게시판 </a></li>
                 <div class="nav-underline"></div>
-            </c:if>
+            </sec:authorize>
         </ul>
     </div>
     </div>
@@ -34,8 +35,10 @@
     <table class="table table-bordered">
         <tr>
             <td>
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
                 <input type="checkbox" id="bpin" name="bpin" value="1">
                 <label for="bpin">공지글 <span></span></label> <br>
+                </sec:authorize>
                 제목 <textarea class="form-control" rows="1" name="btitle" id="btitle" style="height:30px; "></textarea>
             </td>
         <tr>

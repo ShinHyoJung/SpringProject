@@ -17,7 +17,7 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 
         // TODO Auto-generated method stub
         return new Class[] {
-           RootConfig.class, SecurityConfig.class
+           RootConfig.class,SecurityConfig.class
         };
     }
 
@@ -42,7 +42,7 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
         characterEncodingFilter.setForceEncoding(true);
 
         return new Filter[] { characterEncodingFilter
-        //,new DelegatingFilterProxy("springSecurityFilterChain")
+        ,new DelegatingFilterProxy("springSecurityFilterChain")
                 };
     }
 

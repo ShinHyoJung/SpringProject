@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>회원가입</title>
@@ -21,10 +22,10 @@
     <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav" style="float:right;">
             <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
-            <c:if test="${not empty sessionScope.idx}">
+            <sec:authorize access="isAuthenticated()">
                 <li class="active"><a class = "nav-menu" href="/list"> 게시판 </a></li>
                 <div class="nav-underline"></div>
-            </c:if>
+            </sec:authorize>
         </ul>
     </div>
     </div>
@@ -59,7 +60,7 @@
             <input id="email" type="text" class= "form-control" style="width:50%;" name="email" placeholder="이메일을 입력해주세요."/>
         </div>    <br>
         <div class="form-group">
-        <button class="btn btn-default" type="button" onclick="signup()">가입하기</button>
+        <button class="btn btn-default" type="button" onclick="signUp()">가입하기</button>
         </div>
     </form>
 
@@ -92,15 +93,26 @@
         }
 
     }
+    // 아이디 유효성체크
+    function idCheck() {
+
+        form.id.value = form.id.value.trim();
+
+        if(!form.id.value) {
+            alert("아이디를 입력해주세요.");
+        }else {
+            overlapCheck();
+        }
+    }
 
     // 아이디 중복체크
-    function idCheck() {
+    function overlapCheck() {
 
         const id = document.getElementById("id").value;
 
         $.ajax({
             method: "post",
-            url: "/checkMember",
+            url: "/checkId",
             data: {id: id},
             dataType: "json",
             success: function (data) {
@@ -117,7 +129,7 @@
         });
     }
 
-    function signup() {
+    function signUp() {
 
         const check = document.getElementById("check").value;
 

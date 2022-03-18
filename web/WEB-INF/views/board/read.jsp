@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <html>
 <head>
@@ -24,10 +25,10 @@
     <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav" style="float:right;">
             <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
-            <c:if test="${not empty sessionScope.idx}">
+            <sec:authorize access="isAuthenticated()">
                 <li class="active"><a class = "nav-menu" href="/list"> 게시판 </a></li>
                 <div class="nav-underline"></div>
-            </c:if>
+            </sec:authorize>
         </ul>
     </div>
     </div>
@@ -119,11 +120,11 @@
                 <td style="width:10%;">${comments.cwriter}</td>
 
                 <td class="comment_content" user_idx="${user.idx}" comments_idx = "${comments.idx}" style="display: block;">${comments.ctext}</td>
-                <td class="modify_comment" style="display: none;"><textarea id = "comment_ctext" class="form-control" style="width: 90%;">${comments.ctext}</textarea></td>
+                <td class="modify_comment" style="display: none;"><textarea id="texts" class="form-control" style="width: 90%;">${comments.ctext}</textarea></td>
                 <c:if test="${user.idx eq comments.idx}">
                 <td style="width:10%;">
                     <button class="btn btn-default select_comment" comment_idx = "${comments.idx}" style="display: block;">수정</button>
-                    <button class="btn btn-default update_comment" type="button" onclick="update()" comment_cno = "${comments.cno}" comment_bno="${comments.bno}" style="display: none;">등록</button>
+                    <button class="btn btn-default update_comment" id = "update" type="button" onclick="update()" comment_cno = "${comments.cno}" comment_bno="${comments.bno}" style="display: none;">등록</button>
 
                     <button class="btn btn-default delete_comment" comment_idx="${comments.idx}" value="${comments.cno}" style="display: block;">삭제</button>
                 </td>
@@ -142,7 +143,7 @@
     let board_no = $(".heart").attr("board_no");
 
 
-    function remove() {
+    function remove() { // 게시글 삭제
         if(confirm("정말 삭제하시겠습니까?")) {
             removeForm.submit();
             alert("삭제되었습니다.");
@@ -150,17 +151,18 @@
         }
     }
 
-    function downFile() {
+    function downFile() { // 파일 다운
         downForm.submit();
     }
 
-    function enterComment() {
+    function enterComment() { // 엔터키 누르면 등록되도록
         if(window.event.keyCode == 13) {
             enroll();
         }
     }
 
-    function enroll() {
+    function enroll() { // 댓글 등록
+
         commentForm.text.value = commentForm.text.value.trim();
 
         if(!commentForm.text.value) {
@@ -172,18 +174,25 @@
     }
 
     $(".delete_comment").on("click", function () { // 댓글 삭제
-        let comment_no = $(this).val();
 
-        $.ajax({
+        if(confirm("정말 삭제하시겠습니까?")) {
+            let comment_no = $(this).val();
 
-            method: "post",
-            url: "/deleteComment",
-            data: {cno: comment_no}
-        })
-        .done (data => {
-            $(this).parent().parent().remove();
-            location.reload();
-        });
+            $.ajax({
+
+                method: "post",
+                url: "/deleteComment",
+                data: {cno: comment_no}
+            })
+                .done (data => {
+                    $(this).parent().parent().remove();
+                    location.reload();
+                });
+
+        } else {
+
+        }
+
     });
 
     $(".select_comment").on("click", function() { // 수정할 내용 불러오기, 등록버튼활성화
@@ -194,16 +203,13 @@
         $(this).parent().parent().find(".update_comment").css("display", "block");
     });
 
-    function update() {
+    $(".update_comment").on("click", function () { // 댓글 수정
 
-        var comment_text = $("#comment_ctext").val();
-        commentForm.text.value = commentForm.text.value.trim();
+        document.getElementById("texts").value = document.getElementById("texts").value.trim();
 
-        if(!comment_text) {
+        if(!document.getElementById("texts").value) {
             alert("수정할 내용을 입력해주세요.");
-        } else if (comment_text) {
-
-            $(".update_comment").on("click", function () { // 수정
+        } else {
 
             let comment_cno = $(this).parent().parent().find('.update_comment').attr("comment_cno");
             let comment_content = $(this).parent().parent().find('td > textarea').val();
@@ -217,13 +223,13 @@
                 .done(data => {
                     $('#tbody_comment').html(html); // 선택 요소 안의 내용을 가져오거나 바꿈
                 });
-        });
 
-            $(".update_comment").on("click", function () { // 댓글 수정후, 새로고침
-                location.reload();
-            });
+
+            //   $(".update_comment").on("click", function () { // 댓글 수정후, 새로고침
+            location.reload();
         }
-    }
+          //  });
+       });
 
     $("#empty_heart").on("click", function () { // 좋아요
 

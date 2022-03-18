@@ -3,6 +3,7 @@ package com.project.controller;
 import com.project.dto.CommentDTO;
 import com.project.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ public class CommentController {
     @Autowired
     CommentService commentService;
 
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/writeComment")
     public String writeComment(CommentDTO comment) throws Exception { // 댓글 쓰기
 
@@ -32,6 +34,7 @@ public class CommentController {
         return "redirect:read/"+bno;
     }
 
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/deleteComment")
     public String deleteComment(CommentDTO comment) throws Exception { // 댓글 삭제
 
@@ -40,6 +43,7 @@ public class CommentController {
         return "redirect:read/" + bno;
     }
 
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/updateComment")
     public String updateComment(CommentDTO comment, Model model) throws Exception { // 댓글 수정
 

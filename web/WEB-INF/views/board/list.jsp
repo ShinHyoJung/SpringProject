@@ -64,7 +64,7 @@
 
     <table class="table table-hover" style="width:50%;  margin-top: 100px; margin-left: 450px;">
         <tr>
-            <div style="margin-left: 300px;">
+            <div style="margin-top:50px; margin-left: 450px; font-size: 25px;">
             <c:if test="${not empty page.cri.keyword}">
 
                 검색결과 : '${page.cri.keyword}'

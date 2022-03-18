@@ -45,6 +45,7 @@
                password AS password,
                name AS name,
                nickname AS nickname,
+               username AS username,
                authkey AS authkey,
                isAccountNonExpired AS isAccountNonExpired,
                isAccountNonLocked AS isAccountNonLocked,

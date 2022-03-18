@@ -4,10 +4,8 @@ import com.project.dto.MemberDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Collection;
-import java.util.Map;
 
 /**
  * Created with IntellliJ IDEA.
@@ -29,7 +27,7 @@ public interface MemberService extends UserDetailsService
    void insertMember(MemberDTO member) throws Exception;
 
    MemberDTO loginMember(String username);
-   MemberDTO selectMember(MemberDTO member) throws Exception;
+   MemberDTO selectMember(String username) throws Exception;
 
    void updateMember(MemberDTO member) throws Exception;
 
@@ -37,7 +35,7 @@ public interface MemberService extends UserDetailsService
 
    int checkId(MemberDTO member) throws Exception;
 
-   MemberDTO findId(MemberDTO member) throws Exception;
+   MemberDTO findId(MemberDTO username) throws Exception;
 
    void updateAuthKey(String email) throws Exception;
 

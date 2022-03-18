@@ -83,7 +83,6 @@
     <div class="inner cover" style="margin-top: 300px;">
         <h1 class="cover-heading">페이지</h1>
         <p class="lead">자유롭게 글을 쓰고, 댓글로 의견을 표현하세요.</p>
-        <p> <sec:authentication property="principal.username"/> </p>
     </div>
 
 </main>

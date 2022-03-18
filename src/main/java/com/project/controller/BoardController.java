@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +52,7 @@ public class BoardController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @RequestMapping(value="/list", method= RequestMethod.GET) // 게시판 목록
     public String List(Criteria cri, Model model) throws Exception {
 
@@ -64,16 +66,19 @@ public class BoardController {
         return "board/list";
     }
 
-    @Secured("ROLE_USER")
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @RequestMapping("/write") // 게시글 쓰기
-    public String writeBoard(MemberDTO member, Model model, HttpSession session) throws Exception {
+    public String writeBoard(Model model) throws Exception {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails)principal).getUsername();
 
-        int idx = (int)session.getAttribute("idx");
+        MemberDTO user = memberService.selectMember(username);
        // MemberDTO user = memberService.selectMember();
-       // model.addAttribute("user", user);
+        model.addAttribute("user", user);
         return "board/write";
     }
 
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/enroll") // 게시글 등록
     public String enrollBoard(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception {
 
@@ -84,24 +89,30 @@ public class BoardController {
         while(iterator.hasNext()) { // 컬렉션에 저장되어있는 요소들을 읽어오는 방법 표준화, 요소가 있으면 true, 없으면 false
             multipartFile = mpRequest.getFile(iterator.next());
             if(multipartFile.isEmpty() == false) {
-                log.println("-------file start------");
-                log.println("name : " + multipartFile.getName());
-                log.println("filename : " + multipartFile.getOriginalFilename());
-                log.println("size: " + multipartFile.getSize());
-                log.println(("----------end----------"));
+                logger.debug("-------file start------");
+                logger.debug("name : " + multipartFile.getName());
+                logger.debug("filename : " + multipartFile.getOriginalFilename());
+                logger.debug("size: " + multipartFile.getSize());
+                logger.debug("----------end----------");
             }
         }
         return "redirect:/list";
     }
 
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping(value="/read/{bno}", method = RequestMethod.GET) // 게시글 읽기
     public String readBoard(@PathVariable("bno")int bno, MemberDTO member, Model model, HttpSession session) throws Exception {
         // 게시글 번호를 받아서 경로설정
 
         BoardDTO board = boardService.selectBoard(bno); //게시글
         model.addAttribute("board", board);
-        int idx = (int)session.getAttribute("idx");
-       // MemberDTO user = memberService.selectMember(idx);
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = ((UserDetails)principal).getUsername();
+
+        member = memberService.selectMember(username);
+        int idx = member.getIdx();
+        MemberDTO user = memberService.selectMember(username);
 
         HeartDTO heart = heartService.selectHeart(bno, idx);
 
@@ -112,7 +123,7 @@ public class BoardController {
 
         List<Map<String, Object>> file = boardService.selectFile(bno);
 
-      //  model.addAttribute("user", user);
+        model.addAttribute("user", user);
         model.addAttribute("heart", heart);
         model.addAttribute("comments", comments);
         model.addAttribute("file", file);
@@ -120,6 +131,7 @@ public class BoardController {
         return "board/read";
     }
 
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping(value="/modify/{bno}", method = RequestMethod.GET) // 게시글 수정 페이지
     public String modifyBoard(@PathVariable("bno")int bno, Model model) throws Exception {
 
@@ -128,7 +140,7 @@ public class BoardController {
         return "board/modify";
     }
 
-
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping(value = "/update", method = RequestMethod.POST) // 게시글 수정
     public String updateBoard(BoardDTO board) throws Exception {
 
@@ -136,6 +148,7 @@ public class BoardController {
         return "redirect:list";
     }
 
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/delete") // 게시글 삭제
     public String deleteBoard(int bno) throws Exception {
 
@@ -143,6 +156,7 @@ public class BoardController {
         return "redirect:list";
     }
 
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping(value="/search/{bwriter}", method=RequestMethod.GET) // 게시글 작성자 검색
     public String searchBoard(@PathVariable("bwriter")String bwriter, Model model) throws Exception { //
 
@@ -153,6 +167,7 @@ public class BoardController {
         return "board/search";
     }
 
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/upBoard") // 게시글 좋아요수 증가
     public String upBoard(int bno) throws Exception {
 
@@ -161,6 +176,7 @@ public class BoardController {
         return "success";
     }
 
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/downBoard")
     @ResponseBody
     public String downBoard(int bno) throws Exception { // 게시글 좋아요수 감소
@@ -169,7 +185,8 @@ public class BoardController {
         return "success";
     }
 
-    @RequestMapping("/downFile")
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
+    @RequestMapping("/downFile") // 파일 다운로드
     public void downFile(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception {
         Map<String, Object> resultMap = boardService.downFile(map);
 

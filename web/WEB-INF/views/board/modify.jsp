@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>게시글 수정</title>
@@ -20,10 +21,10 @@
     <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav" style="float:right;">
             <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
-            <c:if test="${not empty sessionScope.idx}">
+            <sec:authorize access="isAuthenticated()">
                 <li class="active"><a class = "nav-menu" href="/list"> 게시판 </a></li>
                 <div class="nav-underline"></div>
-            </c:if>
+            </sec:authorize>
         </ul>
     </div>
     </div>
@@ -53,20 +54,22 @@
     function check() {
 
         updateForm.btitle.value = updateForm.btitle.value.trim();
-        updateForm.bcontent.value = updateForm.btitle.value.trim();
+        updateForm.bcontent.value = updateForm.bcontent.value.trim();
 
-        if(!updateForm.btitle.value) {
+        if(updateForm.btitle.value && updateForm.bcontent.value) {
+            update_check = 1;
+        }else if(!updateForm.btitle.value && !updateForm.bcontent.value){
+            alert("제목과 내용을 입력해주세요.");
+        }else if(!updateForm.bcontent.value) {
+            alert("내용을 입력해주세요.");
+        }else if(!updateForm.btitle.value) {
             alert("제목을 입력해주세요.");
-            update_check = 0;
-        }else {
-            update_check =1;
         }
     }
 
     function restore() {
         if(confirm("저장하시겠습니까?")) {
             check();
-
                 if(update_check ==0) {
                     location.reload();
                 } else if(update_check==1) {

@@ -26,7 +26,7 @@ public interface MemberDAO
 
         MemberDTO loginMember(String username);
 
-        MemberDTO selectMember(MemberDTO member) throws Exception;
+        MemberDTO selectMember(String username) throws Exception;
 
         void updateMember(MemberDTO member) throws Exception;
 

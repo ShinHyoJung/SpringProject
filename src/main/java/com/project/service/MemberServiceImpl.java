@@ -8,11 +8,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.List;
 
@@ -68,7 +66,7 @@ public class MemberServiceImpl implements MemberService
         sendMail.setSubject("인증메일입니다.");
         sendMail.setText("<h1> 이메일 인증</h1>" +
                 "<br>" + member.getName()+"님"+
-                "<br> 아래 [이메일 인증확인]을 눌러주세요." +
+                "<br> 아래 [이메일 인증확인]을 눌러주세요.<br>" +
                 "<a href='http://localhost:8080/SignupEmail?email=" +
                 member.getEmail() + "&key=" + key +
                 " ' target='_blenk'>이메일 인증 확인</a>");
@@ -84,8 +82,8 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
-    public MemberDTO selectMember(MemberDTO member) throws Exception {
-           return memberDAO.selectMember(member);
+    public MemberDTO selectMember(String username) throws Exception {
+           return memberDAO.selectMember(username);
     }
 
     @Override
@@ -105,8 +103,8 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
-    public MemberDTO findId(MemberDTO member) throws Exception {
-        return memberDAO.findId(member);
+    public MemberDTO findId(MemberDTO username) throws Exception {
+        return memberDAO.findId(username);
     }
 
     @Override

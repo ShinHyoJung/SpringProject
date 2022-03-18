@@ -5,6 +5,7 @@ import com.project.dto.HeartDTO;
 import com.project.service.BoardService;
 import com.project.service.HeartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,14 +26,16 @@ public class HeartController {
     @Autowired
     HeartService heartService;
 
-    @RequestMapping("/insertHeart")
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
+    @RequestMapping("/insertHeart") // 좋아요 하트생성
     @ResponseBody
     public String insertHeart(HeartDTO heart) throws Exception {
         heartService.insertHeart(heart);
         return "success";
     }
 
-    @RequestMapping("/deleteHeart")
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
+    @RequestMapping("/deleteHeart") // 좋아요 하트 삭제
     @ResponseBody
     public String deleteHeart(HeartDTO heart) throws Exception {
 
@@ -41,7 +44,8 @@ public class HeartController {
         return "success";
     }
 
-    @RequestMapping("/updateHeart")
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
+    @RequestMapping("/updateHeart") // 하트 삭제후 다시 생성시,
     @ResponseBody
     public String updateHeart(HeartDTO heart) throws Exception {
 
