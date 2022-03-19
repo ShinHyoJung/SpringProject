@@ -2,7 +2,6 @@ package com.project.service;
 
 import com.project.dto.BoardDTO;
 import com.project.dto.Criteria;
-import com.project.dto.PagingDTO;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public interface BoardService {
 
     BoardDTO modifyBoard(int bno) throws Exception;
 
-    void updateBoard(BoardDTO board) throws Exception;
+    void updateBoard(BoardDTO board, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws Exception;
 
     void deleteBoard(int bno) throws Exception;
 
@@ -42,5 +41,6 @@ public interface BoardService {
     List<Map<String, Object>> selectFile(int bno) throws Exception;
 
     Map<String, Object> downFile(Map<String, Object> map) throws Exception;
+
 
 }

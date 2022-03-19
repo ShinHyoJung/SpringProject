@@ -81,10 +81,18 @@
 </nav>
 <main style="max-width: 800px; margin: 0 auto; min-height: 400px;">
     <div class="inner cover" style="margin-top: 280px;">
+        <sec:authorize access="isAuthenticated()">
+            <p style="font-size: 20px;">
+                <sec:authentication property="principal.username"/> 님 환영합니다.
+            </p>
+        </sec:authorize>
         <h1 class="cover-heading">페이지</h1>
         <p class="lead">자유롭게 글을 쓰고, 댓글로 의견을 표현하세요.</p>
     </div>
 
+    <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+        <a href="/admin">관리자 페이지</a>
+    </sec:authorize>
 </main>
 <form class="navbar-form navbar-right" style="display: block; width:100%;">
     <div style="text-align: right; max-width: 1000px; margin: 0 auto;">

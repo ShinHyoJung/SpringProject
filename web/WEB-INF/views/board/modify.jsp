@@ -40,6 +40,21 @@
             <td style="width:200px; height:300px;"><textarea class="form-control" rows="20" name="bcontent" style="height:300px;">${board.bcontent}</textarea></td>
             <tr>
                 <td style="width:200px; height:30px;">${board.bhit}</td>
+            <tr>
+            <c:if test="${not empty file}">
+                <td>
+                <c:forEach var="file" items="${file}">
+
+                    <input type="hidden" id="file_no" value="${file.fno}">
+                    ${file.org_fname} ${file.fsize}.kb
+                </c:forEach>
+                <button type="button" id="removeFile" onclick="removeFile()">삭제</button>
+                </td>
+            <tr>
+                <td>
+                    <input type="file" name="file">파일추가</input>
+                </td>
+            </c:if>
         </table>
         <input type="hidden" name="bno" value="${board.bno}">
         <input type="hidden" name="idx" value="${board.idx}">
@@ -79,6 +94,10 @@
             } else {
 
             }
+    }
+
+    function removeFile() {
+        $("#removeFile").parent().remove();
     }
 
 </script>

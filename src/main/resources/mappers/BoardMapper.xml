@@ -162,6 +162,12 @@
       ]]>
     </select>
 
+    <update id="updateFile" parameterType="java.util.HashMap">
+        UPDATE  file
+        SET     file='Y'
+        WHERE   file_no = #{fno}
+    </update>
+
     <sql id="criteria">
         <trim prefix="where (" suffix=")" prefixOverrides="OR">
             <foreach collection="typeArr" item="type">

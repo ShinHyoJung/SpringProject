@@ -60,7 +60,7 @@
             <input id="email" type="text" class= "form-control" style="width:50%;" name="email" placeholder="이메일을 입력해주세요."/>
         </div>    <br>
         <div class="form-group">
-        <button class="btn btn-default" type="button" onclick="signUp()">가입하기</button>
+        <button class="btn btn-default" type="button" onclick="checkEmail()">가입하기</button>
         </div>
     </form>
 
@@ -127,6 +127,26 @@
                 alert("ajax error" + error);
             }
         });
+    }
+
+    // 이메일 중복체크 
+    function checkEmail() {
+
+        var email = form.email.value;
+
+        $.ajax ({
+            method: "post",
+            url: "/checkEmail",
+            data: {email: email},
+            dataType: "json",
+            success: function (data) {
+                if(data ==1) {
+                    alert("이미 존재하는 이메일 입니다.")
+                } else if (data ==0) {
+                    signUp();
+                }
+            }
+        })
     }
 
     function signUp() {

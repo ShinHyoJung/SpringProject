@@ -6,6 +6,7 @@ import com.project.dto.PagingDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 import java.util.Map;
@@ -96,5 +97,10 @@ public class BoardDAOImpl implements BoardDAO {
     @Override
     public Map<String, Object> downFile(Map<String, Object> map) throws Exception {
         return sqlSession.selectOne("downFile", map);
+    }
+
+    @Override
+    public void updateFile(Map<String, Object> map) throws Exception {
+        sqlSession.update("updateFile", map);
     }
 }

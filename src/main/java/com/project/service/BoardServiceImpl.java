@@ -31,10 +31,10 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void insertBoard(BoardDTO board, MultipartHttpServletRequest mpRequest) throws  Exception {
         boardDAO.insertBoard(board);
-
+        // mpRequest로 첨부파일 파라미터를 받음
         List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(board, mpRequest);
         int size = list.size();
-        for(int i=0; i<size; i++) {
+        for(int i=0; i<size; i++) { // 여러개의 첨부파일을 등록할 수 있게하기위해서 반복문 사용
             boardDAO.insertFile(list.get(i));
         }
     }
@@ -57,8 +57,21 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void updateBoard(BoardDTO board) throws Exception {
+    public void updateBoard(BoardDTO board, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws Exception {
         boardDAO.updateBoard(board);
+
+        List<Map<String, Object>> list = fileUtils.parseUpdateFileInfo(board, files, fileNames, mpRequest);
+        Map<String, Object> tempMap = null;
+
+        int size = list.size();
+        for(int i=0; i<size; i++) {
+            tempMap = list.get(i);
+            if(tempMap.get("IS_NEW").equals("Y")) {
+                boardDAO.insertFile(tempMap);
+            } else {
+                boardDAO.updateFile(tempMap);
+            }
+        }
     }
 
     @Override
@@ -100,4 +113,6 @@ public class BoardServiceImpl implements BoardService {
     public Map<String, Object> downFile(Map<String, Object> map) throws Exception {
         return boardDAO.downFile(map);
     }
+
+
 }

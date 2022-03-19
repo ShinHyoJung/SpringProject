@@ -103,6 +103,12 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
+    public int checkEmail(MemberDTO member) throws Exception {
+        int email = memberDAO.checkEmail(member);
+        return email;
+    }
+
+    @Override
     public MemberDTO findId(MemberDTO username) throws Exception {
         return memberDAO.findId(username);
     }

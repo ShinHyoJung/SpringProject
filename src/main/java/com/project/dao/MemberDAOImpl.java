@@ -76,6 +76,12 @@ public class MemberDAOImpl implements MemberDAO
     }
 
     @Override
+    public int checkEmail(MemberDTO member) throws Exception {
+        int email = sqlSession.selectOne("checkEmail", member);
+        return email;
+    }
+
+    @Override
     public MemberDTO findId(MemberDTO member) throws Exception {
         return sqlSession.selectOne("findId", member);
     }

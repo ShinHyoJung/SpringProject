@@ -89,6 +89,12 @@
         WHERE  id = #{id}
     </select>
 
+    <select id="checkEmail" parameterType="com.project.dto.MemberDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM   member
+        WHERE  email = #{email}
+    </select>
+
     <insert id="createAuthority" parameterType="org.springframework.security.core.GrantedAuthority">
         INSERT INTO authority (
             username,

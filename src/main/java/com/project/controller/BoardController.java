@@ -16,7 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import javax.servlet.http.HttpServlet;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -24,8 +24,6 @@ import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
 /**
  * Created with IntellliJ IDEA.
@@ -103,7 +101,7 @@ public class BoardController {
     @RequestMapping(value="/read/{bno}", method = RequestMethod.GET) // 게시글 읽기
     public String readBoard(@PathVariable("bno")int bno, MemberDTO member, Model model, HttpSession session) throws Exception {
         // 게시글 번호를 받아서 경로설정
-
+        // pathVariable은 RESTful 방식에 맞게 좀 더 직관적
         BoardDTO board = boardService.selectBoard(bno); //게시글
         model.addAttribute("board", board);
 
@@ -135,16 +133,22 @@ public class BoardController {
     @RequestMapping(value="/modify/{bno}", method = RequestMethod.GET) // 게시글 수정 페이지
     public String modifyBoard(@PathVariable("bno")int bno, Model model) throws Exception {
 
+        logger.info("update_page");
         BoardDTO board = boardService.modifyBoard(bno);
         model.addAttribute("board", board);
+
+        List<Map<String, Object>> file = boardService.selectFile(bno);
+        model.addAttribute("file", file);
         return "board/modify";
     }
 
-    @Secured({"ROLE_USER","ROLE_ADMIN"})
+    @Secured({"ROLE_USER","ROLE_ADMIN"
+    })
     @RequestMapping(value = "/update", method = RequestMethod.POST) // 게시글 수정
-    public String updateBoard(BoardDTO board) throws Exception {
+    public String updateBoard(BoardDTO board, @RequestParam(value="fileNoDel[]") String[] files,
+                              @RequestParam(value="fileNameDel[]") String[] fileNames, MultipartHttpServletRequest mpRequest) throws Exception {
 
-        boardService.updateBoard(board);
+        boardService.updateBoard(board, files, fileNames, mpRequest);
         return "redirect:list";
     }
 
@@ -158,7 +162,7 @@ public class BoardController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping(value="/search/{bwriter}", method=RequestMethod.GET) // 게시글 작성자 검색
-    public String searchBoard(@PathVariable("bwriter")String bwriter, Model model) throws Exception { //
+    public String searchBoard(@PathVariable("bwriter")String bwriter, Model model) throws Exception { // 어떤 요청이든간에 하나밖에 못씀
 
         List<BoardDTO> result = boardService.searchBoard(bwriter);
         String writer = bwriter;
@@ -190,8 +194,8 @@ public class BoardController {
     public void downFile(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception {
         Map<String, Object> resultMap = boardService.downFile(map);
 
-        String storedFileName = (String) resultMap.get("stored_fname");
-        String originalFileName = (String) resultMap.get("org_fname");
+        String storedFileName = (String) resultMap.get("stored_fname"); // 저장된 파일이름
+        String originalFileName = (String) resultMap.get("org_fname"); // 원본 파일이름
 
         byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("D:\\file\\"+storedFileName));
 
@@ -203,4 +207,6 @@ public class BoardController {
         response.getOutputStream().flush();
         response.getOutputStream().close();
     }
+
+
 }

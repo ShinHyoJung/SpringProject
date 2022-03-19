@@ -36,6 +36,8 @@ public interface MemberService extends UserDetailsService
 
    int checkId(MemberDTO member) throws Exception;
 
+   int checkEmail(MemberDTO member) throws Exception;
+
    MemberDTO findId(MemberDTO username) throws Exception;
 
    void updateAuthKey(String email) throws Exception;

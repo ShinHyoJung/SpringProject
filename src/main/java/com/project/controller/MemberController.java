@@ -34,9 +34,9 @@ public class MemberController {
     private MemberService memberService;
 
     @RequestMapping("/Login") // 로그인 창
-    public String Login(@RequestParam(value= "error", required = false) String error,
-                        @RequestParam(value="exception", required = false) String exception, Model model) {
-
+    public String Login(@RequestParam(value= "error", required = false) String error, //  value uri에서 바인딩하여 별칭으로 전할 값
+                        @RequestParam(value="exception", required = false) String exception, Model model) { //  required 필수적으로 값이 전달되어야 할 파라미터.
+        // uri로부터 데이터를 전달받아 사용
         logger.info("Login Page");
         model.addAttribute("error", error);
         model.addAttribute("exception", exception);
@@ -167,6 +167,13 @@ public class MemberController {
         return id;
     }
 
+    @ResponseBody
+    @RequestMapping(value="/checkEmail", method = RequestMethod.POST)
+    public int checkEmail(MemberDTO member) throws Exception {
+        int email = memberService.checkEmail(member);
+        return email;
+    }
+
     @RequestMapping("/denied") // 페이지권한이 없을때,
     public String denied() throws Exception {
         return "member/denied";
@@ -214,5 +221,12 @@ public class MemberController {
         memberService.updatePwd(member);
 
         return "redirect:/Login";
+    }
+
+    @Secured("ROLE_ADMIN") // 관리자 페이지
+    @RequestMapping("/admin")
+    public String manageAdmin() throws Exception {
+
+        return "manage/admin";
     }
 }

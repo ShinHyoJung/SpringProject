@@ -34,6 +34,8 @@ public interface MemberDAO
 
         int checkId(MemberDTO member) throws Exception;
 
+        int checkEmail(MemberDTO member) throws Exception;
+
         MemberDTO findId(MemberDTO member) throws Exception;
 
         void insertAuthKey(String email, String authkey) throws Exception;
