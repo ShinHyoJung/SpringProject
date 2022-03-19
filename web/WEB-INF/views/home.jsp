@@ -66,7 +66,7 @@
 </head>
 <body class="background" style="background-color: ghostwhite;">
 <nav class="navbar navbar-default"  style="background-color: ghostwhite; border: 0; max-width: 800px; margin: 25px auto;">
-        <a class="navbar-brand" style="color: thistle">Board</a>
+        <a class="navbar-brand" style="color: thistle; font-size: 40px;">Board</a>
 
         <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav" style="float:right;">
@@ -79,8 +79,8 @@
         </div>
     </div>
 </nav>
-<main style="max-width: 800px; margin: 0 auto; min-height: 500px;">
-    <div class="inner cover" style="margin-top: 300px;">
+<main style="max-width: 800px; margin: 0 auto; min-height: 400px;">
+    <div class="inner cover" style="margin-top: 280px;">
         <h1 class="cover-heading">페이지</h1>
         <p class="lead">자유롭게 글을 쓰고, 댓글로 의견을 표현하세요.</p>
     </div>

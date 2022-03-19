@@ -19,6 +19,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -47,6 +48,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
    private DataSource dataSource;
 
+    @Autowired
+    private AuthenticationFailureHandler customFailureHandler;
+
     @Bean
     public PasswordEncoder passwordEncoder() // 비밀번호 암호화
     {
@@ -57,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception // 인증매커니즘 구현
     {
-//     인증과 권한
+                //     인증과 권한
         http
                 .authorizeRequests() // 요청에대한 권한을 지정
                 .antMatchers("/user/**").access("hasRole('ROLE_USER')")// ROLE_USER 권한을 가진 사용자만 들어갈수있는 페이지설정
@@ -65,37 +69,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll() // 그외에 어떤 요청이든 접근을 전부 허용
                .and()
 
-                .formLogin()
-                .loginPage("/Login")
-                .loginProcessingUrl("/doLogin")
+                //     폼 로그인 설정
+
+                .formLogin()// 폼로그인 설정
+                .loginPage("/Login") // 로그인창을 띄우는 URL
+                .loginProcessingUrl("/doLogin") // 로그인을 실행하는 URL
+                .failureHandler(customFailureHandler)
                 .permitAll()
                 .and()
-//     로그아웃 설정
+
+                //     로그아웃 설정
                 .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/Logout"))
-                .logoutSuccessUrl("/")
-                .invalidateHttpSession(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/Logout")) // 로그아웃을 실행하는 URL
+                .logoutSuccessUrl("/") // 로그아웃이 완료되면 뜨는 URL
+                .invalidateHttpSession(true) // 세션 종료
                 .deleteCookies("JSESSIONID", "remember-me")
                 .and()
-//     remember me 설정
+
+                //     remember me 설정
                 .rememberMe() //로그인한 사용자만 접근, 로그인정보 유지
                 .key("myWeb")
                 .rememberMeParameter("remember-me")
                 .tokenValiditySeconds(86400) //1day
                 .and()
-//     exceptionHandling
+
+                //     exceptionHandling
                  .exceptionHandling()
                  .accessDeniedPage("/denied") //접근 거부되었을때 뜨는 페이지
                  .and()
-//     session 관리
+                //     session 관리
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.NEVER) //
                 .invalidSessionUrl("/Login")
                 .and()
-//	    csrf
+
+                //	    csrf
                 .csrf().disable();
 
-//     폼 로그인 설정
 
     }
 

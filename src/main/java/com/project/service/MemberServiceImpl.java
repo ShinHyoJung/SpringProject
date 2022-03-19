@@ -108,7 +108,7 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
-    public void updateAuthKey(String email) throws Exception {
+    public void updateAuthKey(String email) throws Exception { //
         memberDAO.updateAuthKey(email);
     }
 

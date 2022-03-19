@@ -32,9 +32,9 @@
     </div>
 </nav>
 
-    <form class="form-horizontal"  style="width:50%; margin-left: 600px; margin-top: 150px;"name="loginForm" action="/doLogin" method="post">
+    <form class="form-horizontal"  style="width:50%; margin-left: 650px; margin-top: 150px;"name="loginForm" action="/doLogin" method="post">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-        <h1 style="margin-left: 200px;">로그인</h1>
+        <h1 style="margin-left: 215px;">로그인</h1>
         <div class="form-group">
             <label for="username" class="col-sm-2 control-label">아이디</label>
             <div class="col-sm-10">
@@ -47,18 +47,23 @@
             <input id="password" class="form-control" style="width:30%;" type="password" name="password" onkeyup="enterLogin()" placeholder="비밀번호를 입력해주세요."/> <br>
             </div>
         </div>
+        <div style="margin-left: 60px;">
+            <span>
+                ${exception}
+            </span>
+        </div>
         <div class="form -group">
-        <button class="btn btn-default" style="margin-left: 230px;" type="button"  onclick="loginChk()">로그인</button>
+        <button class="btn btn-default" style="margin-left: 240px;" type="button"  onclick="loginChk()">로그인</button>
         </div>
     </form>
-    <div class = "cookie" style="margin-left: 700px;">
+    <div class = "cookie" style="margin-left: 750px;">
         <input type="checkbox" id="checkId" name="checkId">
         <label for="checkId"><span></span></label>
         아이디저장
     </div>
 
-    <a href="/beforeSignup" style="margin-left: 900px;">회원이 아니신가요?</a> <br>
-    <a href="/findId_page" style="margin-left: 860px;">아이디 찾기</a>
+    <a href="/beforeSignup" style="margin-top: -10px;margin-left: 950px;">회원이 아니신가요?</a> <br>
+    <a href="/findId_page" style="margin-left: 910px;">아이디 찾기</a>
     <a href="/findPwd_page" style="margin-left: 10px;">비밀번호 찾기</a>
 <script>
     var form = document.loginForm;

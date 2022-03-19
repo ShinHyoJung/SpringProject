@@ -2,7 +2,7 @@ package com.project.dto;
 
 import java.util.Random;
 
-public class TempKey {
+public class TempKey { //이메일 인증코드 난수화
 
     private boolean lowerCheck;
     private int size;

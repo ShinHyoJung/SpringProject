@@ -11,10 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
@@ -37,9 +34,12 @@ public class MemberController {
     private MemberService memberService;
 
     @RequestMapping("/Login") // 로그인 창
-    public String Login() {
+    public String Login(@RequestParam(value= "error", required = false) String error,
+                        @RequestParam(value="exception", required = false) String exception, Model model) {
 
         logger.info("Login Page");
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
 
         return "member/login";
     }
@@ -121,7 +121,7 @@ public class MemberController {
 
     @RequestMapping(value="SignupEmail", method = RequestMethod.GET) // 이메일인증
     public String emailConfirm(String email, Model model) throws Exception {
-        memberService.updateAuthKey(email);
+        memberService.updateAuthKey(email); // member 테이블 authkey 1로바꿈
         model.addAttribute("email", email);
 
         return"/member/email_confirm";
@@ -131,9 +131,9 @@ public class MemberController {
     @RequestMapping("/Info") // 회원정보 조회
     public String selectInfo(Model model) throws Exception {
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails)principal).getUsername();
-        System.out.println(username);
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); //
+        String username = ((UserDetails)principal).getUsername(); // 스프링시큐리티 principal 인터페이스에서 사용자 정보를 가져옴
+
         MemberDTO user = memberService.selectMember(username);
         model.addAttribute("user", user);
 
