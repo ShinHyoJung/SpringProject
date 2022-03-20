@@ -35,13 +35,13 @@ public class FileUtils { // 첨부파일 정보를 이용해 설정을 하는 �
         int bno = board.getBno();
 
         File file = new File(filePath);
-        if(file.exists() == false) {
+        if (file.exists() == false) {
             file.mkdirs(); // 디렉토리가 존재하지않으면 경로에 디렉토리만듬
         }
 
-        while(iterator.hasNext()) { // 값이 없어서 false가 나올때까지 값을 계속 받음
+        while (iterator.hasNext()) { // 값이 없어서 false가 나올때까지 값을 계속 받음
             multipartFile = mpRequest.getFile(iterator.next());
-            if(multipartFile.isEmpty() == false) {
+            if (multipartFile.isEmpty() == false) {
                 originalFileName = multipartFile.getOriginalFilename();
                 originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
                 storedFileName = CommonUtils.getRandomString() + originalFileExtension;
@@ -60,7 +60,7 @@ public class FileUtils { // 첨부파일 정보를 이용해 설정을 하는 �
         return list;
     }
 
-    public List<Map<String, Object>> parseUpdateFileInfo(BoardDTO board, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws IOException {
+    public List<Map<String, Object>> parseUpdateFileInfo(BoardDTO board,String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws IOException {
 
         Iterator<String> iterator = mpRequest.getFileNames();
         MultipartFile multipartFile = null;
@@ -73,29 +73,28 @@ public class FileUtils { // 첨부파일 정보를 이용해 설정을 하는 �
 
         int bno = board.getBno();
 
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             multipartFile = mpRequest.getFile(iterator.next());
-            if(multipartFile.isEmpty() == false) {
+            if (multipartFile.isEmpty() == false) { // 새로운 첨부파일을 등록할때,
                 originalFileName = multipartFile.getOriginalFilename();
                 originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
                 storedFileName = CommonUtils.getRandomString() + originalFileExtension;
                 multipartFile.transferTo(new File(filePath + storedFileName));
 
                 listMap = new HashMap<String, Object>();
-
                 listMap.put("bno", bno);
                 listMap.put("org_fname", originalFileName);
                 listMap.put("stored_fname", storedFileName);
                 listMap.put("fsize", multipartFile.getSize());
-                listMap.put("IS_NEW", "Y");
+                listMap.put("fdel", "Y");
                 list.add(listMap);
             }
         }
-        if(files != null && fileNames != null) {
-            for(int i=0; i<fileNames.length; i++) {
+        if(files != null && fileNames != null) { // files와 fileNames가 null이 아니면, 삭제할 파일의 번호와 이름을 받음
+            for(int i = 0; i<fileNames.length; i++) {
                 listMap = new HashMap<String, Object>();
-                listMap.put("IS_NEW", "N");
                 listMap.put("fno", files[i]);
+                listMap.put("fdel", "N");
                 list.add(listMap);
             }
         }

@@ -50,11 +50,14 @@
                  <textarea class="form-control" rows="20" name="bcontent" style="height:300px;"></textarea>
             </td>
         <tr>
-            <td>
-                <input type="file" name="file" placeholder="파일선택" multiple/>
-            </td>
-        </tr>
     </table>
+
+    <div id="fileDiv">
+        <p>
+        </p>
+    </div>
+
+    <button type="button" class="btn btn-primary" onclick="addFile()">파일추가</button>
     <button class="btn btn-default" type="button" onclick="enroll()">등록</button>
     <input type="hidden" value="${user.nickname}" name="bwriter">
     <input type="hidden" value="${user.idx}" name="idx">
@@ -62,6 +65,8 @@
 </form>
 
 <script>
+
+    var count = 1;
 
     function enroll() {
         var form = document.writeForm;
@@ -82,6 +87,24 @@
             }
         }
     }
+
+    function addFile() {
+
+        var str = "<p><input type='file' name='file_"+(count++)+"'/><a href='#this' name='delete' class='btn'>삭제</a></p> ";
+        $("#fileDiv").append(str);
+
+        $("a[name='delete']").on("click",function(){
+            removeFile($(this));
+        })
+
+    }
+
+    function removeFile(obj) {
+        obj.parent().remove();
+    }
+
+
+
 </script>
 </body>
 </html>

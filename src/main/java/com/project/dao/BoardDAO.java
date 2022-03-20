@@ -5,6 +5,7 @@ import com.project.dto.Criteria;
 import com.project.dto.PagingDTO;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -48,4 +49,5 @@ public interface BoardDAO {
     Map<String, Object> downFile(Map<String, Object> map) throws Exception;
 
     void updateFile(Map<String, Object> map) throws Exception;
+
 }

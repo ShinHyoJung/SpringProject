@@ -33,7 +33,6 @@
     </div>
     </div>
 </nav>
-
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <table class="table table-bordered" style="width: 50%; margin-left: 450px;">
         <tr>
@@ -53,18 +52,20 @@
         <tr>
             <td class="read">업데이트날짜: ${board.bupdatetime}</td>
         <c:if test="${not empty file}">
-        <tr>
-            <form name="downForm" method="post" action="/downFile" >
+        <c:forEach var="file" items="${file}">
+            <tr>
             <td class="read">파일
-            <c:forEach var="file" items="${file}">
-                <a href="#" onclick="downFile(); return false;">${file.org_fname}</a>(${file.fsize}kb)
-                <input type="hidden" id = "fno" name="fno" value="${file.fno}">
-            </c:forEach>
+                <a href="#" onclick="downFile(${file.fno}); return false;">${file.org_fname}</a>(${file.fsize}kb)
+
             </td>
-            </form>
-         </c:if>
-        </tr>
+            </c:forEach>
+        </c:if>
+    </tr>
     </table>
+
+    <form name="downForm" method="post" >
+        <input type="hidden" id ="fno" name="fno" value=""/>
+    </form>
 
 <div style="margin-left: 450px;">
 <svg class="heart" id="fill_heart" style="display: none;" heart_no = "${heart.hno}" idx = "${user.idx}" heart_idx = "${heart.idx}" board_no = "${board.bno}" check="${heart.hcheck}" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 512 512">
@@ -151,8 +152,11 @@
         }
     }
 
-    function downFile() { // 파일 다운
-        downForm.submit();
+    function downFile(file_no) { // 파일 다운
+        var form = $("form[name='downForm']");
+        $("#fno").attr("value", file_no);
+        form.attr("action", "/downFile");
+        form.submit();
     }
 
     function enterComment() { // 엔터키 누르면 등록되도록

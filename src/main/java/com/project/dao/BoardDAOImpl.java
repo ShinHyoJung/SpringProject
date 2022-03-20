@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -103,4 +104,5 @@ public class BoardDAOImpl implements BoardDAO {
     public void updateFile(Map<String, Object> map) throws Exception {
         sqlSession.update("updateFile", map);
     }
+
 }

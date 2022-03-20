@@ -164,7 +164,7 @@
 
     <update id="updateFile" parameterType="java.util.HashMap">
         UPDATE  file
-        SET     file='Y'
+        SET     file_del='Y'
         WHERE   file_no = #{fno}
     </update>
 

@@ -57,7 +57,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void updateBoard(BoardDTO board, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws Exception {
+    public void updateBoard(BoardDTO board,String[] files, String [] fileNames, MultipartHttpServletRequest mpRequest) throws Exception {
         boardDAO.updateBoard(board);
 
         List<Map<String, Object>> list = fileUtils.parseUpdateFileInfo(board, files, fileNames, mpRequest);
@@ -66,7 +66,7 @@ public class BoardServiceImpl implements BoardService {
         int size = list.size();
         for(int i=0; i<size; i++) {
             tempMap = list.get(i);
-            if(tempMap.get("IS_NEW").equals("Y")) {
+            if(tempMap.get("fdel").equals("Y")) {
                 boardDAO.insertFile(tempMap);
             } else {
                 boardDAO.updateFile(tempMap);

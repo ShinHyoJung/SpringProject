@@ -145,8 +145,8 @@ public class BoardController {
     @Secured({"ROLE_USER","ROLE_ADMIN"
     })
     @RequestMapping(value = "/update", method = RequestMethod.POST) // 게시글 수정
-    public String updateBoard(BoardDTO board, @RequestParam(value="fileNoDel[]") String[] files,
-                              @RequestParam(value="fileNameDel[]") String[] fileNames, MultipartHttpServletRequest mpRequest) throws Exception {
+    public String updateBoard(BoardDTO board, @RequestParam(value="fileNoDel[]", required = false) String[] files,
+                              @RequestParam(value="fileNameDel[]", required = false) String[] fileNames, MultipartHttpServletRequest mpRequest) throws Exception {
 
         boardService.updateBoard(board, files, fileNames, mpRequest);
         return "redirect:list";
