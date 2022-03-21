@@ -129,12 +129,14 @@ public class MemberController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/Info") // 회원정보 조회
-    public String selectInfo(Model model) throws Exception {
+    public String selectInfo(MemberDTO member, Model model) throws Exception {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); //
         String username = ((UserDetails)principal).getUsername(); // 스프링시큐리티 principal 인터페이스에서 사용자 정보를 가져옴
 
+        member = memberService.selectMember(username);
         MemberDTO user = memberService.selectMember(username);
+
         model.addAttribute("user", user);
 
         return "member/info";
@@ -150,26 +152,29 @@ public class MemberController {
         return "redirect:/Info";
     }
 
-    @Secured("ROLE_USER")
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/quitSignup") // 회원탈퇴
-    public String quitSignup(MemberDTO member, HttpSession session) throws Exception {
+    public String quitSignup(HttpSession session) throws Exception {
 
-        int idx = (int)session.getAttribute("idx");
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); //
+        String username = ((UserDetails)principal).getUsername();
 
-        memberService.deleteMember(idx);
-        return "home";
+        MemberDTO user = memberService.selectMember(username);
+        memberService.deleteMember(user.getIdx());
+        session.invalidate(); //
+        return "redirect:/";
     }
 
-    @ResponseBody // 아이디중복체크
+    @ResponseBody // http요청의 바디내용을 통째로 자바객체로 변환해서 매핑된 메소드 파라미터로 전달, ajax활용시 편함
     @RequestMapping(value="/checkId", method=RequestMethod.POST)
-    public int checkMember(MemberDTO member) throws Exception { // 파라미터
+    public int checkId(MemberDTO member) throws Exception { // 아이디중복체크, 파라미터
         int id = memberService.checkId(member);
         return id;
     }
 
     @ResponseBody
     @RequestMapping(value="/checkEmail", method = RequestMethod.POST)
-    public int checkEmail(MemberDTO member) throws Exception {
+    public int checkEmail(MemberDTO member) throws Exception { // 이메일중복체크
         int email = memberService.checkEmail(member);
         return email;
     }

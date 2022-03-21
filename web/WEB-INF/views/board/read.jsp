@@ -44,7 +44,7 @@
         <tr>
             <td class="read">작성자: ${board.bwriter}</td>
         <tr>
-            <td class="read" style="height:500px;"><c:out value="${board.bcontent}" escapeXml="true"/></td>
+        <td class="read" style="height:500px;"><c:out value="${board.bcontent}" escapeXml="true"/></td>
         <tr>
             <td class="read">조회수: ${board.bhit}</td>
         <tr>

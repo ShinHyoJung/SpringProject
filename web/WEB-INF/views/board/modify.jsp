@@ -31,7 +31,7 @@
     </div>
 </nav>
 
-    <form class="form-group" style="margin-left: 450px;width:50%;" name="updateForm" method="post" action="/update" enctype="multipart/form-data">
+    <form class="form-group" style="margin-left: 450px;width:50%; margin-top: 50px;" name="updateForm" method="post" action="/update" enctype="multipart/form-data">
         <table class="table table-bordered">
             <tr>
                 <td style="width:200px; height:30px;"><textarea class="form-control" rows="20" name="btitle" style="height:30px; ">${board.btitle}</textarea></td>
@@ -67,6 +67,8 @@
         <button class="btn btn-primary" type="button" onclick="addFile()">파일추가</button>
         <button class="btn btn-default" type="button" onclick="restore()">저장</button>
     </form>
+
+<a href="/list" style="margin-left: 1350px;">뒤로가기</a>
 </body>
 
 <script>

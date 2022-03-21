@@ -93,6 +93,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenValiditySeconds(86400) //1day
                 .and()
 
+                .headers()
+                .frameOptions() //에디터가 사용되도록 security에서 막는 iframe기능 사용
+                .disable()
+                .and()
                 //     exceptionHandling
                  .exceptionHandling()
                  .accessDeniedPage("/denied") //접근 거부되었을때 뜨는 페이지

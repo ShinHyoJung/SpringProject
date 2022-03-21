@@ -197,14 +197,14 @@ public class BoardController {
         String storedFileName = (String) resultMap.get("stored_fname"); // 저장된 파일이름
         String originalFileName = (String) resultMap.get("org_fname"); // 원본 파일이름
 
-        byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("D:\\file\\"+storedFileName));
+        byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("D:\\file\\"+storedFileName)); //
 
-        response.setContentType("application/octet-stream");
+        response.setContentType("application/octet-stream"); // contentType을 다르게 지정하여 응답. mime형식, 8비트로 된 데이터
         response.setContentLength(fileByte.length);
-        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(originalFileName, "UTF-8")+"\";");
-        response.setHeader("Content-Transfer-Encoding", "binary");
-        response.getOutputStream().write(fileByte);
-        response.getOutputStream().flush();
+        response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(originalFileName, "UTF-8")+"\";"); // name 헤더의 값을 value로 지정
+        response.setHeader("Content-Transfer-Encoding", "binary"); //
+        response.getOutputStream().write(fileByte); //
+        response.getOutputStream().flush(); //
         response.getOutputStream().close();
     }
 

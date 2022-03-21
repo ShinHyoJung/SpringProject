@@ -62,7 +62,7 @@
     </div>
 </nav>
 
-    <table class="table table-hover" style="width:50%;  margin-top: 100px; margin-left: 450px;">
+    <table class="table table-hover" style="width:50%;  margin-top: 100px; margin-left: 460px;">
         <tr>
             <div style="margin-top:50px; margin-left: 450px; font-size: 25px;">
             <c:if test="${not empty page.cri.keyword}">
@@ -143,7 +143,7 @@
 <br><br>
 
 <sec:authorize access="isAuthenticated()">
-<button class="btn btn-default" style="margin-left: -790px;" type="button" onclick="location.href='/write'">글쓰기</button> <br> <br>
+<button class="btn btn-default" style="margin-left: -660px;" type="button" onclick="location.href='/write'">글쓰기</button> <br> <br>
 </sec:authorize>
 
     <form class="navbar-form navbar-right" style="width: 101%;">

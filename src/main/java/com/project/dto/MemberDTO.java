@@ -28,13 +28,13 @@ public class MemberDTO implements UserDetails {
     private int authkey;
     private String datetime;
     private String updatetime;
-    private Collection<? extends GrantedAuthority> authorities;
+    private Collection<? extends GrantedAuthority> authorities; // 계정이 갖고있는 권한목록 리턴
 
 
-    private boolean isAccountNonExpired;
-    private boolean isAccountNonLocked;
-    private boolean isCredentialsNonExpired;
-    private boolean isEnabled;
+    private boolean isAccountNonExpired; // 계정이 만료되지 않았는지를 리턴
+    private boolean isAccountNonLocked; // 계정이 잠겨있지 않은지를 리턴
+    private boolean isCredentialsNonExpired; // 계정의 패스워드가 만료되지 않았는지 리턴
+    private boolean isEnabled; // 계정이 사용가능한 계정인지 리턴
 
 
     public int getIdx()

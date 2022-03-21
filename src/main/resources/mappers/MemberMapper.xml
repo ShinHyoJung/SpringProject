@@ -130,7 +130,7 @@
         AND    name = #{name}
     </update>
 
-    <insert id="insertAuthKey" parameterType="com.project.dto.AuthDTO">
+    <insert id="insertAuthKey" parameterType="com.project.dto.EmailAuthDTO">
         INSERT INTO emailauth (
             email,
             authkey
@@ -140,7 +140,7 @@
         )
     </insert>
 
-    <update id="updateAuthKey" parameterType="com.project.dto.AuthDTO">
+    <update id="updateAuthKey" parameterType="com.project.dto.EmailAuthDTO">
         <![CDATA[
         UPDATE member
         SET  authkey =1

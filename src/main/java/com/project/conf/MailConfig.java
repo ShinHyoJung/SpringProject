@@ -22,7 +22,7 @@ public class MailConfig {
     @Bean(name="mailSender")
     public JavaMailSender getJavaMailSender() { // MailSender을 상속받은 JavaMailSender 인터페이스 메일 보내기위한 설정
         Properties properties = new Properties();
-        properties.put("mail.smtp.auth", true); // smtp 설정
+        properties.put("mail.smtp.auth", true); // smtp서버 설정
         properties.put("mail.transport.protocol", "smtp");
         properties.put("mail.smtp.starttls.enable", true);
         properties.put("mail.smtp.starttls.required", true);

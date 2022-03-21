@@ -16,12 +16,13 @@
 
     <style>
         h2 {
-            margin-left: 650px;
+            margin-left: 740px;
+            margin-top: 100px;
         }
 
         div {
             width:15%;
-            margin-left: 700px;
+            margin-left: 800px;
         }
     </style>
 </head>
@@ -45,40 +46,48 @@
 <h2>아이디와 이름을 입력해주세요.</h2>
 <br>
     <div>
-        <form method="post" action="/updatePwd" name="PwdForm">
+        <form method="post" action="/updatePwd" name="PwdForm" style="margin-top: 50px;">
             <label for="id">아이디</label>
             <input class="form-control" type="text" id="id" name="id"/>
             <label for="name">이름</label>
             <input class="form-control" type="text" id="name" name="name"/> <br>
             <button type="button" class="btn btn-default" onclick="find()">본인인증</button> <br>
-            <input class="form-control" type="text" id="password" name="password" style="margin-top: 10px;"/> <br>
+            <input class="form-control" type="password" id="password" name="password" style="margin-top: 10px;"/> <br>
             <button type="button" onclick="update()" class="btn btn-default">비밀번호 변경</button>
         </form>
     </div>
 
-<a href="/" style="margin-left: 900px;">뒤로가기</a>
+<a href="/" style="margin-left: 1030px;">뒤로가기</a>
 <input type="hidden" id="find" value=0 />
 <script>
 
     function find() {
-        let id = document.getElementById("id").value;
-        let name = document.getElementById("name").value;
+        document.id.value = document.id.value.trim();
+        document.name.value = document.name.value.trim();
 
-        $.ajax ({
-            method: "post",
-            url: "/findPwd",
-            data: {id: id , name: name},
-            dataType: "json",
-            success: function(data) {
-                if(data == 1) {
-                    alert("본인인증이 완료되었습니다.");
-                    document.getElementById("find").setAttribute("value", 1);
+        if(document.id.value && document.name.value) {
+            let id = document.getElementById("id").value;
+            let name = document.getElementById("name").value;
+
+            $.ajax({
+                method: "post",
+                url: "/findPwd",
+                data: {id: id, name: name},
+                dataType: "json",
+                success: function (data) {
+                    if (data == 1) {
+                        alert("본인인증이 완료되었습니다.");
+                        document.getElementById("id").disabled = true;
+                        document.getElementById("name").disabled = true;
+                        document.getElementById("find").setAttribute("value", 1);
+                    } else {
+                        alert("개인정보가 틀렸습니다.");
+                    }
                 }
-                else {
-                    alert("개인정보가 틀렸습니다.");
-                }
-            }
-        });
+            });
+        } else {
+            alert("정보를 입력해주세요.");
+        }
     }
 
     function update() {

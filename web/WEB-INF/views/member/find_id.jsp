@@ -29,9 +29,9 @@
     </div>
     </div>
 </nav>
-<h2 style="margin-left: 650px; margin-top: 50px;">이름과 전화번호를 입력해주세요.</h2>
+<h2 style="margin-left: 700px; margin-top: 100px;">이름과 전화번호를 입력해주세요.</h2>
 
-        <form method="post" action="/findId" style="max-width: 300px; margin-left: 700px; margin-top:100px;">
+        <form method="post" action="/findId" style="max-width: 300px; margin-left: 760px; margin-top:100px;">
             <label for="name">이름</label>
             <input class="form-control" type="text" id="name" name="name"/>
             <label for="pnum">전화번호</label>
@@ -48,6 +48,6 @@
         </c:if>
 <br>
 <br>
-<a href="/" style="margin-left: 900px;" >뒤로가기</a>
+<a href="/" style="margin-left: 1000px;" >뒤로가기</a>
 </body>
 </html>
