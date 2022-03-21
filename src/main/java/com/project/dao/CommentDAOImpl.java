@@ -22,22 +22,22 @@ public class CommentDAOImpl implements CommentDAO {
     SqlSession sqlSession;
 
     @Override
-    public void insertComment(CommentDTO comment) throws Exception {
+    public void insertComment(CommentDTO comment) {
         sqlSession.insert("insertComment", comment);
     }
 
     @Override
-    public List<CommentDTO> selectComment(CommentDTO comment) throws Exception {
+    public List<CommentDTO> selectComment(CommentDTO comment)  {
         return sqlSession.selectList("selectComment", comment);
     }
 
     @Override
-    public void deleteComment(CommentDTO comment) throws Exception {
+    public void deleteComment(CommentDTO comment) {
         sqlSession.delete("deleteComment", comment);
     }
 
     @Override
-    public void updateComment(CommentDTO comment) throws Exception {
+    public void updateComment(CommentDTO comment)  {
         sqlSession.update("updateComment", comment);
     }
 }

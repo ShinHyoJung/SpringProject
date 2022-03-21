@@ -22,22 +22,22 @@ public class CommentServiceImpl implements CommentService{
     CommentDAO commentDAO;
 
     @Override
-    public void insertComment(CommentDTO comment) throws Exception {
+    public void insertComment(CommentDTO comment) {
         commentDAO.insertComment(comment);
     }
 
     @Override
-    public List<CommentDTO> selectComment(CommentDTO comment) throws Exception {
+    public List<CommentDTO> selectComment(CommentDTO comment) {
         return commentDAO.selectComment(comment);
     }
 
     @Override
-    public void deleteComment(CommentDTO comment) throws Exception {
+    public void deleteComment(CommentDTO comment)  {
         commentDAO.deleteComment(comment);
     }
 
     @Override
-    public void updateComment(CommentDTO comment) throws Exception {
+    public void updateComment(CommentDTO comment) {
         commentDAO.updateComment(comment);
     }
 }

@@ -4,6 +4,7 @@ import com.project.dto.BoardDTO;
 import com.project.dto.Criteria;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -18,29 +19,29 @@ public interface BoardService {
 
     void insertBoard(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception;
 
-    List<BoardDTO> viewBoard(Criteria cri) throws Exception;
+    List<BoardDTO> viewBoard(Criteria cri);
 
-    BoardDTO selectBoard(int bno) throws Exception;
+    BoardDTO selectBoard(int bno);
 
-    BoardDTO modifyBoard(int bno) throws Exception;
+    BoardDTO modifyBoard(int bno);
 
-    void updateBoard(BoardDTO board, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws Exception;
+    void updateBoard(BoardDTO board, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws IOException;
 
-    void deleteBoard(int bno) throws Exception;
+    void deleteBoard(int bno);
 
-    int countBoard(Criteria cri) throws Exception;
+    int countBoard(Criteria cri);
 
-    List<BoardDTO> searchBoard(String bwriter) throws Exception;
+    List<BoardDTO> searchBoard(String bwriter);
 
-    BoardDTO heartBoard(int bno) throws Exception;
+    BoardDTO heartBoard(int bno);
 
-    void upBoard(int bno) throws Exception;
+    void upBoard(int bno);
 
-    void downBoard(int bno) throws Exception;
+    void downBoard(int bno);
 
-    List<Map<String, Object>> selectFile(int bno) throws Exception;
+    List<Map<String, Object>> selectFile(int bno);
 
-    Map<String, Object> downFile(Map<String, Object> map) throws Exception;
+    Map<String, Object> downFile(Map<String, Object> map);
 
 
 }

@@ -8,11 +8,11 @@ import java.util.Map;
 
 public interface HeartDAO {
 
-    void insertHeart(HeartDTO heart) throws Exception;
+    void insertHeart(HeartDTO heart);
 
-    HeartDTO selectHeart(Map<String, Integer> num) throws Exception;
+    HeartDTO selectHeart(Map<String, Integer> num);
 
-    void deleteHeart(int hno) throws Exception;
+    void deleteHeart(int hno);
 
-    void updateHeart(HeartDTO heart) throws Exception;
+    void updateHeart(HeartDTO heart);
 }

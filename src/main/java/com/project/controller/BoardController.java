@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.List;
@@ -52,7 +53,7 @@ public class BoardController {
 
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @RequestMapping(value="/list", method= RequestMethod.GET) // 게시판 목록
-    public String List(Criteria cri, Model model) throws Exception {
+    public String List(Criteria cri, Model model)  {
 
         logger.info("board");
         List<BoardDTO> list= boardService.viewBoard(cri);
@@ -66,7 +67,7 @@ public class BoardController {
 
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @RequestMapping("/write") // 게시글 쓰기
-    public String writeBoard(Model model) throws Exception {
+    public String writeBoard(Model model) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails)principal).getUsername();
 
@@ -88,7 +89,7 @@ public class BoardController {
             multipartFile = mpRequest.getFile(iterator.next());
             if(multipartFile.isEmpty() == false) {
                 logger.debug("-------file start------");
-                logger.debug("name : " + multipartFile.getName());
+                logger.debug("name : " + multipartFile.getName()); //
                 logger.debug("filename : " + multipartFile.getOriginalFilename());
                 logger.debug("size: " + multipartFile.getSize());
                 logger.debug("----------end----------");
@@ -162,7 +163,7 @@ public class BoardController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping(value="/search/{bwriter}", method=RequestMethod.GET) // 게시글 작성자 검색
-    public String searchBoard(@PathVariable("bwriter")String bwriter, Model model) throws Exception { // 어떤 요청이든간에 하나밖에 못씀
+    public String searchBoard(@PathVariable("bwriter")String bwriter, Model model) { // 어떤 요청이든간에 하나밖에 못씀
 
         List<BoardDTO> result = boardService.searchBoard(bwriter);
         String writer = bwriter;
@@ -173,7 +174,7 @@ public class BoardController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/upBoard") // 게시글 좋아요수 증가
-    public String upBoard(int bno) throws Exception {
+    public String upBoard(int bno) {
 
         boardService.upBoard(bno);
         boardService.selectBoard(bno);
@@ -183,7 +184,7 @@ public class BoardController {
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/downBoard")
     @ResponseBody
-    public String downBoard(int bno) throws Exception { // 게시글 좋아요수 감소
+    public String downBoard(int bno) { // 게시글 좋아요수 감소
         boardService.downBoard(bno);
         boardService.selectBoard(bno);
         return "success";
@@ -191,7 +192,7 @@ public class BoardController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/downFile") // 파일 다운로드
-    public void downFile(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception {
+    public void downFile(@RequestParam Map<String, Object> map, HttpServletResponse response) throws IOException {
         Map<String, Object> resultMap = boardService.downFile(map);
 
         String storedFileName = (String) resultMap.get("stored_fname"); // 저장된 파일이름
@@ -199,13 +200,13 @@ public class BoardController {
 
         byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("D:\\file\\"+storedFileName)); //
 
-        response.setContentType("application/octet-stream"); // contentType을 다르게 지정하여 응답. mime형식, 8비트로 된 데이터
-        response.setContentLength(fileByte.length);
+        response.setContentType("application/octet-stream"); // contentType을 다르게 지정하여 응답. mime형식표준, binary데이터 (파일)8비트로 된 데이터
+        response.setContentLength(fileByte.length); // 파일의 길이를 헤더의 길이에 명시
         response.setHeader("Content-Disposition", "attachment; fileName=\"" + URLEncoder.encode(originalFileName, "UTF-8")+"\";"); // name 헤더의 값을 value로 지정
-        response.setHeader("Content-Transfer-Encoding", "binary"); //
-        response.getOutputStream().write(fileByte); //
-        response.getOutputStream().flush(); //
-        response.getOutputStream().close();
+        response.setHeader("Content-Transfer-Encoding", "binary"); // 바이너리파일로 인코딩
+        response.getOutputStream().write(fileByte); // 내용물을 채움 버퍼가 속도 조절
+        response.getOutputStream().flush(); // 버퍼에서 빠져나감 버퍼를 비움
+        response.getOutputStream().close(); // 닫음
     }
 
 

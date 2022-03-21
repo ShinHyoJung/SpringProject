@@ -17,12 +17,12 @@ public class HeartServiceImpl implements HeartService {
     HeartDAO heartDAO;
 
     @Override
-    public void insertHeart(HeartDTO heart) throws Exception {
+    public void insertHeart(HeartDTO heart) {
         heartDAO.insertHeart(heart);
     }
 
     @Override
-    public HeartDTO selectHeart(int bno, int idx) throws Exception {
+    public HeartDTO selectHeart(int bno, int idx) {
         
         Map<String, Integer> num = new HashMap<>();
         num.put("bno",bno);
@@ -32,13 +32,13 @@ public class HeartServiceImpl implements HeartService {
     }
 
     @Override
-    public void deleteHeart(int hno) throws Exception {
+    public void deleteHeart(int hno) {
 
         heartDAO.deleteHeart(hno);
     }
 
     @Override
-    public void updateHeart(HeartDTO heart) throws Exception {
+    public void updateHeart(HeartDTO heart) {
 
         heartDAO.updateHeart(heart);
     }

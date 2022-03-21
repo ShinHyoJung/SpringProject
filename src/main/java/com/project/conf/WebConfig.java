@@ -33,7 +33,7 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
         // 요청을 처리할 컨트롤러를 찾음
 
         // TODO Auto-generated method stub
-        return new String[] {"/"};
+        return new String[] {"/"}; //서블릿 매핑 DispatcherServlet->Controller
     }
 
     @Override

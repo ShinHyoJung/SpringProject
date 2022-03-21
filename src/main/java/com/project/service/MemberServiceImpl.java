@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 import java.util.List;
 
@@ -52,12 +54,12 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
-    public void createAuthorities(MemberDTO member) throws Exception {
+    public void createAuthorities(MemberDTO member) {
         memberDAO.createAuthorities(member);
     }
 
     @Override
-    public void insertMember(MemberDTO member) throws Exception {
+    public void insertMember(MemberDTO member) throws MessagingException, UnsupportedEncodingException {
         memberDAO.insertMember(member);
 
         String key = new TempKey().getKey(50, false);
@@ -82,50 +84,50 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
-    public MemberDTO selectMember(String username) throws Exception {
+    public MemberDTO selectMember(String username) {
            return memberDAO.selectMember(username);
     }
 
     @Override
-    public void updateMember(MemberDTO member) throws Exception {
+    public void updateMember(MemberDTO member)  {
         memberDAO.updateMember(member);
     }
 
     @Override
-    public void deleteMember(int idx) throws Exception {
+    public void deleteMember(int idx) {
         memberDAO.deleteMember(idx);
     }
 
     @Override
-    public int checkId(MemberDTO member) throws Exception {
+    public int checkId(MemberDTO member) {
         int id = memberDAO.checkId(member);
         return id;
     }
 
     @Override
-    public int checkEmail(MemberDTO member) throws Exception {
+    public int checkEmail(MemberDTO member) {
         int email = memberDAO.checkEmail(member);
         return email;
     }
 
     @Override
-    public MemberDTO findId(MemberDTO username) throws Exception {
+    public MemberDTO findId(MemberDTO username) {
         return memberDAO.findId(username);
     }
 
     @Override
-    public void updateAuthKey(String email) throws Exception { //
+    public void updateAuthKey(String email) { //
         memberDAO.updateAuthKey(email);
     }
 
     @Override
-    public int findPwd(MemberDTO member) throws Exception {
+    public int findPwd(MemberDTO member)  {
         int pwd = memberDAO.findPwd(member);
         return pwd;
     }
 
     @Override
-    public void updatePwd(MemberDTO member) throws Exception {
+    public void updatePwd(MemberDTO member) {
         memberDAO.updatePwd(member);
     }
 }

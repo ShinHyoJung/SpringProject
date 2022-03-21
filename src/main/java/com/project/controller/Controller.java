@@ -19,7 +19,7 @@ public class Controller
     private Logger logger = LoggerFactory.getLogger(Controller.class); // 로그를 사용하기위해 선언
 
     @RequestMapping("/") // 홈, 컨트롤러에 들어오는 요청을 처리하는 기준점 url+value로 매핑
-    public String Home(Model model) {
+    public String Home() {
         logger.info("home"); // 로그의 info레벨 사용
         return "home";
     }

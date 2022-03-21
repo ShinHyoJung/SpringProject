@@ -27,7 +27,7 @@ public class CommentController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/writeComment")
-    public String writeComment(CommentDTO comment) throws Exception { // 댓글 쓰기
+    public String writeComment(CommentDTO comment) { // 댓글 쓰기
 
         commentService.insertComment(comment);
         int bno = comment.getBno();
@@ -36,7 +36,7 @@ public class CommentController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/deleteComment")
-    public String deleteComment(CommentDTO comment) throws Exception { // 댓글 삭제
+    public String deleteComment(CommentDTO comment) { // 댓글 삭제
 
         commentService.deleteComment(comment);
         int bno= comment.getBno();
@@ -45,7 +45,7 @@ public class CommentController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/updateComment")
-    public String updateComment(CommentDTO comment, Model model) throws Exception { // 댓글 수정
+    public String updateComment(CommentDTO comment, Model model) { // 댓글 수정
 
         commentService.updateComment(comment);
         int bno = comment.getBno();

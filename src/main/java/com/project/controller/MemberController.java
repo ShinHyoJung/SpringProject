@@ -14,7 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 
 /**
@@ -95,7 +98,7 @@ public class MemberController {
     }
 
     @RequestMapping("/Signup") // 회원가입 처리
-    public String Signup(@ModelAttribute MemberDTO member, RedirectAttributes rttr) throws Exception {
+    public String Signup(@ModelAttribute MemberDTO member, RedirectAttributes rttr) throws MessagingException, UnsupportedEncodingException {
 
         String pwdbCrypt = new BCryptPasswordEncoder().encode(member.getPassword()); //비밀번호 암호화
 
@@ -109,6 +112,7 @@ public class MemberController {
         member.setAuthorities(AuthorityUtils.createAuthorityList("ROLE_USER")); // 사용자 권한 부여
 
         memberService.insertMember(member);
+        // 스레드 안에 이메일서비스
         memberService.createAuthorities(member);
 
 
@@ -120,7 +124,7 @@ public class MemberController {
     }
 
     @RequestMapping(value="SignupEmail", method = RequestMethod.GET) // 이메일인증
-    public String emailConfirm(String email, Model model) throws Exception {
+    public String emailConfirm(String email, Model model)  {
         memberService.updateAuthKey(email); // member 테이블 authkey 1로바꿈
         model.addAttribute("email", email);
 
@@ -129,7 +133,7 @@ public class MemberController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/Info") // 회원정보 조회
-    public String selectInfo(MemberDTO member, Model model) throws Exception {
+    public String selectInfo(MemberDTO member, Model model)  {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); //
         String username = ((UserDetails)principal).getUsername(); // 스프링시큐리티 principal 인터페이스에서 사용자 정보를 가져옴
@@ -144,7 +148,7 @@ public class MemberController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/updateInfo") // 회원정보 수정
-    public String updateInfo(MemberDTO member) throws Exception {
+    public String updateInfo(MemberDTO member)  {
 
         String pwdbCrypt = new BCryptPasswordEncoder().encode(member.getPassword()); // 수정된 비밀번호 암호화
         member.setPassword(pwdbCrypt);
@@ -154,7 +158,7 @@ public class MemberController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/quitSignup") // 회원탈퇴
-    public String quitSignup(HttpSession session) throws Exception {
+    public String quitSignup(HttpSession session) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); //
         String username = ((UserDetails)principal).getUsername();
@@ -174,24 +178,24 @@ public class MemberController {
 
     @ResponseBody
     @RequestMapping(value="/checkEmail", method = RequestMethod.POST)
-    public int checkEmail(MemberDTO member) throws Exception { // 이메일중복체크
+    public int checkEmail(MemberDTO member) { // 이메일중복체크
         int email = memberService.checkEmail(member);
         return email;
     }
 
     @RequestMapping("/denied") // 페이지권한이 없을때,
-    public String denied() throws Exception {
+    public String denied() {
         return "member/denied";
     }
 
     @RequestMapping("/findId_page") // 아이디찾기 페이지
-    public String findIdPage() throws Exception{
+    public String findIdPage() {
 
         return "member/find_id";
     }
 
     @RequestMapping("/findId") // 아이디찾기
-    public String findId(MemberDTO member, Model model) throws Exception {
+    public String findId(MemberDTO member, Model model) {
 
         MemberDTO user = memberService.findId(member);
 
@@ -206,21 +210,21 @@ public class MemberController {
     }
 
     @RequestMapping("/findPwd_page") // 비밀번호찾기 페이지
-    public String findPwdPage() throws Exception {
+    public String findPwdPage()  {
 
         return "/member/find_pwd";
     }
 
     @RequestMapping("/findPwd") // 비밀번호찾기
     @ResponseBody
-    public int findPwd(MemberDTO member) throws Exception {
+    public int findPwd(MemberDTO member) {
 
         int pwd = memberService.findPwd(member);
         return pwd;
     }
 
     @RequestMapping("/updatePwd") // 비밀번호 변경
-    public String updatePwd(MemberDTO member) throws Exception {
+    public String updatePwd(MemberDTO member) {
         String pwdbCrypt = new BCryptPasswordEncoder().encode(member.getPassword()); // 수정된 비밀번호 암호화
         member.setPassword(pwdbCrypt);
         memberService.updatePwd(member);
@@ -230,7 +234,7 @@ public class MemberController {
 
     @Secured("ROLE_ADMIN") // 관리자 페이지
     @RequestMapping("/admin")
-    public String manageAdmin() throws Exception {
+    public String manageAdmin()  {
 
         return "manage/admin";
     }

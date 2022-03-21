@@ -20,29 +20,29 @@ public interface MemberDAO
 
         List<GrantedAuthority> readAuthorities(String username);
 
-        void createAuthorities(MemberDTO member) throws Exception;
+        void createAuthorities(MemberDTO member);
 
-        void insertMember(MemberDTO member) throws Exception;
+        void insertMember(MemberDTO member);
 
         MemberDTO loginMember(String username);
 
-        MemberDTO selectMember(String username) throws Exception;
+        MemberDTO selectMember(String username);
 
-        void updateMember(MemberDTO member) throws Exception;
+        void updateMember(MemberDTO member);
 
-        void deleteMember(int idx) throws Exception;
+        void deleteMember(int idx);
 
-        int checkId(MemberDTO member) throws Exception;
+        int checkId(MemberDTO member);
 
-        int checkEmail(MemberDTO member) throws Exception;
+        int checkEmail(MemberDTO member);
 
-        MemberDTO findId(MemberDTO member) throws Exception;
+        MemberDTO findId(MemberDTO member);
 
-        void insertAuthKey(String email, String authkey) throws Exception;
+        void insertAuthKey(String email, String authkey);
 
-        void updateAuthKey(String email) throws Exception;
+        void updateAuthKey(String email);
 
-        int findPwd(MemberDTO member) throws Exception;
+        int findPwd(MemberDTO member);
 
-        void updatePwd(MemberDTO member) throws Exception;
+        void updatePwd(MemberDTO member);
     }

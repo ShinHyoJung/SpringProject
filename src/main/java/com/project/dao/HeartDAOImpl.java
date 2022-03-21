@@ -17,22 +17,22 @@ public class HeartDAOImpl implements HeartDAO {
     SqlSession sqlSession;
 
     @Override
-    public void insertHeart(HeartDTO heart) throws Exception {
+    public void insertHeart(HeartDTO heart){
         sqlSession.insert("insertHeart", heart);
     }
 
     @Override
-    public HeartDTO selectHeart(Map<String, Integer> num) throws Exception {
+    public HeartDTO selectHeart(Map<String, Integer> num){
         return sqlSession.selectOne("selectHeart", num);
     }
 
     @Override
-    public void deleteHeart(int hno) throws Exception {
+    public void deleteHeart(int hno) {
         sqlSession.delete("deleteHeart", hno);
     }
 
     @Override
-    public void updateHeart(HeartDTO heart) throws Exception {
+    public void updateHeart(HeartDTO heart) {
         sqlSession.update("updateHeart", heart);
     }
 }

@@ -30,7 +30,7 @@ public class MemberDAOImpl implements MemberDAO
 
 
     @Override
-    public void createAuthorities(MemberDTO member) throws Exception {
+    public void createAuthorities(MemberDTO member) {
         sqlSession.insert("createAuthority", member);
     }
 
@@ -41,7 +41,7 @@ public class MemberDAOImpl implements MemberDAO
 
 
     @Override
-    public void insertMember(MemberDTO member) throws Exception {
+    public void insertMember(MemberDTO member) {
         sqlSession.insert("insertMember", member);
     }
 
@@ -54,40 +54,40 @@ public class MemberDAOImpl implements MemberDAO
     }
 
     @Override
-    public MemberDTO selectMember(String username) throws Exception {
+    public MemberDTO selectMember(String username) {
         return sqlSession.selectOne("selectMember", username);
 
     }
 
     @Override
-    public void updateMember(MemberDTO member) throws Exception {
+    public void updateMember(MemberDTO member) {
         sqlSession.update("updateMember", member);
     }
 
     @Override
-    public void deleteMember(int idx) throws Exception {
+    public void deleteMember(int idx) {
         sqlSession.delete("deleteMember", idx);
     }
 
     @Override
-    public int checkId(MemberDTO member) throws Exception {
+    public int checkId(MemberDTO member) {
         int id = sqlSession.selectOne("checkId", member);
         return id;
     }
 
     @Override
-    public int checkEmail(MemberDTO member) throws Exception {
+    public int checkEmail(MemberDTO member) {
         int email = sqlSession.selectOne("checkEmail", member);
         return email;
     }
 
     @Override
-    public MemberDTO findId(MemberDTO member) throws Exception {
+    public MemberDTO findId(MemberDTO member) {
         return sqlSession.selectOne("findId", member);
     }
 
     @Override
-    public void insertAuthKey(String email, String authkey) throws Exception {
+    public void insertAuthKey(String email, String authkey) {
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("email", email);
@@ -96,19 +96,19 @@ public class MemberDAOImpl implements MemberDAO
     }
 
     @Override
-    public void updateAuthKey(String email) throws Exception {
+    public void updateAuthKey(String email) {
 
         sqlSession.update("updateAuthKey", email);
     }
 
     @Override
-    public int findPwd(MemberDTO member) throws Exception {
+    public int findPwd(MemberDTO member) {
         int pwd = sqlSession.selectOne("findPwd", member);
         return pwd;
     }
 
     @Override
-    public void updatePwd(MemberDTO member) throws Exception {
+    public void updatePwd(MemberDTO member) {
         sqlSession.update("updatePwd", member);
     }
 }

@@ -6,12 +6,12 @@ import java.util.Map;
 
 public interface HeartService {
 
-    void insertHeart(HeartDTO heart) throws Exception;
+    void insertHeart(HeartDTO heart);
 
-    HeartDTO selectHeart(int bno, int idx) throws Exception;
+    HeartDTO selectHeart(int bno, int idx);
 
-    void deleteHeart(int hno) throws Exception;
+    void deleteHeart(int hno);
 
-    void updateHeart(HeartDTO heart) throws Exception;
+    void updateHeart(HeartDTO heart);
 
 }

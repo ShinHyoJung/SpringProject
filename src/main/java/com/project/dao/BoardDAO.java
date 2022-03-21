@@ -18,36 +18,36 @@ import java.util.Map;
  */
 public interface BoardDAO {
 
-    void insertBoard(BoardDTO board) throws Exception;
+    void insertBoard(BoardDTO board);
 
-    List<BoardDTO> viewBoard(Criteria cri) throws Exception;
+    List<BoardDTO> viewBoard(Criteria cri);
 
-    BoardDTO selectBoard(int bno) throws Exception;
+    BoardDTO selectBoard(int bno);
 
-    BoardDTO modifyBoard(int bno) throws Exception;
+    BoardDTO modifyBoard(int bno);
 
-    void updateBoard(BoardDTO board) throws Exception;
+    void updateBoard(BoardDTO board);
 
-    void deleteBoard(int bno) throws Exception;
+    void deleteBoard(int bno);
 
-    int hitBoard(int bno) throws Exception;
+    int hitBoard(int bno);
 
-    int countBoard(Criteria cri) throws Exception;
+    int countBoard(Criteria cri);
 
-    List<BoardDTO> searchBoard(String bwriter) throws Exception;
+    List<BoardDTO> searchBoard(String bwriter);
 
-    BoardDTO heartBoard(int bno) throws Exception;
+    BoardDTO heartBoard(int bno);
 
-    void upBoard(int bno) throws Exception;
+    void upBoard(int bno);
 
-    void downBoard(int bno) throws Exception;
+    void downBoard(int bno);
 
-    void insertFile(Map<String, Object> map) throws Exception;
+    void insertFile(Map<String, Object> map);
 
-    List<Map<String, Object>> selectFile(int bno) throws Exception;
+    List<Map<String, Object>> selectFile(int bno);
 
-    Map<String, Object> downFile(Map<String, Object> map) throws Exception;
+    Map<String, Object> downFile(Map<String, Object> map);
 
-    void updateFile(Map<String, Object> map) throws Exception;
+    void updateFile(Map<String, Object> map);
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class BoardServiceImpl implements BoardService {
     BoardDAO boardDAO;
 
     @Override
-    public void insertBoard(BoardDTO board, MultipartHttpServletRequest mpRequest) throws  Exception {
+    public void insertBoard(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception {
         boardDAO.insertBoard(board);
         // mpRequest로 첨부파일 파라미터를 받음
         List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(board, mpRequest);
@@ -40,24 +41,24 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardDTO> viewBoard(Criteria cri) throws Exception {
+    public List<BoardDTO> viewBoard(Criteria cri) {
         return boardDAO.viewBoard(cri);
     }
 
     @Override
-    public BoardDTO selectBoard(int bno) throws Exception {
+    public BoardDTO selectBoard(int bno) {
 
         boardDAO.hitBoard(bno);
         return boardDAO.selectBoard(bno);
     }
 
     @Override
-    public BoardDTO modifyBoard(int bno) throws Exception {
+    public BoardDTO modifyBoard(int bno) {
         return boardDAO.modifyBoard(bno);
     }
 
     @Override
-    public void updateBoard(BoardDTO board,String[] files, String [] fileNames, MultipartHttpServletRequest mpRequest) throws Exception {
+    public void updateBoard(BoardDTO board,String[] files, String [] fileNames, MultipartHttpServletRequest mpRequest) throws IOException {
         boardDAO.updateBoard(board);
 
         List<Map<String, Object>> list = fileUtils.parseUpdateFileInfo(board, files, fileNames, mpRequest);
@@ -75,42 +76,42 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void deleteBoard(int bno) throws Exception {
+    public void deleteBoard(int bno) {
         boardDAO.deleteBoard(bno);
     }
 
     @Override
-    public int countBoard(Criteria cri) throws Exception {
+    public int countBoard(Criteria cri) {
         return boardDAO.countBoard(cri);
     }
 
     @Override
-    public List<BoardDTO> searchBoard(String bwriter) throws Exception {
+    public List<BoardDTO> searchBoard(String bwriter) {
         return boardDAO.searchBoard(bwriter);
     }
 
     @Override
-    public BoardDTO heartBoard(int bno) throws Exception {
+    public BoardDTO heartBoard(int bno) {
         return boardDAO.heartBoard(bno);
     }
 
     @Override
-    public void upBoard(int bno) throws Exception {
+    public void upBoard(int bno) {
         boardDAO.upBoard(bno);
     }
 
     @Override
-    public void downBoard(int bno) throws Exception {
+    public void downBoard(int bno) {
         boardDAO.downBoard(bno);
     }
 
     @Override
-    public List<Map<String, Object>> selectFile(int bno) throws Exception {
+    public List<Map<String, Object>> selectFile(int bno) {
         return boardDAO.selectFile(bno);
     }
 
     @Override
-    public Map<String, Object> downFile(Map<String, Object> map) throws Exception {
+    public Map<String, Object> downFile(Map<String, Object> map) {
         return boardDAO.downFile(map);
     }
 

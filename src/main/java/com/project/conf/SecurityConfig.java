@@ -67,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/**").access("hasRole('ROLE_USER')")// ROLE_USER 권한을 가진 사용자만 들어갈수있는 페이지설정
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // ROLE_ADMIN 권한 , 결과에 따른 접근
                 .anyRequest().permitAll() // 그외에 어떤 요청이든 접근을 전부 허용
-               .and()
+                .and()
 
                 //     폼 로그인 설정
 
@@ -102,9 +102,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  .accessDeniedPage("/denied") //접근 거부되었을때 뜨는 페이지
                  .and()
                 //     session 관리
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.NEVER) //
-                .invalidSessionUrl("/Login")
+                .sessionManagement()//세션관리
+                .sessionCreationPolicy(SessionCreationPolicy.NEVER) // 세션을 만드는 전략 세션을 안만듬
+                .invalidSessionUrl("/Login") //세션이 잘못됐을때 로그인을 다시함
                 .and()
 
                 //	    csrf
@@ -114,7 +114,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PersistentTokenRepository persistentTokenRepository() //
+    public PersistentTokenRepository persistentTokenRepository() // 토큰 저장하는곳
     {
         JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
         db.setDataSource(dataSource);

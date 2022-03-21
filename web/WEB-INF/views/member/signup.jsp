@@ -66,7 +66,7 @@
             <input id="email" type="text" class= "form-control" style="width:50%;" name="email" placeholder="이메일을 입력해주세요."/>
         </div>    <br>
         <div class="form-group">
-        <button class="btn btn-default" type="button" onclick="checkEmail()">가입하기</button>
+        <button class="btn btn-default" type="button" onclick="validCheck()">가입하기</button>
         </div>
     </form>
 
@@ -76,20 +76,27 @@
     var form = document.signupForm;
     let signupCheck = 0;
 
-    var re1 = /^[a-zA-Z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
+    var re1 = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8.25}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
     var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일이 적합한지 검사할 정규식
 
-    var id = document.getElementById("id");
-    var pw = document.getElementById("password");
-    var cpw = document.getElementById("password_confirm");
-    var email = document.getElementById("email");
+    var reg = /^[0-9]+/g; // 숫자만 입력하도록하는 정규식
 
     function validCheck() {
-        if(!check(re1, id, "아이디는 4~12자의 영문 대소문자와 숫자로만 입력"))    {
+        var id = form.id.value;
+        var pw = form.password.value;
+        var cpw = document.getElementById("password_confirm");
+        var email = document.getElementById("email");
+
+
+        if(!re1.test(form.id.value)) {
+            alert("아이디는 영문자+숫자+특수문자 조합으로 8~25자리 사용해야 합니다.");
+            form.id.focus();
             return false;
         }
 
-        if(!check(re1, pw, "패스워드는 4~12자의 영문 대소문자와 숫자로만 입력")) {
+        if(!re1.test(form.password.value)) {
+            alert("비밀번호는 영문자+숫자+특수문자 조합으로 8~25자리 사용해야 합니다.");
+            form.password.focus();
             return false;
         }
 
@@ -100,7 +107,8 @@
             return false;
         }
 
-        if(!check(re2, email,"적합하지 않은 이메일 형식입니다.")) {
+        if(!re2.test(form.email.value)) {
+            alert("dd");
             return false;
         }
     }
@@ -200,6 +208,7 @@
         form.email.value = form.email.value.trim();
 
         infoCheck();
+        validCheck();
 
         if(signupCheck==1 && check == 1) {
             form.submit();

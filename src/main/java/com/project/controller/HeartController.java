@@ -29,7 +29,7 @@ public class HeartController {
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/insertHeart") // 좋아요 하트생성
     @ResponseBody
-    public String insertHeart(HeartDTO heart) throws Exception {
+    public String insertHeart(HeartDTO heart) {
         heartService.insertHeart(heart);
         return "success";
     }
@@ -37,7 +37,7 @@ public class HeartController {
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/deleteHeart") // 좋아요 하트 삭제
     @ResponseBody
-    public String deleteHeart(HeartDTO heart) throws Exception {
+    public String deleteHeart(HeartDTO heart) {
 
         int hno = heart.getHno();
         heartService.deleteHeart(hno);
@@ -47,7 +47,7 @@ public class HeartController {
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/updateHeart") // 하트 삭제후 다시 생성시,
     @ResponseBody
-    public String updateHeart(HeartDTO heart) throws Exception {
+    public String updateHeart(HeartDTO heart) {
 
         heartService.updateHeart(heart);
         return "success";

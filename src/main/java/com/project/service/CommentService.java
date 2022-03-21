@@ -13,11 +13,11 @@ import java.util.List;
  */
 public interface CommentService {
 
-    void insertComment(CommentDTO comment) throws Exception;
+    void insertComment(CommentDTO comment);
 
-    List<CommentDTO> selectComment(CommentDTO comment) throws Exception;
+    List<CommentDTO> selectComment(CommentDTO comment);
 
-    void deleteComment(CommentDTO comment) throws Exception;
+    void deleteComment(CommentDTO comment);
 
-    void updateComment(CommentDTO comment) throws Exception;
+    void updateComment(CommentDTO comment);
 }
