@@ -90,9 +90,6 @@
         <p class="lead">자유롭게 글을 쓰고, 댓글로 의견을 표현하세요.</p>
     </div>
 
-    <sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-        <a href="/admin">관리자 페이지</a>
-    </sec:authorize>
 </main>
 <form class="navbar-form navbar-right" style="display: block; width:100%;">
     <div style="text-align: right; max-width: 1000px; margin: 0 auto;">

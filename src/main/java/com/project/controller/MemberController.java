@@ -47,42 +47,6 @@ public class MemberController {
         return "member/login";
     }
 
-
-    //@RequestMapping(value="/doLogin", method= RequestMethod.GET) //로그인 처리
-   // public String doLogin(MemberDTO member, HttpSession session, Model model) throws Exception {
-       // logger.info("Login");
-        //웹에 접근한 사용자 식별하는 방법
-        //MemberDTO login = memberService.loginMember(member.getUsername());
-        //int authkey = login.getAuthkey();
-
-        // 아이디가 틀렸을때
-        //if(login == null) {
-          //  model.addAttribute("message", "아이디가 틀렸습니다.");
-         //   return "redirect:/Login";
-       // }
-
-        // 이메일 인증을 안했을때,
-        //if(authkey == 0) {
-          //  return "redirect:/Login";
-        //}
-
-        // 로그인정보에서 id값 추출
-     //   boolean passMatch = new BCryptPasswordEncoder().matches(member.getPassword(), login.getPassword());
-
-       // if (login != null && passMatch) {
-         //   session.setAttribute("login", login);
-           // String id = login.getId();
-            //int idx = login.getIdx();
-           // session.setAttribute("id", id);
-          //  session.setAttribute("idx", idx);
-            //세션에 로그인정보 애트리뷰트와 아이디 애트리뷰트 저장
-        //    return "redirect:/";
-     //   } else { // 비밀번호가 틀렸습니다 알림창 구현
-       //     model.addAttribute("message", "비밀번호가 틀렸습니다.");
-         //   return "redirect:/Login";
-     //   }
-//    }
-
     @RequestMapping("/Logout") // 로그아웃
     public String Logout(HttpSession session) {
 
@@ -98,27 +62,36 @@ public class MemberController {
     }
 
     @RequestMapping("/Signup") // 회원가입 처리
-    public String Signup(@ModelAttribute MemberDTO member, RedirectAttributes rttr) throws MessagingException, UnsupportedEncodingException {
+    public String Signup(@ModelAttribute MemberDTO member) throws MessagingException, UnsupportedEncodingException {
 
         String pwdbCrypt = new BCryptPasswordEncoder().encode(member.getPassword()); //비밀번호 암호화
 
         // 회원가입시 유저 정보를 넣음
         member.setPassword(pwdbCrypt);
         member.setUsername(member.getId());
-        member.setAccountNonExpired(true); // boolean값
+        member.setAccountNonExpired(true); // boolean 값
         member.setAccountNonLocked(true);
         member.setEnabled(true);
         member.setCredentialsNonExpired(true);
-        member.setAuthorities(AuthorityUtils.createAuthorityList("ROLE_USER")); // 사용자 권한 부여
 
         memberService.insertMember(member);
+
+        Runnable task = new Runnable() { // 스레드가 실행할 작업
+            @Override
+            public void run() {
+                try {
+                    memberService.sendMail(member);
+                } catch (MessagingException e) { // 메일 예외 처리
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        Thread thread = new Thread(task); // 실행할 작업을 담은 thread객체 생성
+        thread.start(); // 스레드 시작
         // 스레드 안에 이메일서비스
-        memberService.createAuthorities(member);
-
-
-        rttr.addFlashAttribute("msg", "가입이 완료되었습니다.");
-        rttr.addAttribute("email", member.getEmail());
-        rttr.addAttribute("name", member.getName());
 
         return "home";
     }
@@ -131,7 +104,7 @@ public class MemberController {
         return"/member/email_confirm";
     }
 
-    @Secured({"ROLE_USER","ROLE_ADMIN"})
+    @Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/Info") // 회원정보 조회
     public String selectInfo(MemberDTO member, Model model)  {
 
@@ -146,7 +119,7 @@ public class MemberController {
         return "member/info";
     }
 
-    @Secured({"ROLE_USER","ROLE_ADMIN"})
+    @Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/updateInfo") // 회원정보 수정
     public String updateInfo(MemberDTO member)  {
 
@@ -156,15 +129,15 @@ public class MemberController {
         return "redirect:/Info";
     }
 
-    @Secured({"ROLE_USER","ROLE_ADMIN"})
+    @Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/quitSignup") // 회원탈퇴
     public String quitSignup(HttpSession session) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); //
         String username = ((UserDetails)principal).getUsername();
 
-        MemberDTO user = memberService.selectMember(username);
-        memberService.deleteMember(user.getIdx());
+        memberService.deleteMember(username);
+        memberService.deleteAuthorities(username);
         session.invalidate(); //
         return "redirect:/";
     }
@@ -181,6 +154,13 @@ public class MemberController {
     public int checkEmail(MemberDTO member) { // 이메일중복체크
         int email = memberService.checkEmail(member);
         return email;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/checkNickname", method = RequestMethod.POST)
+    public int checkNickname(MemberDTO member) { // 닉네임 중복체크
+        int nickname = memberService.checkNickname(member);
+        return nickname;
     }
 
     @RequestMapping("/denied") // 페이지권한이 없을때,

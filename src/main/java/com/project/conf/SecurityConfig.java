@@ -66,6 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests() // 요청에대한 권한을 지정
                 .antMatchers("/user/**").access("hasRole('ROLE_USER')")// ROLE_USER 권한을 가진 사용자만 들어갈수있는 페이지설정
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // ROLE_ADMIN 권한 , 결과에 따른 접근
+                .antMatchers("/guest/**").access("hasRole('ROLE_GUEST')") // ROLE_GUEST권한
                 .anyRequest().permitAll() // 그외에 어떤 요청이든 접근을 전부 허용
                 .and()
 
@@ -74,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()// 폼로그인 설정
                 .loginPage("/Login") // 로그인창을 띄우는 URL
                 .loginProcessingUrl("/doLogin") // 로그인을 실행하는 URL
-                .failureHandler(customFailureHandler)
+                .failureHandler(customFailureHandler)// 로그인실패시 뜨는 예외처리로 문구가 뜨도록 함
                 .permitAll()
                 .and()
 
@@ -103,12 +104,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  .and()
                 //     session 관리
                 .sessionManagement()//세션관리
-                .sessionCreationPolicy(SessionCreationPolicy.NEVER) // 세션을 만드는 전략 세션을 안만듬
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // 세션을 만드는 전략 세션을 안만듬
                 .invalidSessionUrl("/Login") //세션이 잘못됐을때 로그인을 다시함
                 .and()
 
                 //	    csrf
-                .csrf().disable();
+                .csrf().disable(); // csrf 보호기능 비활성화
 
 
     }

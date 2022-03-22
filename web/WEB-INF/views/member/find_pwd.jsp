@@ -52,7 +52,10 @@
             <label for="name">이름</label>
             <input class="form-control" type="text" id="name" name="name"/> <br>
             <button type="button" class="btn btn-default" onclick="find()">본인인증</button> <br>
+            <label for="password" style="margin-top: 10px;">변경할 비밀번호</label>
             <input class="form-control" type="password" id="password" name="password" style="margin-top: 10px;"/> <br>
+            <label for="password_confirm">비밀번호 확인</label>
+            <input id="password_confirm" type="password" class="form-control" name="password_confirm" placeholder="비밀번호 확인"/> <br>
             <button type="button" onclick="update()" class="btn btn-default">비밀번호 변경</button>
         </form>
     </div>
@@ -61,11 +64,15 @@
 <input type="hidden" id="find" value=0 />
 <script>
 
-    function find() {
-        document.id.value = document.id.value.trim();
-        document.name.value = document.name.value.trim();
+    var form = document.PwdForm;
+    var re1 = /^[a-zA-z0-9]{4,12}$/;
 
-        if(document.id.value && document.name.value) {
+    function find() {
+
+        form.id.value = form.id.value.trim();
+        form.name.value = form.name.value.trim();
+
+        if(form.id.value && form.name.value) {
             let id = document.getElementById("id").value;
             let name = document.getElementById("name").value;
 
@@ -94,12 +101,36 @@
 
         var find = document.getElementById("find").getAttribute("value");
 
+        var pw = document.getElementById("password");
+        var cpw = document.getElementById("password_confirm");
+
         if(find == 0) {
             alert("본인인증을 해주세요.");
         }
         else if(find ==1) {
-            alert("비밀번호 변경이 완료되었습니다.");
-            PwdForm.submit();
+
+            if(form.password.value) {
+
+                if(!re1.test(pw.value)) {
+                    alert("비밀번호는 영문 대소문자와 숫자 4~12자리로 입력해야 합니다.");
+                    form.password.focus();
+                    return false;
+                }
+
+                if(pw.value != cpw.value) {
+                    alert("비밀번호가 다릅니다.");
+                    form.password.focus();
+                    return false;
+                }
+
+                form.submit();
+                alert("비밀번호 변경이 완료되었습니다.");
+
+            } else {
+                alert("비밀번호를 입력해주세요.");
+            }
+
+
         }
     }
 

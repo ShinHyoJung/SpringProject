@@ -22,10 +22,6 @@ public interface MemberService extends UserDetailsService
 {
    UserDetails loadUserByUsername(String username);
 
-   Collection<GrantedAuthority> getAuthorities(String username);
-
-   void createAuthorities(MemberDTO member) ;
-
    void insertMember(MemberDTO member) throws MessagingException, UnsupportedEncodingException;
 
    MemberDTO loginMember(String username);
@@ -34,17 +30,27 @@ public interface MemberService extends UserDetailsService
 
    void updateMember(MemberDTO member);
 
-   void deleteMember(int idx);
+   void deleteMember(String username);
 
    int checkId(MemberDTO member);
 
    int checkEmail(MemberDTO member);
 
+   int checkNickname(MemberDTO member);
+
    MemberDTO findId(MemberDTO username);
+
+   Collection<GrantedAuthority> getAuthorities(String username);
+
+   void createAuthorities(MemberDTO member) ;
+
+   void deleteAuthorities(String username);
 
    void updateAuthKey(String email);
 
    int findPwd(MemberDTO member);
 
    void updatePwd(MemberDTO member);
+
+   void sendMail(MemberDTO member) throws MessagingException, UnsupportedEncodingException;
 }

@@ -44,7 +44,7 @@ public class FileUtils { // 첨부파일 정보를 이용해 설정을 하는 �
             if (multipartFile.isEmpty() == false) {
                 originalFileName = multipartFile.getOriginalFilename();
                 originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-                storedFileName = CommonUtils.getRandomString() + originalFileExtension;
+                storedFileName = RandomUtils.getRandomString() + originalFileExtension;
 
 
                 file = new File(filePath + storedFileName);
@@ -78,7 +78,7 @@ public class FileUtils { // 첨부파일 정보를 이용해 설정을 하는 �
             if (multipartFile.isEmpty() == false) { // 새로운 첨부파일을 등록할때,
                 originalFileName = multipartFile.getOriginalFilename();
                 originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-                storedFileName = CommonUtils.getRandomString() + originalFileExtension;
+                storedFileName = RandomUtils.getRandomString() + originalFileExtension;
                 multipartFile.transferTo(new File(filePath + storedFileName));
 
                 listMap = new HashMap<String, Object>();

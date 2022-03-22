@@ -30,17 +30,6 @@ public class MemberDAOImpl implements MemberDAO
 
 
     @Override
-    public void createAuthorities(MemberDTO member) {
-        sqlSession.insert("createAuthority", member);
-    }
-
-    @Override
-    public List<GrantedAuthority>readAuthorities(String username) {
-        return sqlSession.selectList("readAuthorities", username);
-    }
-
-
-    @Override
     public void insertMember(MemberDTO member) {
         sqlSession.insert("insertMember", member);
     }
@@ -65,8 +54,8 @@ public class MemberDAOImpl implements MemberDAO
     }
 
     @Override
-    public void deleteMember(int idx) {
-        sqlSession.delete("deleteMember", idx);
+    public void deleteMember(String username) {
+        sqlSession.delete("deleteMember", username);
     }
 
     @Override
@@ -82,8 +71,30 @@ public class MemberDAOImpl implements MemberDAO
     }
 
     @Override
+    public int checkNickname(MemberDTO member) {
+        int nickname = sqlSession.selectOne("checkNickname", member);
+        return nickname;
+    }
+
+    @Override
     public MemberDTO findId(MemberDTO member) {
         return sqlSession.selectOne("findId", member);
+    }
+
+
+    @Override
+    public void createAuthorities(MemberDTO member) {
+        sqlSession.insert("createAuthority", member);
+    }
+
+    @Override
+    public List<GrantedAuthority>readAuthorities(String username) {
+        return sqlSession.selectList("readAuthorities", username);
+    }
+
+    @Override
+    public void deleteAuthorities(String username) {
+        sqlSession.delete("deleteAuthority", username);
     }
 
     @Override

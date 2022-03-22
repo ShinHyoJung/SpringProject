@@ -37,7 +37,8 @@
         <h1 style="margin-left: 145px;">회원 가입</h1> <br>
         <div class="form-group">
             <label for="id">아이디</label>
-            <input id="before_id" class="form-control" style="width:30%; display: inline-block;" type="text" name="before_id" placeholder="아이디를 입력해주세요."/> <button class="btn btn-default" type="button" id="check" onclick="idCheck()" value=0>아이디 중복체크</button>
+            <input id="before_id" class="form-control" style="width:30%; display: inline-block;" type="text" name="before_id" placeholder="아이디를 입력해주세요."/>
+            <button class="btn btn-default" type="button" id="check_id" onclick="checkId()" value=0>아이디 중복체크</button>
             <input type="hidden" name="id" id="id">
         </div>
         <br>
@@ -54,8 +55,10 @@
             <input id= "name" type="text" class="form-control" style="width:50%;" name="name" placeholder="이름을 입력해주세요."/>
         </div>    <br>
         <div class="form-group">
-            <label for="nickname">닉네임</label>
-            <input id= "nickname" type="text" class="form-control" style="width:50%;" name="nickname" placeholder="닉네임을 입력해주세요."/>
+            <label for="before_nickname">닉네임</label>
+            <input id= "before_nickname" type="text" class="form-control" style="width:30%; display: inline-block;" name="before_nickname" placeholder="닉네임을 입력해주세요."/>
+            <button class="btn btn-default" type="button" id="check_nickname" onclick="checkNickname()" value=0>닉네임 중복체크</button>
+            <input type="hidden" name="nickname" id="nickname">
         </div> <br>
         <div class="form-group">
             <label for="pnum">전화번호</label>
@@ -66,7 +69,7 @@
             <input id="email" type="text" class= "form-control" style="width:50%;" name="email" placeholder="이메일을 입력해주세요."/>
         </div>    <br>
         <div class="form-group">
-        <button class="btn btn-default" type="button" onclick="validCheck()">가입하기</button>
+        <button class="btn btn-default" type="button" onclick="signUp()">가입하기</button>
         </div>
     </form>
 
@@ -76,149 +79,190 @@
     var form = document.signupForm;
     let signupCheck = 0;
 
-    var re1 = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8.25}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
+    var re1 = /^[a-zA-z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
     var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일이 적합한지 검사할 정규식
 
     var reg = /^[0-9]+/g; // 숫자만 입력하도록하는 정규식
 
-    function validCheck() {
-        var id = form.id.value;
-        var pw = form.password.value;
-        var cpw = document.getElementById("password_confirm");
-        var email = document.getElementById("email");
+    function checkValid() { // 비밀번호, 이름, 전화번호, 이메일 유효성 체크
 
+        form.password.value = form.password.value.trim();
+        form.name.value = form.name.value.trim();
+        form.pnum.value = form.pnum.value.trim();
+        form.email.value = form.email.value.trim();
 
-        if(!re1.test(form.id.value)) {
-            alert("아이디는 영문자+숫자+특수문자 조합으로 8~25자리 사용해야 합니다.");
-            form.id.focus();
-            return false;
-        }
-
-        if(!re1.test(form.password.value)) {
-            alert("비밀번호는 영문자+숫자+특수문자 조합으로 8~25자리 사용해야 합니다.");
-            form.password.focus();
-            return false;
-        }
-
-        if(form.password.value != form.password_confirm.value) {
-            alert("비밀번호가 다릅니다. 다시 확인해 주세요.");
-            form.password_confirm.value="";
-            form.password_confirm.focus();
-            return false;
-        }
-
-        if(!re2.test(form.email.value)) {
-            alert("dd");
-            return false;
-        }
-    }
-    //정보입력 유효성 체크
-    function infoCheck() {
-
-        if(!form.before_id.value && !form.password.value && !form.name.value && !form.nickname.value && !form.pnum.value && !form.email.value) {
+        if(!form.password.value && !form.name.value && !form.pnum.value && !form.email.value) {
             alert("정보를 입력해주세요.");
-        } else if(!form.password.value) {
+            return false;
+        }else if(!form.password.value) {
             alert("비밀번호를 입력해주세요.");
+            return false;
         } else if(!form.name.value) {
             alert("이름을 입력해주세요.");
-        } else if(!form.nickname.value) {
-            alert("닉네임을 입력해주세요.");
+            return false;
         } else if(!form.pnum.value) {
             alert("전화번호를 입력해주세요.");
+            return false;
         } else if(!form.email.value) {
             alert("이메일을 입력해주세요.");
-        } else if (!form.id.value) {
-            alert("아이디를 입력해주세요.");
-        } else if (form.before_id.value && form.password.value&& form.name.value&& form.nickname.value&& form.pnum.value && form.email.value) {
-            signupCheck =1;
+            return false;
+        } else if (form.password.value&& form.name.value&&form.pnum.value && form.email.value) {
+
+            var pw = document.getElementById("password");
+            var cpw = document.getElementById("password_confirm");
+            var email = document.getElementById("email");
+            var pnum = document.getElementById("pnum");
+
+
+            if (!re1.test(pw.value)) {
+                alert("비밀번호는 영문 대소문자와 숫자 4~12자리로 입력해야 합니다.");
+                form.password.focus();
+                return false;
+            }
+            else if (pw.value !== cpw.value) {
+                alert("비밀번호가 서로 다릅니다. 다시 확인해 주세요.");
+                form.password_confirm.value = "";
+                form.password_confirm.focus();
+                return false;
+            }
+            else if(!re2.test(email.value)) {
+                alert("이메일형식이 맞지 않습니다.");
+                form.before_email.focus();
+                return false;
+            }
+            else if (!reg.test(pnum.value)) {
+                alert("전화번호형식이 맞지 않습니다.");
+                form.pnum.focus();
+                return false;
+            }
+            else {
+                signupCheck = 1;
+            }
         }
     }
 
-    // 아이디 유효성체크
-    function idCheck() {
+    // 아이디 중복체크, 유효성검사
+    function checkId() {
 
-        form.id.value = form.id.value.trim();
+        form.before_id.value = form.before_id.value.trim();
+        const before_id = document.getElementById("before_id").value;
 
         if(!form.before_id.value) {
             alert("아이디를 입력해주세요.");
-        }else {
-            overlapCheck();
+            form.before_id.focus();
+            return false;
+        } else {
+
+            if (!re1.test(before_id)) {
+                alert("아이디는 영문자+숫자 조합으로 4~8자리 사용해야 합니다.");
+                form.before_id.focus();
+                return false;
+            }
         }
-    }
-
-    // 아이디 중복체크
-    function overlapCheck() {
-
-        const before_id = document.getElementById("before_id").value;
 
         $.ajax({
-            method: "post",
-            url: "/checkId",
-            data: {id: before_id},
-            dataType: "json",
-            success: function (data) {
+                method: "post",
+                url: "/checkId",
+                data: {id: before_id},
+                dataType: "json",
+                success: function (data) {
+                    if (data == 0) {
 
-                if (data == 0) {
-                    document.getElementById("check").setAttribute("value", 1);
-                    document.getElementById("id").value = document.getElementById("before_id").value;
-                    document.getElementById("before_id").disabled = true;
-                    alert("사용가능한 아이디입니다.");
-                } else {
-                    alert("중복된 아이디입니다.");
+                        document.getElementById("check_id").setAttribute("value", 1);
+                        document.getElementById("id").value = document.getElementById("before_id").value;
+                        document.getElementById("before_id").disabled = true;
+                        alert("사용가능한 아이디입니다.");
+
+                    } else {
+                        alert("중복된 아이디입니다.");
+                    }
                 }
-            },
-            error: function (error) {
-                alert("ajax error" + error);
-            }
-        });
+            });
+    }
+
+    // 닉네임중복, 유효성 검사
+    function checkNickname() {
+        form.before_nickname.value = form.before_nickname.value.trim();
+
+        const before_nickname = document.getElementById("before_nickname").value;
+
+        if(!form.before_nickname.value) {
+            alert("닉네임을 입력해주세요.");
+            form.before_nickname.focus();
+            return false;
+        } else {
+
+            $.ajax({
+                method: "post",
+                url: "/checkNickname",
+                data: {nickname: before_nickname},
+                dataType: "json",
+                success: function (data) {
+                    if (data == 0) {
+                        alert("사용가능한 닉네임입니다.");
+                        document.getElementById("check_nickname").setAttribute("value", 1);
+                        document.getElementById("nickname").value = document.getElementById("before_nickname").value;
+                        document.getElementById("before_nickname").disabled = true;
+                    } else {
+                        alert("중복된 닉네임입니다.");
+                    }
+                }
+            });
+
+        }
 
     }
 
     // 이메일 중복체크 
-    function checkEmail() {
+    function signUp() {
 
-        var email = form.email.value;
+        if(confirm("이 정보로 가입하시겠습니까?")) {
+            checkValid();
 
-        $.ajax ({
-            method: "post",
-            url: "/checkEmail",
-            data: {email: email},
-            dataType: "json",
-            success: function (data) {
-                if(data ==1) {
-                    alert("이미 존재하는 이메일 입니다.")
-                } else if (data ==0) {
-                    signUp();
+            var email = form.email.value;
+
+            $.ajax({
+                method: "post",
+                url: "/checkEmail",
+                data: {email: email},
+                dataType: "json",
+                success: function (data) {
+                    if (data == 1) {
+                        alert("이미 존재하는 이메일 입니다.")
+                    } else if (data == 0) {
+                        checkAll();
+                    }
                 }
-            }
-        })
+            })
+        } else {
+
+        }
     }
 
     // 회원가입 진행
-    function signUp() {
-
-        const check = document.getElementById("check").value; //
-
+    function checkAll() {
+        const check_id = document.getElementById("check_id").value; //
+        const check_nickname = document.getElementById("check_nickname").value;
         // 공백제거
-        form.before_id.value = form.before_id.value.trim();
-        form.password.value = form.password.value.trim();
-        form.name.value = form.name.value.trim();
-        form.nickname.value = form.nickname.value.trim();
-        form.pnum.value = form.pnum.value.trim();
-        form.email.value = form.email.value.trim();
 
-        infoCheck();
-        validCheck();
-
-        if(signupCheck==1 && check == 1) {
+        if (signupCheck == 1 && check_id == 1 && check_nickname == 1) {
             form.submit();
-            alert("가입이 완료되었습니다. 이메일 인증 후 로그인해주세요.");
-        } else if(signupCheck==1 && check ==0) {
+            alert("가입이 완료되었습니다. 이메일 인증후 게시판 사용이 가능합니다.");
+        } else if (signupCheck == 1 && check_id != 1 && check_nickname == 1) {
             alert("아이디 중복체크를 해주세요.");
-        } else if(signupCheck ==0 && check==1) {
-            alert("정보를 입력해주세요.");
-        }
+            form.before_id.focus();
+            return false;
+        } else if (signupCheck == 1 && check_id == 1 && check_nickname != 1) {
+            alert("닉네임 중복체크를 해주세요.");
+            form.before_nickname.focus();
+            return false;
+        } else if (signupCheck == 0 && check_id == 0 && check_nickname == 0) {
 
+            return false;
+        } else if (signupCheck == 0 && check_id == 1 && check_nickname == 1) {
+
+            return false;
+        }
     }
 
 </script>

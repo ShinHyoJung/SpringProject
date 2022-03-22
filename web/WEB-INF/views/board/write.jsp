@@ -13,7 +13,7 @@
     <title>게시글쓰기</title>
     <link rel="stylesheet" href="<c:url value="/css/background.css"/>" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <script type="text/javascript" src="/smarteditor/js/HuskyEZCreator.js" charset="UTF-8"></script>
+
 </head>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
@@ -50,9 +50,8 @@
         <tr>
             <td>
                   <div id="smarteditor">
-                 <textarea class="form-control" rows="20" id= "editorTxt" name="editorTxt" style="height:300px;"></textarea>
+                 <textarea class="form-control" rows="20" id= "bcontent" name="bcontent" style="height:300px;"></textarea>
                   </div>
-                <input type="hidden" id = "bcontent" name="bcontent" />
             </td>
         <tr>
     </table>
@@ -74,44 +73,13 @@
 
     var count = 1;
 
-    let oEditors = []
-
-    smartEditor = function() {
-        console.log("Naver SmartEditor")
-        nhn.husky.EZCreator.createInIFrame({
-            oAppRef: oEditors,
-            elPlaceHolder: "editorTxt",
-            sSkinURI: "/smarteditor/SmartEditor2Skin.html",
-            fCreator: "createSEditor2",
-            htParams: {
-                bUseModeChanger:false
-            }
-        })
-    }
-
-    $(document).ready(function() {
-        smartEditor()
-    })
-
     function enroll() {
         var form = document.writeForm;
-
-        oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", [])
-        let content = document.getElementById("editorTxt").value
-
-        if(content == '' || content==null || content=='&nbsp;' || content == '<br>' || content=='</br>' || content=='<p>&nbsp;</p>') {
-            alert("내용을 입력해주세요.")
-            oEditors.getById["editorTxt"].exec("FOCUS")
-            return
-        } else {
-            console.log(content)
-            document.getElementById("bcontent").value = content;
-        }
 
         if(!form.btitle.value) { // 제목 유효성 검사
             alert("제목을 입력해주세요.");
         }
-        else {
+        else  {
             if (confirm("글을 등록하시겠습니까?")) {
                 form.submit();
                 alert("등록되었습니다.");

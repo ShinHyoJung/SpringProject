@@ -17,11 +17,6 @@ import java.util.Map;
 
 public interface MemberDAO
     {
-
-        List<GrantedAuthority> readAuthorities(String username);
-
-        void createAuthorities(MemberDTO member);
-
         void insertMember(MemberDTO member);
 
         MemberDTO loginMember(String username);
@@ -30,13 +25,21 @@ public interface MemberDAO
 
         void updateMember(MemberDTO member);
 
-        void deleteMember(int idx);
+        void deleteMember(String username);
 
         int checkId(MemberDTO member);
 
         int checkEmail(MemberDTO member);
 
+        int checkNickname(MemberDTO member);
+
         MemberDTO findId(MemberDTO member);
+
+        List<GrantedAuthority> readAuthorities(String username);
+
+        void createAuthorities(MemberDTO member);
+
+        void deleteAuthorities(String username);
 
         void insertAuthKey(String email, String authkey);
 

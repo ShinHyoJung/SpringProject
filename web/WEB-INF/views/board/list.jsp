@@ -147,7 +147,7 @@
 </sec:authorize>
 
     <form class="navbar-form navbar-right" style="width: 101%;">
-        <div style="margin-left: 1600px;">
+        <div style="margin-left: 1200px;">
 
            <sec:authorize access="isAuthenticated()">
             <button class = "btn btn-default navbar-btn" type="button" onclick="Logout()">로그아웃</button>

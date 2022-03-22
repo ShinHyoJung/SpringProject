@@ -2,11 +2,12 @@ package com.project.service;
 
 import com.project.dao.MemberDAO;
 import com.project.dto.MemberDTO;
-import com.project.dto.TempKey;
 import com.project.util.MailUtils;
+import com.project.util.RandomUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -37,32 +38,30 @@ public class MemberServiceImpl implements MemberService
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{ // SpringSecurity에서 제공하는 인터페이스로, DB에 접근해서 사용자정보를 가져옴
             MemberDTO member = memberDAO.loginMember(username);
-
             int authkey = member.getAuthkey();
+
             if(authkey==1) { //인증키가 1이면
-                member.setAuthorities(getAuthorities(username)); // 권한테이블로부터 권한을 갖게됨
-                return member; // member값 반환함으로써, 로그인실행
+            // 권한테이블로부터 권한을 갖게됨
+                member.setAuthorities(AuthorityUtils.createAuthorityList("ROLE_USER")); // 사용자 권한 부여
+                createAuthorities(member);
+            // member값 반환함으로써, 로그인실행
+            } else if(authkey ==0) {
+                member.setAuthorities(AuthorityUtils.createAuthorityList("ROLE_GUEST")); // 사용자 권한 부여
+                createAuthorities(member);
             }
 
-            return null; // 인증키가 1이아니면 로그인 안함
+            member.setAuthorities(getAuthorities(username));
+
+            return member;
     }
 
-    @Override // 이미 선언된 함수를 바꿔치기
-    public Collection<GrantedAuthority> getAuthorities(String username)  {
-        List<GrantedAuthority> authorities = memberDAO.readAuthorities(username);
-        return authorities;
-    }
-
-    @Override
-    public void createAuthorities(MemberDTO member) {
-        memberDAO.createAuthorities(member);
-    }
 
     @Override
     public void insertMember(MemberDTO member) throws MessagingException, UnsupportedEncodingException {
         memberDAO.insertMember(member);
-
-        String key = new TempKey().getKey(50, false);
+/*
+        String key = RandomUtils.getRandomString();
+                //new TempKey().getKey(50, false);
         memberDAO.insertAuthKey(member.getEmail(), key);
         MailUtils sendMail = new MailUtils(mailSender);
         sendMail.setSubject("인증메일입니다.");
@@ -75,7 +74,7 @@ public class MemberServiceImpl implements MemberService
         sendMail.setFrom("sljh1020@gmail.com", "admin");
         sendMail.setTo(member.getEmail());
         sendMail.send();
-
+*/
     }
 
     @Override
@@ -94,8 +93,8 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
-    public void deleteMember(int idx) {
-        memberDAO.deleteMember(idx);
+    public void deleteMember(String username) {
+        memberDAO.deleteMember(username);
     }
 
     @Override
@@ -111,13 +110,36 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
-    public MemberDTO findId(MemberDTO username) {
-        return memberDAO.findId(username);
+    public int checkNickname(MemberDTO member) {
+        int nickname = memberDAO.checkNickname(member);
+        return nickname;
     }
+
 
     @Override
     public void updateAuthKey(String email) { //
         memberDAO.updateAuthKey(email);
+    }
+
+    @Override // 이미 선언된 함수를 바꿔치기
+    public Collection<GrantedAuthority> getAuthorities(String username)  {
+        List<GrantedAuthority> authorities = memberDAO.readAuthorities(username);
+        return authorities;
+    }
+
+    @Override
+    public void createAuthorities(MemberDTO member) {
+        memberDAO.createAuthorities(member);
+    }
+
+    @Override
+    public void deleteAuthorities(String username) {
+        memberDAO.deleteAuthorities(username);
+    }
+
+    @Override
+    public MemberDTO findId(MemberDTO username) {
+        return memberDAO.findId(username);
     }
 
     @Override
@@ -129,5 +151,22 @@ public class MemberServiceImpl implements MemberService
     @Override
     public void updatePwd(MemberDTO member) {
         memberDAO.updatePwd(member);
+    }
+
+    @Override
+    public void sendMail(MemberDTO member) throws MessagingException, UnsupportedEncodingException {
+        String key = RandomUtils.getRandomString();
+        memberDAO.insertAuthKey(member.getEmail(), key);
+        MailUtils sendMail = new MailUtils(mailSender);
+        sendMail.setSubject("인증메일입니다.");
+        sendMail.setText("<h1> 이메일 인증</h1>" +
+                "<br>" + member.getName()+"님"+
+                "<br> 아래 [이메일 인증확인]을 눌러주세요.<br>" +
+                "<a href='http://localhost:8080/SignupEmail?email=" +
+                member.getEmail() + "&key=" + key +
+                " ' target='_blenk'>이메일 인증 확인</a>");
+        sendMail.setFrom("sljh1020@gmail.com", "admin");
+        sendMail.setTo(member.getEmail());
+        sendMail.send();
     }
 }

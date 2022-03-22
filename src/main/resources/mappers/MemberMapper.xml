@@ -3,13 +3,6 @@
 
 <mapper namespace="com.project.dao.MemberDAOImpl">
 
-    <select id="readAuthorities" parameterType="String" resultType="org.springframework.security.core.authority.SimpleGrantedAuthority">
-        SELECT auth
-        FROM authority
-        WHERE 1=1
-        AND username = #{username}
-    </select>
-
     <insert id="insertMember" parameterType="com.project.dto.MemberDTO">
         INSERT INTO member(
             id,
@@ -80,7 +73,7 @@
 
     <delete id="deleteMember" parameterType="com.project.dto.MemberDTO">
         DELETE FROM member
-        WHERE   idx = #{idx}
+        WHERE   username = #{username}
     </delete>
 
     <select id="checkId" parameterType="com.project.dto.MemberDTO" resultType="int">
@@ -93,6 +86,12 @@
         SELECT COUNT(*)
         FROM   member
         WHERE  email = #{email}
+    </select>
+
+    <select id="checkNickname" parameterType="com.project.dto.MemberDTO" resultType="int">
+        SELECT COUNT(*)
+        FROM   member
+        WHERE  nickname = #{nickname}
     </select>
 
     <insert id="createAuthority" parameterType="org.springframework.security.core.GrantedAuthority">
@@ -108,6 +107,17 @@
         username = #{username}
     </insert>
 
+    <select id="readAuthorities" parameterType="String" resultType="org.springframework.security.core.authority.SimpleGrantedAuthority">
+        SELECT auth
+        FROM authority
+        WHERE 1=1
+          AND username = #{username}
+    </select>
+
+    <delete id="deleteAuthority" parameterType="String">
+        DELETE FROM authority
+        WHERE  username = #{username}
+    </delete>
     <select id="findId" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
         SELECT username as username
         FROM  member
