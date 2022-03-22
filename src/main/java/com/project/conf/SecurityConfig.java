@@ -66,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests() // 요청에대한 권한을 지정
                 .antMatchers("/user/**").access("hasRole('ROLE_USER')")// ROLE_USER 권한을 가진 사용자만 들어갈수있는 페이지설정
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')") // ROLE_ADMIN 권한 , 결과에 따른 접근
-                .antMatchers("/guest/**").access("hasRole('ROLE_GUEST')") // ROLE_GUEST권한
+                .antMatchers("/guest/**").access("hasRole('ROLE_GUEST')")  // ROLE_GUEST권한
                 .anyRequest().permitAll() // 그외에 어떤 요청이든 접근을 전부 허용
                 .and()
 

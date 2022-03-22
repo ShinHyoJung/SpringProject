@@ -9,7 +9,7 @@ import java.util.Arrays;
  * Time: 오후 5:23
  * Comments:
  */
-public class Criteria {
+public class Criteria { // 현재페이지와 페이지당 보여질 게시물 갯수, 검색
 
 
     // 현재 페이지

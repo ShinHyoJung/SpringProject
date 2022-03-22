@@ -48,9 +48,11 @@
     <div>
         <form method="post" action="/updatePwd" name="PwdForm" style="margin-top: 50px;">
             <label for="id">아이디</label>
-            <input class="form-control" type="text" id="id" name="id"/>
+            <input class="form-control" type="text" id="before_id" name="before_id"/>
+            <input type="hidden" id="id" name = "id">
             <label for="name">이름</label>
-            <input class="form-control" type="text" id="name" name="name"/> <br>
+            <input class="form-control" type="text" id="before_name" name="before_name"/> <br>
+            <input type="hidden" id="name" name="name">
             <button type="button" class="btn btn-default" onclick="find()">본인인증</button> <br>
             <label for="password" style="margin-top: 10px;">변경할 비밀번호</label>
             <input class="form-control" type="password" id="password" name="password" style="margin-top: 10px;"/> <br>
@@ -69,23 +71,23 @@
 
     function find() {
 
-        form.id.value = form.id.value.trim();
-        form.name.value = form.name.value.trim();
+        form.before_id.value = form.before_id.value.trim();
+        form.before_name.value = form.before_name.value.trim();
 
-        if(form.id.value && form.name.value) {
-            let id = document.getElementById("id").value;
-            let name = document.getElementById("name").value;
+        if(form.before_id.value && form.before_name.value) {
+            let before_id = document.getElementById("before_id").value;
+            let before_name = document.getElementById("before_name").value;
 
             $.ajax({
                 method: "post",
                 url: "/findPwd",
-                data: {id: id, name: name},
+                data: {id: before_id, name: before_name},
                 dataType: "json",
                 success: function (data) {
                     if (data == 1) {
                         alert("본인인증이 완료되었습니다.");
-                        document.getElementById("id").disabled = true;
-                        document.getElementById("name").disabled = true;
+                        document.getElementById("before_id").disabled = true;
+                        document.getElementById("before_name").disabled = true;
                         document.getElementById("find").setAttribute("value", 1);
                     } else {
                         alert("개인정보가 틀렸습니다.");
@@ -108,7 +110,8 @@
             alert("본인인증을 해주세요.");
         }
         else if(find ==1) {
-
+            document.getElementById("id").value = document.getElementById("before_id").value;
+            document.getElementById("name").value = document.getElementById("before_name").value;
             if(form.password.value) {
 
                 if(!re1.test(pw.value)) {

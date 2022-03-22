@@ -73,7 +73,9 @@ public class MemberController {
         member.setAccountNonLocked(true);
         member.setEnabled(true);
         member.setCredentialsNonExpired(true);
+        member.setAuthorities(AuthorityUtils.createAuthorityList("ROLE_GUEST")); // 사용자 권한 부여
 
+        memberService.createAuthorities(member);
         memberService.insertMember(member);
 
         Runnable task = new Runnable() { // 스레드가 실행할 작업
@@ -131,13 +133,18 @@ public class MemberController {
 
     @Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/quitSignup") // 회원탈퇴
-    public String quitSignup(HttpSession session) {
+    public String quitSignup(MemberDTO member, HttpSession session) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); //
         String username = ((UserDetails)principal).getUsername();
 
+        member = memberService.selectMember(username);
+        String email = member.getEmail();
+
+        memberService.deleteEmail(email);
         memberService.deleteMember(username);
         memberService.deleteAuthorities(username);
+
         session.invalidate(); //
         return "redirect:/";
     }

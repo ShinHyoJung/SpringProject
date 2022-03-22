@@ -46,6 +46,8 @@ public interface MemberService extends UserDetailsService
 
    void deleteAuthorities(String username);
 
+   void updateAuthorities(String username);
+
    void updateAuthKey(String email);
 
    int findPwd(MemberDTO member);
@@ -53,4 +55,6 @@ public interface MemberService extends UserDetailsService
    void updatePwd(MemberDTO member);
 
    void sendMail(MemberDTO member) throws MessagingException, UnsupportedEncodingException;
+
+   void deleteEmail(String email);
 }

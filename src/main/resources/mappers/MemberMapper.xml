@@ -114,10 +114,17 @@
           AND username = #{username}
     </select>
 
-    <delete id="deleteAuthority" parameterType="String">
+    <delete id="deleteAuthorities" parameterType="String">
         DELETE FROM authority
         WHERE  username = #{username}
     </delete>
+
+    <update id="updateAuthorities" parameterType="String">
+        UPDATE  authority
+        SET auth = 'ROLE_USER'
+        WHERE  username = #{username}
+    </update>
+
     <select id="findId" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
         SELECT username as username
         FROM  member
@@ -151,11 +158,13 @@
     </insert>
 
     <update id="updateAuthKey" parameterType="com.project.dto.EmailAuthDTO">
-        <![CDATA[
         UPDATE member
         SET  authkey =1
-        WHERE (SELECT COUNT(*) FROM emailauth
-                WHERE email = #{email}) > 0
-        ]]>
+        WHERE email = #{email}
     </update>
+
+    <delete id="deleteEmail" parameterType="String">
+        DELETE FROM emailauth
+        WHERE  email = #{email}
+    </delete>
 </mapper>

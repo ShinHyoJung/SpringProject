@@ -76,8 +76,15 @@
     function enroll() {
         var form = document.writeForm;
 
+        form.btitle.value = form.btitle.value.trim();
+        form.bcontent.value = form.bcontent.value.trim();
+
+
         if(!form.btitle.value) { // 제목 유효성 검사
             alert("제목을 입력해주세요.");
+        }
+        else if(!form.bcontent.value) {
+            alert("내용을 입력해주세요.");
         }
         else  {
             if (confirm("글을 등록하시겠습니까?")) {

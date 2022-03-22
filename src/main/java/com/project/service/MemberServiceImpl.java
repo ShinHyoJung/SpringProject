@@ -39,18 +39,16 @@ public class MemberServiceImpl implements MemberService
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{ // SpringSecurity에서 제공하는 인터페이스로, DB에 접근해서 사용자정보를 가져옴
             MemberDTO member = memberDAO.loginMember(username);
             int authkey = member.getAuthkey();
-
             if(authkey==1) { //인증키가 1이면
             // 권한테이블로부터 권한을 갖게됨
-                member.setAuthorities(AuthorityUtils.createAuthorityList("ROLE_USER")); // 사용자 권한 부여
-                createAuthorities(member);
+               // 사용자 권한 부여
+                updateAuthorities(username);
+
             // member값 반환함으로써, 로그인실행
             } else if(authkey ==0) {
-                member.setAuthorities(AuthorityUtils.createAuthorityList("ROLE_GUEST")); // 사용자 권한 부여
-                createAuthorities(member);
-            }
 
-            member.setAuthorities(getAuthorities(username));
+            }
+            member.setAuthorities(getAuthorities(username)); //인증
 
             return member;
     }
@@ -138,6 +136,11 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
+    public void updateAuthorities(String username) {
+        memberDAO.updateAuthorities(username);
+    }
+
+    @Override
     public MemberDTO findId(MemberDTO username) {
         return memberDAO.findId(username);
     }
@@ -168,5 +171,10 @@ public class MemberServiceImpl implements MemberService
         sendMail.setFrom("sljh1020@gmail.com", "admin");
         sendMail.setTo(member.getEmail());
         sendMail.send();
+    }
+
+    @Override
+    public void deleteEmail(String email) {
+        memberDAO.deleteEmail(email);
     }
 }

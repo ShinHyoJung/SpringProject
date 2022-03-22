@@ -7,7 +7,7 @@ package com.project.dto;
  * Time: 오후 4:06
  * Comments:
  */
-public class PagingDTO {
+public class PagingDTO { // 페이지 계산
 
 
 

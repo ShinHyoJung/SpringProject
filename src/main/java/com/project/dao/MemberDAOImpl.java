@@ -94,7 +94,12 @@ public class MemberDAOImpl implements MemberDAO
 
     @Override
     public void deleteAuthorities(String username) {
-        sqlSession.delete("deleteAuthority", username);
+        sqlSession.delete("deleteAuthorities", username);
+    }
+
+    @Override
+    public void updateAuthorities(String username) {
+        sqlSession.update("updateAuthorities", username);
     }
 
     @Override
@@ -121,5 +126,10 @@ public class MemberDAOImpl implements MemberDAO
     @Override
     public void updatePwd(MemberDTO member) {
         sqlSession.update("updatePwd", member);
+    }
+
+    @Override
+    public void deleteEmail(String email) {
+        sqlSession.delete("deleteEmail", email);
     }
 }

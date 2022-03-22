@@ -41,6 +41,8 @@ public interface MemberDAO
 
         void deleteAuthorities(String username);
 
+        void updateAuthorities(String username);
+
         void insertAuthKey(String email, String authkey);
 
         void updateAuthKey(String email);
@@ -48,4 +50,6 @@ public interface MemberDAO
         int findPwd(MemberDTO member);
 
         void updatePwd(MemberDTO member);
+
+        void deleteEmail(String email);
     }

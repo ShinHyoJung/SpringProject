@@ -127,7 +127,7 @@
             }
             else if(!re2.test(email.value)) {
                 alert("이메일형식이 맞지 않습니다.");
-                form.before_email.focus();
+                form.email.focus();
                 return false;
             }
             else if (!reg.test(pnum.value)) {
@@ -213,7 +213,7 @@
 
     }
 
-    // 이메일 중복체크 
+    // 이메일 중복체크 및 회원가입 진행
     function signUp() {
 
         if(confirm("이 정보로 가입하시겠습니까?")) {
@@ -239,7 +239,7 @@
         }
     }
 
-    // 회원가입 진행
+    // 유효성 총 검사
     function checkAll() {
         const check_id = document.getElementById("check_id").value; //
         const check_nickname = document.getElementById("check_nickname").value;

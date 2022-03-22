@@ -130,9 +130,8 @@
         if(form.password.value) {
 
             if (check_nickname == 1 || check_nickname == 0) {
-                alert(check_nickname);
+                document.getElementById("nickname").value = document.getElementById("before_nickname").value;
 
-                document.getElementById("before_nickname").disabled = true;
                 if (!re1.test(pw.value)) {
                     alert("비밀번호는 영문 대소문자와 숫자 4~12자리로 입력해야 합니다.");
                     form.password.focus();
