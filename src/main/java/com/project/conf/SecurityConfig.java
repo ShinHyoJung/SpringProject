@@ -30,7 +30,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity(debug = true)// SpringSecurity FilterChain이 자동으로 포함됨
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) //
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // preAuthorize, PostAuthorise로 인가처리, secured어노테이션 사용
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     static Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
@@ -43,13 +43,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    private MemberService memberService;
+    private MemberService memberService; // userdetailService로 인증
 
     @Autowired
-   private DataSource dataSource;
+   private DataSource dataSource; //토큰
 
     @Autowired
-    private AuthenticationFailureHandler customFailureHandler;
+    private AuthenticationFailureHandler customFailureHandler; //로그인실패시 동작 빈 주입
 
     @Bean
     public PasswordEncoder passwordEncoder() // 비밀번호 암호화

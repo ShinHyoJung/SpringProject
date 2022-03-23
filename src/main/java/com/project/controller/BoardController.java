@@ -88,7 +88,7 @@ public class BoardController {
         Iterator<String> iterator = mpRequest.getFileNames();
         MultipartFile multipartFile = null;
         while(iterator.hasNext()) { // 컬렉션에 저장되어있는 요소들을 읽어오는 방법 표준화, 요소가 있으면 true, 없으면 false
-            multipartFile = mpRequest.getFile(iterator.next());
+            multipartFile = mpRequest.getFile(iterator.next()); //파일을 받아서 저장..
             if(multipartFile.isEmpty() == false) {
                 logger.debug("-------file start------");
                 logger.debug("name : " + multipartFile.getName()); //
@@ -118,7 +118,6 @@ public class BoardController {
 
         HeartDTO heart = heartService.selectHeart(bno, idx);
 
-
         CommentDTO comment = new CommentDTO(); // 댓글
         comment.setBno(bno);
         List<CommentDTO> comments = commentService.selectComment(comment);
@@ -146,8 +145,7 @@ public class BoardController {
         return "board/modify";
     }
 
-    @Secured({"ROLE_USER","ROLE_ADMIN"
-    })
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping(value = "/update", method = RequestMethod.POST) // 게시글 수정
     public String updateBoard(BoardDTO board, @RequestParam(value="fileNoDel[]", required = false) String[] files,
                               @RequestParam(value="fileNameDel[]", required = false) String[] fileNames, MultipartHttpServletRequest mpRequest) throws Exception {
@@ -183,7 +181,7 @@ public class BoardController {
 
         logger.info("heart_up");
         boardService.upBoard(bno);
-        boardService.selectBoard(bno);
+        boardService.selectBoard(bno); //다시 조회해서 좋아요수 반영
         return "success";
     }
 

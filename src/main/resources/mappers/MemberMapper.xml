@@ -110,8 +110,7 @@
     <select id="readAuthorities" parameterType="String" resultType="org.springframework.security.core.authority.SimpleGrantedAuthority">
         SELECT auth
         FROM authority
-        WHERE 1=1
-          AND username = #{username}
+        WHERE username = #{username}
     </select>
 
     <delete id="deleteAuthorities" parameterType="String">

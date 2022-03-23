@@ -55,24 +55,8 @@ public class MemberServiceImpl implements MemberService
 
 
     @Override
-    public void insertMember(MemberDTO member) throws MessagingException, UnsupportedEncodingException {
+    public void insertMember(MemberDTO member) {
         memberDAO.insertMember(member);
-/*
-        String key = RandomUtils.getRandomString();
-                //new TempKey().getKey(50, false);
-        memberDAO.insertAuthKey(member.getEmail(), key);
-        MailUtils sendMail = new MailUtils(mailSender);
-        sendMail.setSubject("인증메일입니다.");
-        sendMail.setText("<h1> 이메일 인증</h1>" +
-                "<br>" + member.getName()+"님"+
-                "<br> 아래 [이메일 인증확인]을 눌러주세요.<br>" +
-                "<a href='http://localhost:8080/SignupEmail?email=" +
-                member.getEmail() + "&key=" + key +
-                " ' target='_blenk'>이메일 인증 확인</a>");
-        sendMail.setFrom("sljh1020@gmail.com", "admin");
-        sendMail.setTo(member.getEmail());
-        sendMail.send();
-*/
     }
 
     @Override
