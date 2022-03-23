@@ -20,7 +20,9 @@ import java.util.*;
 public class FileUtils { // 첨부파일 정보를 이용해 설정을 하는 클래스
     private static final String filePath = "D:\\file\\"; // 상수로 값이 고정됨
 
-    public List<Map<String, Object>> parseInsertFileInfo(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception { // 스프링이 제공하는 파일 업로드 인터페이스
+    public List<Map<String, Object>> parseInsertFileInfo(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception {
+        // 스프링이 제공하는 파일 업로드 인터페이스
+        // 파일을 처음 업로드할때 쓰는 메서드
         // mpRequest는 첨부파일의 파라미터 값을 받을 수 있음
         Iterator<String> iterator = mpRequest.getFileNames(); // 리스트를 저장하기위한 컬렉션 프레임워크 인터페이스
 
@@ -61,7 +63,7 @@ public class FileUtils { // 첨부파일 정보를 이용해 설정을 하는 �
     }
 
     public List<Map<String, Object>> parseUpdateFileInfo(BoardDTO board,String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws IOException {
-
+        //파일 수정과정에서 쓰이는 메서드
         Iterator<String> iterator = mpRequest.getFileNames();
         MultipartFile multipartFile = null;
         String originalFileName = null;

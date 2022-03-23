@@ -109,7 +109,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 
                 //	    csrf
-                .csrf().disable(); // csrf 보호기능 비활성화
+                .csrf().disable(); // csrf 보호기능 비활성화, 이미 csrf공격으로부터 안전하기때문에 csrf토큰을 받지않아도 되어 disable하는것이 더 나음
 
 
     }

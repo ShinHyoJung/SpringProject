@@ -33,6 +33,6 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
 
         registry.addResourceHandler("/css/**").addResourceLocations("/css/");
 
-        registry.addResourceHandler("/smarteditor/**").addResourceLocations("/smarteditor/");
+        //registry.addResourceHandler("/smarteditor/**").addResourceLocations("/smarteditor/");
     }
 }

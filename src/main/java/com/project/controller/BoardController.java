@@ -68,6 +68,7 @@ public class BoardController {
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @RequestMapping("/write") // 게시글 쓰기
     public String writeBoard(Model model) {
+        logger.info("write");
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails)principal).getUsername();
 
@@ -81,6 +82,7 @@ public class BoardController {
     @RequestMapping("/enroll") // 게시글 등록
     public String enrollBoard(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception {
 
+        logger.info("enroll");
         boardService.insertBoard(board, mpRequest);
 
         Iterator<String> iterator = mpRequest.getFileNames();
@@ -103,6 +105,7 @@ public class BoardController {
     public String readBoard(@PathVariable("bno")int bno, MemberDTO member, Model model, HttpSession session) throws Exception {
         // 게시글 번호를 받아서 경로설정
         // pathVariable은 RESTful 방식에 맞게 좀 더 직관적
+        logger.info("read");
         BoardDTO board = boardService.selectBoard(bno); //게시글
         model.addAttribute("board", board);
 
@@ -148,7 +151,7 @@ public class BoardController {
     @RequestMapping(value = "/update", method = RequestMethod.POST) // 게시글 수정
     public String updateBoard(BoardDTO board, @RequestParam(value="fileNoDel[]", required = false) String[] files,
                               @RequestParam(value="fileNameDel[]", required = false) String[] fileNames, MultipartHttpServletRequest mpRequest) throws Exception {
-
+        logger.info("update");
         boardService.updateBoard(board, files, fileNames, mpRequest);
         return "redirect:list";
     }
@@ -165,6 +168,8 @@ public class BoardController {
     @RequestMapping(value="/search/{bwriter}", method=RequestMethod.GET) // 게시글 작성자 검색
     public String searchBoard(@PathVariable("bwriter")String bwriter, Model model) { // 어떤 요청이든간에 하나밖에 못씀
 
+        logger.info("search");
+
         List<BoardDTO> result = boardService.searchBoard(bwriter);
         String writer = bwriter;
         model.addAttribute("result",result);
@@ -176,6 +181,7 @@ public class BoardController {
     @RequestMapping("/upBoard") // 게시글 좋아요수 증가
     public String upBoard(int bno) {
 
+        logger.info("heart_up");
         boardService.upBoard(bno);
         boardService.selectBoard(bno);
         return "success";
@@ -185,6 +191,7 @@ public class BoardController {
     @RequestMapping("/downBoard")
     @ResponseBody
     public String downBoard(int bno) { // 게시글 좋아요수 감소
+        logger.info("heart_down");
         boardService.downBoard(bno);
         boardService.selectBoard(bno);
         return "success";

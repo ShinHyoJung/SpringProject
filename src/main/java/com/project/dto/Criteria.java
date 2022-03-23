@@ -11,12 +11,15 @@ import java.util.Arrays;
  */
 public class Criteria { // 현재페이지와 페이지당 보여질 게시물 갯수, 검색
 
+    // 페이징 쿼리를 동적으로 제어하기 위해 필요한 데이터 pageNum과 amount 값을 파라미터로 전달하기 위한 용도
+    // 각각 분리하여 파라미터로 전달해도 되지만 연관성 있는데이터를 같이 관리하면서 재사용성을 위함
+
 
     // 현재 페이지
     private int pageNum;
     // 한 페이지당 보여질 게시물 갯수
     private int amount;
-    // 스킵할 게시물의 수 ((pageNum-1) * amount)
+    // 스킵할 게시물의 수 ((pageNum-1) * amount) limit에서 사용
     private int skip;
     // 검색 키워드
     private String keyword;

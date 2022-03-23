@@ -4,6 +4,8 @@ import com.project.dto.BoardDTO;
 import com.project.dto.HeartDTO;
 import com.project.service.BoardService;
 import com.project.service.HeartService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -26,10 +28,14 @@ public class HeartController {
     @Autowired
     HeartService heartService;
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/insertHeart") // 좋아요 하트생성
     @ResponseBody
     public String insertHeart(HeartDTO heart) {
+
+        logger.info("insert_heart");
         heartService.insertHeart(heart);
         return "success";
     }
@@ -38,6 +44,8 @@ public class HeartController {
     @RequestMapping("/deleteHeart") // 좋아요 하트 삭제
     @ResponseBody
     public String deleteHeart(HeartDTO heart) {
+
+        logger.info("delete_heart");
 
         int hno = heart.getHno();
         heartService.deleteHeart(hno);
@@ -48,6 +56,8 @@ public class HeartController {
     @RequestMapping("/updateHeart") // 하트 삭제후 다시 생성시,
     @ResponseBody
     public String updateHeart(HeartDTO heart) {
+
+        logger.info("update_heart");
 
         heartService.updateHeart(heart);
         return "success";

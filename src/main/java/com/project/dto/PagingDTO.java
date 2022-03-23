@@ -23,7 +23,7 @@ public class PagingDTO { // 페이지 계산
         this.cri = cri;
         this.total = total;
 
-        this.endPage = (int)(Math.ceil(cri.getPageNum()/5.0))*5; // 끝번호를 구한다.  페이지를 5로 나눈후 그 값을 올림해서 5를 곱함
+        this.endPage = (int)(Math.ceil(cri.getPageNum()/5.0))*5; // 끝번호를 구한다.  페이지를 5로 나눈후 그 값을 올림해서 5를 곱함 반올림을하는 식
 
         this.startPage = this.endPage - 4; // 첫번째 번호는 페이지번호들-1인 4를 빼주면 나옴
 

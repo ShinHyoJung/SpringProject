@@ -61,7 +61,7 @@
     </div>
     <div class="form-group">
         <label for="email">이메일주소</label>
-        <input id = "email" class="form-control" name="email" value="${user.email}">
+        <input id = "email" class="form-control" name="email" value="${user.email}" readonly="readonly">
     </div>
     <input type="hidden" name = "idx" value="${user.idx}">
     <button class= "btn btn-default" type="button" onclick="update()">수정 </button>
@@ -118,12 +118,10 @@
         form.name.value = form.name.value.trim();
         form.nickname.value = form.nickname.value.trim();
         form.pnum.value = form.pnum.value.trim();
-        form.email.value = form.email.value.trim();
 
         var pw = document.getElementById("password");
         var cpw = document.getElementById("password_confirm");
         var pnum = document.getElementById("pnum");
-        var email = document.getElementById("email");
 
         var check_nickname = document.getElementById("check_nickname").value;
 
@@ -147,12 +145,6 @@
                 if (!reg.test(pnum.value)) {
                     alert("전화번호는 숫자로만 입력해야 합니다.");
                     form.pnum.focus();
-                    return false;
-                }
-
-                if (!re2.test(email.value)) {
-                    alert("이메일 형식에 맞지 않습니다.");
-                    form.email.focus();
                     return false;
                 }
 

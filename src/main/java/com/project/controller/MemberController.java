@@ -49,21 +49,21 @@ public class MemberController {
 
     @RequestMapping("/Logout") // 로그아웃
     public String Logout(HttpSession session) {
-
-        session.invalidate();
         logger.info("Logout");
+        session.invalidate();
         return "home";
     }
 
     @RequestMapping("/beforeSignup") // 회원가입 창
     public String beforeSignup()
     {
+        logger.info("Signup_page");
         return "member/signup";
     }
 
     @RequestMapping("/Signup") // 회원가입 처리
     public String Signup(@ModelAttribute MemberDTO member) throws MessagingException, UnsupportedEncodingException {
-
+        logger.info("Signup");
         String pwdbCrypt = new BCryptPasswordEncoder().encode(member.getPassword()); //비밀번호 암호화
 
         // 회원가입시 유저 정보를 넣음
@@ -100,6 +100,8 @@ public class MemberController {
 
     @RequestMapping(value="SignupEmail", method = RequestMethod.GET) // 이메일인증
     public String emailConfirm(String email, Model model)  {
+
+        logger.info("Signup_email");
         memberService.updateAuthKey(email); // member 테이블 authkey 1로바꿈
         model.addAttribute("email", email);
 
@@ -109,6 +111,8 @@ public class MemberController {
     @Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/Info") // 회원정보 조회
     public String selectInfo(MemberDTO member, Model model)  {
+
+        logger.info("Info");
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); //
         String username = ((UserDetails)principal).getUsername(); // 스프링시큐리티 principal 인터페이스에서 사용자 정보를 가져옴
@@ -125,6 +129,7 @@ public class MemberController {
     @RequestMapping("/updateInfo") // 회원정보 수정
     public String updateInfo(MemberDTO member)  {
 
+        logger.info("update_Info");
         String pwdbCrypt = new BCryptPasswordEncoder().encode(member.getPassword()); // 수정된 비밀번호 암호화
         member.setPassword(pwdbCrypt);
         memberService.updateMember(member);
@@ -134,6 +139,8 @@ public class MemberController {
     @Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/quitSignup") // 회원탈퇴
     public String quitSignup(MemberDTO member, HttpSession session) {
+
+        logger.info("quit_Signup");
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); //
         String username = ((UserDetails)principal).getUsername();
@@ -152,6 +159,7 @@ public class MemberController {
     @ResponseBody // http요청의 바디내용을 통째로 자바객체로 변환해서 매핑된 메소드 파라미터로 전달, ajax활용시 편함
     @RequestMapping(value="/checkId", method=RequestMethod.POST)
     public int checkId(MemberDTO member) throws Exception { // 아이디중복체크, 파라미터
+        logger.info("check_Id");
         int id = memberService.checkId(member);
         return id;
     }
@@ -159,6 +167,8 @@ public class MemberController {
     @ResponseBody
     @RequestMapping(value="/checkEmail", method = RequestMethod.POST)
     public int checkEmail(MemberDTO member) { // 이메일중복체크
+
+        logger.info("check_Email");
         int email = memberService.checkEmail(member);
         return email;
     }
@@ -166,24 +176,29 @@ public class MemberController {
     @ResponseBody
     @RequestMapping(value="/checkNickname", method = RequestMethod.POST)
     public int checkNickname(MemberDTO member) { // 닉네임 중복체크
+
+        logger.info("check_Email");
         int nickname = memberService.checkNickname(member);
         return nickname;
     }
 
     @RequestMapping("/denied") // 페이지권한이 없을때,
     public String denied() {
+
+        logger.info("access_denied");
         return "member/denied";
     }
 
     @RequestMapping("/findId_page") // 아이디찾기 페이지
     public String findIdPage() {
-
+        logger.info("findId_page");
         return "member/find_id";
     }
 
     @RequestMapping("/findId") // 아이디찾기
     public String findId(MemberDTO member, Model model) {
 
+        logger.info("findId");
         MemberDTO user = memberService.findId(member);
 
         if(user == null) {
@@ -198,7 +213,7 @@ public class MemberController {
 
     @RequestMapping("/findPwd_page") // 비밀번호찾기 페이지
     public String findPwdPage()  {
-
+        logger.info("findPwd_page");
         return "/member/find_pwd";
     }
 
@@ -206,12 +221,15 @@ public class MemberController {
     @ResponseBody
     public int findPwd(MemberDTO member) {
 
+        logger.info("find_Pwd");
         int pwd = memberService.findPwd(member);
         return pwd;
     }
 
     @RequestMapping("/updatePwd") // 비밀번호 변경
     public String updatePwd(MemberDTO member) {
+
+        logger.info("update_Pwd");
         String pwdbCrypt = new BCryptPasswordEncoder().encode(member.getPassword()); // 수정된 비밀번호 암호화
         member.setPassword(pwdbCrypt);
         memberService.updatePwd(member);
@@ -219,10 +237,14 @@ public class MemberController {
         return "redirect:/Login";
     }
 
+    /*
     @Secured("ROLE_ADMIN") // 관리자 페이지
     @RequestMapping("/admin")
     public String manageAdmin()  {
 
+
         return "manage/admin";
     }
+    */
+
 }

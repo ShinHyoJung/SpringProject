@@ -91,54 +91,62 @@
         form.pnum.value = form.pnum.value.trim();
         form.email.value = form.email.value.trim();
 
+        var pw = document.getElementById("password");
+        var cpw = document.getElementById("password_confirm");
+        var email = document.getElementById("email");
+        var pnum = document.getElementById("pnum");
+
         if(!form.password.value && !form.name.value && !form.pnum.value && !form.email.value) {
             alert("정보를 입력해주세요.");
-            return false;
-        }else if(!form.password.value) {
+            return false; // 아래코드부터 아무것도 진행하지 말 것
+        }
+
+        if(!form.password.value) {
             alert("비밀번호를 입력해주세요.");
             return false;
-        } else if(!form.name.value) {
+        }
+
+        if(!form.name.value) {
             alert("이름을 입력해주세요.");
             return false;
-        } else if(!form.pnum.value) {
+        }
+
+        if(!form.pnum.value) {
             alert("전화번호를 입력해주세요.");
             return false;
-        } else if(!form.email.value) {
+        }
+
+        if(!form.email.value) {
             alert("이메일을 입력해주세요.");
             return false;
-        } else if (form.password.value&& form.name.value&&form.pnum.value && form.email.value) {
+        }
 
-            var pw = document.getElementById("password");
-            var cpw = document.getElementById("password_confirm");
-            var email = document.getElementById("email");
-            var pnum = document.getElementById("pnum");
-
-
-            if (!re1.test(pw.value)) {
-                alert("비밀번호는 영문 대소문자와 숫자 4~12자리로 입력해야 합니다.");
-                form.password.focus();
+        if (!re1.test(pw.value)) {
+            alert("비밀번호는 영문 대소문자와 숫자 4~12자리로 입력해야 합니다.");
+            form.password.focus();
                 return false;
             }
-            else if (pw.value !== cpw.value) {
+
+        if (pw.value !== cpw.value) {
                 alert("비밀번호가 서로 다릅니다. 다시 확인해 주세요.");
                 form.password_confirm.value = "";
                 form.password_confirm.focus();
                 return false;
             }
-            else if(!re2.test(email.value)) {
+
+        if(!re2.test(email.value)) {
                 alert("이메일형식이 맞지 않습니다.");
                 form.email.focus();
                 return false;
-            }
-            else if (!reg.test(pnum.value)) {
+        }
+
+        if (!reg.test(pnum.value)) {
                 alert("전화번호형식이 맞지 않습니다.");
                 form.pnum.focus();
                 return false;
-            }
-            else {
-                signupCheck = 1;
-            }
         }
+
+        signupCheck=1;
     }
 
     // 아이디 중복체크, 유효성검사
@@ -241,26 +249,21 @@
 
     // 유효성 총 검사
     function checkAll() {
+
         const check_id = document.getElementById("check_id").value; //
         const check_nickname = document.getElementById("check_nickname").value;
         // 공백제거
 
-        if (signupCheck == 1 && check_id == 1 && check_nickname == 1) {
+        if (signupCheck==1 && check_id == 1 && check_nickname == 1) {
             form.submit();
             alert("가입이 완료되었습니다. 이메일 인증후 게시판 사용이 가능합니다.");
-        } else if (signupCheck == 1 && check_id != 1 && check_nickname == 1) {
+        } else if (signupCheck==1 && check_id != 1 && check_nickname == 1) {
             alert("아이디 중복체크를 해주세요.");
             form.before_id.focus();
             return false;
-        } else if (signupCheck == 1 && check_id == 1 && check_nickname != 1) {
+        } else if (signupCheck==1 && check_id == 1 && check_nickname != 1) {
             alert("닉네임 중복체크를 해주세요.");
             form.before_nickname.focus();
-            return false;
-        } else if (signupCheck == 0 && check_id == 0 && check_nickname == 0) {
-
-            return false;
-        } else if (signupCheck == 0 && check_id == 1 && check_nickname == 1) {
-
             return false;
         }
     }

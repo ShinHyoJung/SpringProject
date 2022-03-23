@@ -20,7 +20,7 @@ public interface BoardDAO {
 
     void insertBoard(BoardDTO board);
 
-    List<BoardDTO> viewBoard(Criteria cri);
+    List<BoardDTO> viewBoard(Criteria cri); // 페이징을 적용해서 목록을 띄우기 위함
 
     BoardDTO selectBoard(int bno);
 
