@@ -31,7 +31,7 @@ public class ServletConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/resources/**")
         .addResourceLocations("/resources/*"); // 이 경로 아래에 오는 파일들을 인식
 
-        registry.addResourceHandler("/css/**").addResourceLocations("/css/");
+        //registry.addResourceHandler("/css/**").addResourceLocations("/css/");
 
         //registry.addResourceHandler("/smarteditor/**").addResourceLocations("/smarteditor/");
     }
