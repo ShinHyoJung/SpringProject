@@ -40,6 +40,7 @@ public class MemberServiceImpl implements MemberService
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{ // SpringSecurity에서 제공하는 인터페이스로, DB에 접근해서 사용자정보를 가져옴
             MemberDTO member = memberDAO.loginMember(username);
             int authkey = member.getAuthkey();
+
             if(authkey==1) { //인증키가 1이면
             // 권한테이블로부터 권한을 갖게됨
                // 사용자 권한 부여
@@ -59,13 +60,15 @@ public class MemberServiceImpl implements MemberService
     public void insertMember(MemberDTO member) {
 
         int id = checkId(member);
-        int email = checkEmail(member);
         int nickname = checkNickname(member);
-        if(id ==0 && email ==0 && nickname ==0) {
+        String email = member.getEmail();
+
+        if(id ==0 && nickname ==0) {
             memberDAO.insertMember(member);
         }
         else {
         System.out.println("회원가입이 되지 않았습니다.");
+            memberDAO.deleteEmail(email);
         }
     }
 
@@ -153,11 +156,6 @@ public class MemberServiceImpl implements MemberService
     @Override
     public void sendMail(MemberDTO member) throws MessagingException, UnsupportedEncodingException {
 
-        int id = checkId(member);
-        int email = checkEmail(member);
-        int nickname = checkNickname(member);
-
-        if(id == 0 && email ==0 && nickname ==0) {
             String key = RandomUtils.getRandomString();
             memberDAO.insertAuthKey(member.getEmail(), key);
             MailUtils sendMail = new MailUtils(mailSender);
@@ -171,9 +169,7 @@ public class MemberServiceImpl implements MemberService
             sendMail.setFrom("sljh1020@gmail.com", "admin");
             sendMail.setTo(member.getEmail());
             sendMail.send();
-        } else {
-            System.out.println("메일이 전송되지 않았습니다.");
-        }
+
     }
 
     @Override
