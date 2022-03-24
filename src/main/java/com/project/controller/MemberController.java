@@ -75,8 +75,15 @@ public class MemberController {
         member.setCredentialsNonExpired(true);
         member.setAuthorities(AuthorityUtils.createAuthorityList("ROLE_GUEST")); // 사용자 권한 부여
 
+
+        int id = memberService.checkId(member);
+        int nickname = memberService.checkNickname(member);
+        System.out.println(id + " " + nickname);
+
         memberService.createAuthorities(member);
         memberService.insertMember(member);
+
+
 
         Runnable task = new Runnable() { // 스레드가 실행할 작업
             @Override
@@ -91,10 +98,11 @@ public class MemberController {
             }
         };
 
-        Thread thread = new Thread(task); // 실행할 작업을 담은 thread객체 생성
-        thread.start(); // 스레드 시작
-        // 스레드 안에 이메일서비스
-
+       if (id == 0 && nickname==0) {
+            Thread thread = new Thread(task); // 실행할 작업을 담은 thread객체 생성
+            thread.start(); // 스레드 시작
+            // 스레드 안에 이메일서비스
+        }
         return "home";
     }
 

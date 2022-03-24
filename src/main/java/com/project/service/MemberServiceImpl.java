@@ -61,7 +61,6 @@ public class MemberServiceImpl implements MemberService
 
         int id = checkId(member);
         int nickname = checkNickname(member);
-        String email = member.getEmail();
 
         if(id ==0 && nickname ==0) {
             memberDAO.insertMember(member);
