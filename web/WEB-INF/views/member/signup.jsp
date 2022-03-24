@@ -42,24 +42,26 @@
             <input type="hidden" name="id" id="id">
         </div>
         <br>
-        <div class="form-group" >
-            <label for="password">비밀번호</label>
-            <input id= "password" type="password" class="form-control" style="width:50%;" name="password" placeholder="비밀번호를 입력해주세요."/> <br>
-        </div>
-        <div>
-            <label for="password_confirm">비밀번호 확인</label>
-            <input id="password_confirm" type="password" class="form-control" style="width:50%;" name="password_confirm" placeholder="비밀번호 확인"/> <br>
-        </div>
         <div class="form-group">
             <label for="name">이름</label>
-            <input id= "name" type="text" class="form-control" style="width:50%;" name="name" placeholder="이름을 입력해주세요."/>
-        </div>    <br>
+            <input id= "name" type="text" class="form-control" style="width:50%;" name="name" placeholder="이름을 입력해주세요."/> <br>
+        </div>
         <div class="form-group">
             <label for="before_nickname">닉네임</label>
             <input id= "before_nickname" type="text" class="form-control" style="width:30%; display: inline-block;" name="before_nickname" placeholder="닉네임을 입력해주세요."/>
             <button class="btn btn-default" type="button" id="check_nickname" onclick="checkNickname()" value=0>닉네임 중복체크</button>
             <input type="hidden" name="nickname" id="nickname">
         </div> <br>
+        <div class="form-group" >
+            <label for="password">비밀번호</label>
+            <input id= "password" type="password" class="form-control" style="width:50%;" name="password" placeholder="비밀번호를 입력해주세요."/>
+        </div>
+        <div>
+            <label for="password_confirm">비밀번호 확인</label>
+            <input id="password_confirm" type="password" class="form-control" style="width:50%;" name="password_confirm" placeholder="비밀번호 확인"/> <br>
+        </div>
+        <br>
+
         <div class="form-group">
             <label for="pnum">전화번호</label>
             <input id="pnum" type="text" class="form-control" style="width:50%;" name="pnum" placeholder="전화번호를 입력해주세요."/> <br>
@@ -82,7 +84,7 @@
     var re1 = /^[a-zA-z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
     var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일이 적합한지 검사할 정규식
 
-    var reg = /^[0-9]+/g; // 숫자만 입력하도록하는 정규식
+    var reg = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/; // 숫자만 입력하도록하는 정규식
 
     function checkValid() { // 비밀번호, 이름, 전화번호, 이메일 유효성 체크
 
@@ -93,8 +95,9 @@
 
         var pw = document.getElementById("password");
         var cpw = document.getElementById("password_confirm");
-        var email = document.getElementById("email");
         var pnum = document.getElementById("pnum");
+        var email = document.getElementById("email");
+
 
         if(!form.password.value && !form.name.value && !form.pnum.value && !form.email.value) {
             alert("정보를 입력해주세요.");
@@ -134,15 +137,17 @@
                 return false;
             }
 
+        if (!reg.test(pnum.value)) {
+            alert(pnum.value);
+            alert("전화번호형식이 맞지 않습니다.");
+            form.pnum.focus();
+            return false;
+        }
+
+
         if(!re2.test(email.value)) {
                 alert("이메일형식이 맞지 않습니다.");
                 form.email.focus();
-                return false;
-        }
-
-        if (!reg.test(pnum.value)) {
-                alert("전화번호형식이 맞지 않습니다.");
-                form.pnum.focus();
                 return false;
         }
 

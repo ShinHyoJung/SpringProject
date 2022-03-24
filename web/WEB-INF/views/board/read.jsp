@@ -120,7 +120,7 @@
             <tr>
                 <td style="width:10%;">${comments.cwriter}</td>
 
-                <td class="comment_content" user_idx="${user.idx}" comments_idx = "${comments.idx}" style="display: block;">${comments.ctext}</td>
+                <td class="comment_content" user_idx="${user.idx}" comments_idx = "${comments.idx}" style="display: block;"><c:out value="${comments.ctext}" escapeXml="true"/></td>
                 <td class="modify_comment" style="display: none;"><textarea id="texts" class="form-control" style="width: 90%;">${comments.ctext}</textarea></td>
                 <c:if test="${user.idx eq comments.idx}">
                 <td style="width:10%;">
