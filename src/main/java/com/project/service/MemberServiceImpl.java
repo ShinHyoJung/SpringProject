@@ -68,7 +68,7 @@ public class MemberServiceImpl implements MemberService
         }
         else {
         System.out.println("회원가입이 되지 않았습니다.");
-            memberDAO.deleteEmail(email);
+
         }
     }
 
