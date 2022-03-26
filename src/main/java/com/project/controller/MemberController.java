@@ -78,12 +78,12 @@ public class MemberController {
 
         int id = memberService.checkId(member);
         int nickname = memberService.checkNickname(member);
+        int email = memberService.checkEmail(member);
+
         System.out.println(id + " " + nickname);
 
         memberService.createAuthorities(member);
         memberService.insertMember(member);
-
-
 
         Runnable task = new Runnable() { // 스레드가 실행할 작업
             @Override
@@ -98,7 +98,7 @@ public class MemberController {
             }
         };
 
-       if (id == 0 && nickname==0) {
+       if (id == 0 && nickname==0 && email ==0) {
             Thread thread = new Thread(task); // 실행할 작업을 담은 thread객체 생성
             thread.start(); // 스레드 시작
             // 스레드 안에 이메일서비스

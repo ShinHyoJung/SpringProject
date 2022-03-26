@@ -50,10 +50,10 @@
     </div>
     <br>
     <div class="form-group">
-        <label for="before_nickname">닉네임</label>
-        <input id = "before_nickname" type="text" class="form-control" style="width:50%;display: inline-block;" name="before_nickname" value="${user.nickname}">
-        <button class="btn btn-default" type="button" id="check_nickname" onclick="checkNickname()" value=0>닉네임 중복체크</button>
-        <input type="hidden" name="nickname" id="nickname">
+        <label for="nickname">닉네임</label>
+        <input id = "nickname" type="text" class="form-control" style="width:50%;display: inline-block;" name="nickname" value="${user.nickname}" required oninput="checkNickname()">
+        <span class="nickname_ok" style="display:none;">사용가능한 닉네임입니다.</span>
+        <span class="nickname_already" style="display: none;">중복된 닉네임입니다.</span>
     </div>
     <div class="form-group">
         <label for="pnum">전화번호</label>
@@ -76,40 +76,31 @@
     var form = document.updateForm;
     var re1 = /^[a-zA-z0-9]{4,12}$/;
     var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일이 적합한지 검사할 정규식
-    var reg = /^[0-9]+/g;
-
+    var reg = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+    var check_nickname;
 
     function checkNickname() {
 
-        form.before_nickname.value = form.before_nickname.value.trim();
-
-        const before_nickname = document.getElementById("before_nickname").value;
-
-        if(!form.before_nickname.value) {
-            alert("닉네임을 입력해주세요.");
-            form.before_nickname.focus();
-            return false;
-        } else {
+        const nickname = document.getElementById("nickname").value;
 
             $.ajax({
                 method: "post",
                 url: "/checkNickname",
-                data: {nickname: before_nickname},
+                data: {nickname: nickname},
                 dataType: "json",
                 success: function (data) {
                     if (data == 0) {
-                        alert("사용가능한 닉네임입니다.");
-                        document.getElementById("check_nickname").setAttribute("value", 1);
-                        document.getElementById("nickname").value = document.getElementById("before_nickname").value;
-                        document.getElementById("before_nickname").disabled = true;
+                        $('.nickname_ok').css("display", "block");
+                        $('.nickname_already').css("display", "none");
                     } else {
-                        alert("중복된 닉네임입니다.");
-                        document.getElementById("check_nickname").setAttribute("value", -1);
+                        check_nickname = -1;
+                        $('.nickname_already').css("display", "block");
+                        $('.nickname_ok').css("display", "none");
                     }
                 }
             });
 
-        }
+
     }
 
     function update() {
@@ -122,39 +113,39 @@
         var pw = document.getElementById("password");
         var cpw = document.getElementById("password_confirm");
         var pnum = document.getElementById("pnum");
+        var nickname = document.getElementById("nickname");
 
-        var check_nickname = document.getElementById("check_nickname").value;
 
-        if(form.password.value) {
+        if (form.password.value) {
 
-            if (check_nickname == 1 || check_nickname == 0) {
-                document.getElementById("nickname").value = document.getElementById("before_nickname").value;
+            if (!re1.test(pw.value)) {
+                alert("비밀번호는 영문 대소문자와 숫자 4~12자리로 입력해야 합니다.");
+                form.password.focus();
+                return false;
+            }
 
-                if (!re1.test(pw.value)) {
-                    alert("비밀번호는 영문 대소문자와 숫자 4~12자리로 입력해야 합니다.");
-                    form.password.focus();
-                    return false;
-                }
+            if (pw.value != cpw.value) {
+                alert("비밀번호가 다릅니다.");
+                form.password.focus();
+                return false;
+            }
 
-                if (pw.value != cpw.value) {
-                    alert("비밀번호가 다릅니다.");
-                    form.password.focus();
-                    return false;
-                }
+            if (!reg.test(pnum.value)) {
+                alert("전화번호는 숫자로만 입력해야 합니다.");
+                form.pnum.focus();
+                return false;
+            }
 
-                if (!reg.test(pnum.value)) {
-                    alert("전화번호는 숫자로만 입력해야 합니다.");
-                    form.pnum.focus();
-                    return false;
-                }
+            if(check_nickname == -1) {
+                alert("닉네임을 변경해주세요.");
+                form.nickname.focus();
+                return false;
+            }
 
-                if (confirm("수정하시겠습니까?")) {
-                    form.submit();
-                    alert("수정되었습니다.");
-                } else {
-                }
+            if (confirm("수정하시겠습니까?")) {
+                form.submit();
+                alert("수정되었습니다.");
             } else {
-                alert("닉네임 변경후 중복체크 해주세요.");
             }
         } else {
             alert("비밀번호를 입력해주세요.");
