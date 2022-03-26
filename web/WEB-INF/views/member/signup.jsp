@@ -82,7 +82,6 @@
 
     var form = document.signupForm;
     let Check = 0;
-    let check_id, check_nickname, check_email;
 
     var re1 = /^[a-zA-z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
     var re2 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일이 적합한지 검사할 정규식
@@ -186,7 +185,7 @@
                 data: {id: id},
                 dataType: "json",
                 success: function (data) {
-                    check_id = data;
+
                     if (data == 0) {
                         $('.id_ok').css("display","block");
                         $('.id_already').css("display", "none");
@@ -217,7 +216,7 @@
                 data: {nickname: nickname},
                 dataType: "json",
                 success: function (data) {
-                    check_nickname = data;
+
                     if (data == 0) {
                         $('.nickname_ok').css("display", "block");
                         $('.nickname_already').css("display", "none");
@@ -235,7 +234,7 @@
     // 이메일 중복체크 및 회원가입 진행
     function checkEmail() {
 
-            var email = form.email.value;
+        const email = form.email.value;
 
             $.ajax({
                 method: "post",
@@ -243,7 +242,7 @@
                 data: {email: email},
                 dataType: "json",
                 success: function (data) {
-                    check_email = data;
+
                     if (data == 0) {
                         $('.email_ok').css("display", "block");
                         $('.email_already').css("display", "none");
@@ -258,16 +257,52 @@
     // 유효성 총 검사
     function signUp() {
         // 공백제거
+        let check_id, check_nickname, check_email;
+
+        const id = document.getElementById("id").value;
+        const nickname = document.getElementById("nickname").value;
+        const email = form.email.value;
 
         if(confirm("이 정보로 가입하시겠습니까?")) {
 
             checkValid();
 
+            $.ajax({
+                method: "post",
+                url: "/checkId",
+                data: {id: id},
+                dataType: "json",
+                success: function (data) {
+                    check_id = data;
+                }
+            });
+
+            $.ajax({
+                method: "post",
+                url: "/checkEmail",
+                data: {email: email},
+                dataType: "json",
+                success: function (data) {
+                    check_email = data;
+
+                }
+            })
+
+            $.ajax({
+                method: "post",
+                url: "/checkNickname",
+                data: {nickname: nickname},
+                dataType: "json",
+                success: function (data) {
+                    check_nickname = data;
+                }
+            });
+
             if (Check==1 && check_id == 0&& check_nickname == 0 && check_email ==0) {
                 form.submit();
                 alert("가입이 완료되었습니다. 이메일 인증후 게시판 사용이 가능합니다.");
             } else {
-                alert("정보를 다시 확인해주세요.");
+                alert("정보를 확인해주세요.");
             }
 
         } else {
