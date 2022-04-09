@@ -30,6 +30,8 @@ public interface MemberService extends UserDetailsService
 
    void updateMember(MemberDTO member);
 
+   void updateEmail(MemberDTO member);
+
    void deleteMember(String username);
 
    int checkId(MemberDTO member);

@@ -54,6 +54,11 @@ public class MemberDAOImpl implements MemberDAO
     }
 
     @Override
+    public void updateEmail(MemberDTO member) {
+        sqlSession.update("updateEmail", member);
+    }
+
+    @Override
     public void deleteMember(String username) {
         sqlSession.delete("deleteMember", username);
     }

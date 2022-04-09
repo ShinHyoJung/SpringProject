@@ -40,6 +40,7 @@
             <input id="id" class="form-control" style="width:30%;" type="text" name="id" placeholder="아이디를 입력해주세요." required oninput="checkId()"/>
             <span class="id_ok" style="display: none;"> 사용가능한 아이디입니다.</span>
             <span class="id_already" style="display: none;">중복된 아이디입니다.</span>
+            <span class="id_valid" style="display: none;">아이디는 영문 대소문자와 숫자 4~12자리로 입력해야 합니다.</span>
         </div>
         <br>
         <div class="form-group">
@@ -71,11 +72,15 @@
             <input id="email" type="text" class= "form-control" style="width:50%;" name="email" placeholder="이메일을 입력해주세요." required oninput="checkEmail()"/>
             <span class="email_ok" style="display: none;">사용가능한 이메일 입니다.</span>
             <span class="email_already" style="display: none;">중복된 이메일 입니다.</span>
-        </div>    <br>
+        </div>
         <div class="form-group">
         <button class="btn btn-default" type="button" onclick="signUp()">가입하기</button>
         </div>
     </form>
+
+    <input type="hidden" id="check_id">
+    <input type="hidden" id="check_email">
+    <input type="hidden" id="check_nickname">
 
 <a href="/" style="margin-left: 1140px;">홈으로</a>
 <script>
@@ -138,11 +143,7 @@
             return false;
         }
 
-        if(!re1.test(id.value)) {
-            alert("아이디는 영문 대소문자와 숫자 4~12자리로 입력해야 합니다.");
-            form.id.focus();
-            return false;
-        }
+
 
         if (!re1.test(pw.value)) {
             alert("비밀번호는 영문 대소문자와 숫자 4~12자리로 입력해야 합니다.");
@@ -185,6 +186,14 @@
                 data: {id: id},
                 dataType: "json",
                 success: function (data) {
+
+                    if(!re1.test(id)) {
+                        $('.id_valid').css("display","block");
+                        form.id.focus();
+                        return false;
+                    }else {
+                        $('.id_valid').css("display","none");
+                    }
 
                     if (data == 0) {
                         $('.id_ok').css("display","block");
@@ -254,51 +263,56 @@
             })
     }
 
-    // 유효성 총 검사
-    function signUp() {
-        // 공백제거
-        let check_id, check_nickname, check_email;
+    function check() {
 
         const id = document.getElementById("id").value;
         const nickname = document.getElementById("nickname").value;
         const email = form.email.value;
 
+     $.ajax({
+            method: "post",
+            url: "/checkId",
+            data: {id: id},
+            dataType: "json",
+            async: false,
+            success: function (data) {
+              document.getElementById("check_id").value = data;
+            }
+        });
+
+     $.ajax({
+            method: "post",
+            url: "/checkEmail",
+            data: {email: email},
+            dataType: "json",
+            async: false,
+            success: function (data) {
+              document.getElementById("check_email").value = data;
+            }
+        });
+
+     $.ajax({
+            method: "post",
+            url: "/checkNickname",
+            data: {nickname: nickname},
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                document.getElementById("check_nickname").value = data;
+            }
+        });
+
+    }
+
+    // 유효성 총 검사
+    function signUp() {
+        // 공백제거
+        check();
+        checkValid();
+
         if(confirm("이 정보로 가입하시겠습니까?")) {
 
-            checkValid();
-
-            $.ajax({
-                method: "post",
-                url: "/checkId",
-                data: {id: id},
-                dataType: "json",
-                success: function (data) {
-                    check_id = data;
-                }
-            });
-
-            $.ajax({
-                method: "post",
-                url: "/checkEmail",
-                data: {email: email},
-                dataType: "json",
-                success: function (data) {
-                    check_email = data;
-
-                }
-            })
-
-            $.ajax({
-                method: "post",
-                url: "/checkNickname",
-                data: {nickname: nickname},
-                dataType: "json",
-                success: function (data) {
-                    check_nickname = data;
-                }
-            });
-
-            if (Check==1 && check_id == 0&& check_nickname == 0 && check_email ==0) {
+            if (Check==1 && document.getElementById("check_id").value == 0 && document.getElementById("check_email").value ==0 && document.getElementById("check_nickname").value ==0) {
                 form.submit();
                 alert("가입이 완료되었습니다. 이메일 인증후 게시판 사용이 가능합니다.");
             } else {

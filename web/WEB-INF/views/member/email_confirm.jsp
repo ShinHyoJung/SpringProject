@@ -14,7 +14,7 @@
     <script type="text/javascript">
         var email = "${email}";
 
-        alert(email + "회원가입을 축하합니다. 이제 로그인이 가능합니다. 확인버튼을 누르면 로그인 페이지로 이동합니다.");
+        alert(email + "회원가입을 축하합니다. 이제 게시판이용이 가능합니다. 확인버튼을 누르면 로그인 페이지로 이동합니다.");
 
         self.location = "/Login";
     </script>

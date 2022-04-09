@@ -61,12 +61,18 @@
     </div>
     <div class="form-group">
         <label for="email">이메일주소</label>
-        <input id = "email" class="form-control" name="email" value="${user.email}" readonly="readonly">
+        <input id = "email" class="form-control" name="email" value="${user.email}" style="display: inline-block;">
+        <button class="btn btn-default" style="margin-left: 289px;" type="button" onclick="authEmail()">이메일인증</button>
     </div>
     <input type="hidden" name = "idx" value="${user.idx}">
     <button class= "btn btn-default" type="button" onclick="update()">수정 </button>
 </form>
 
+<form name="emailForm" action="/authEmail" method="post">
+    <input type="hidden" id="auth_email" name="email" value="">
+    <input type="hidden" id="auth_name" name="name" value="${user.name}">
+    <input type="hidden" id = "idx" name="idx" value ="${user.idx}">
+</form>
 
 <a id= "quit" href="/quitSignup"></a>
 <button class = "btn btn-primary" style="margin-left: 1000px;" type="button" onclick="quitSignup()">회원탈퇴</button>
@@ -113,8 +119,6 @@
         var pw = document.getElementById("password");
         var cpw = document.getElementById("password_confirm");
         var pnum = document.getElementById("pnum");
-        var nickname = document.getElementById("nickname");
-
 
         if (form.password.value) {
 
@@ -162,6 +166,26 @@
 
     }
 
+    function authEmail() {
+        var form = document.emailForm;
+        const email = document.getElementById("email").value;
+
+        $.ajax({
+            method: "post",
+            url: "/checkEmail",
+            data: {email: email},
+            dataType: "json",
+            success: function (data) {
+                if (data == 0) {
+                    document.getElementById("auth_email").value = document.getElementById("email").value;
+                    form.submit();
+                } else {
+                    alert("중복된 이메일이 있습니다.");
+                }
+            }
+        });
+
+    }
 </script>
 </body>
 </html>

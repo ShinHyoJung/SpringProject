@@ -88,6 +88,11 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
+    public void updateEmail(MemberDTO member) {
+        memberDAO.updateEmail(member);
+    }
+
+    @Override
     public void deleteMember(String username) {
         memberDAO.deleteMember(username);
     }

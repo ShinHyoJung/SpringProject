@@ -71,6 +71,12 @@
         WHERE  idx = #{idx}
     </update>
 
+    <update id="updateEmail" parameterType="com.project.dto.MemberDTO">
+        UPDATE  member
+        SET
+                email = #{email}
+        WHERE   idx = #{idx}
+    </update>
     <delete id="deleteMember" parameterType="com.project.dto.MemberDTO">
         DELETE FROM member
         WHERE   username = #{username}

@@ -116,6 +116,16 @@ public class MemberController {
         return"/member/email_confirm";
     }
 
+    @RequestMapping(value= "authEmail", method = RequestMethod.POST)
+    public String authEmail(MemberDTO member) throws MessagingException, UnsupportedEncodingException {
+
+        logger.info("auth_email");
+        memberService.updateEmail(member);
+        memberService.sendMail(member);
+
+        return "redirect:/Info";
+    }
+
     @Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/Info") // 회원정보 조회
     public String selectInfo(MemberDTO member, Model model)  {
