@@ -308,15 +308,29 @@
     function signUp() {
         // 공백제거
         check();
-        checkValid();
 
         if(confirm("이 정보로 가입하시겠습니까?")) {
+
+            checkValid();
+
+            if(document.getElementById("check_id").value != 0) {
+                alert("아이디가 중복되었습니다.");
+                form.id.focus();
+            }
+
+            if(document.getElementById("check_email").value != 0) {
+                alert("이메일이 중복되었습니다.");
+                form.email.focus();
+            }
+
+            if(document.getElementById("check_nickname").value != 0) {
+                alert("닉네임이 중복되었습니다.");
+                form.nickname.focus();
+            }
 
             if (Check==1 && document.getElementById("check_id").value == 0 && document.getElementById("check_email").value ==0 && document.getElementById("check_nickname").value ==0) {
                 form.submit();
                 alert("가입이 완료되었습니다. 이메일 인증후 게시판 사용이 가능합니다.");
-            } else {
-                alert("정보를 확인해주세요.");
             }
 
         } else {
