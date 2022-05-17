@@ -36,7 +36,6 @@ public class MemberDTO implements UserDetails {
     private boolean isCredentialsNonExpired; // 계정의 패스워드가 만료되지 않았는지 리턴
     private boolean isEnabled; // 계정이 사용가능한 계정인지 리턴
 
-
     public int getIdx()
     {
         return idx;

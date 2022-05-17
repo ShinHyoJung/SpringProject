@@ -134,7 +134,7 @@ public class MemberController {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal(); //
         String username = ((UserDetails)principal).getUsername(); // 스프링시큐리티 principal 인터페이스에서 사용자 정보를 가져옴
-
+        
         member = memberService.selectMember(username);
         MemberDTO user = memberService.selectMember(username);
 

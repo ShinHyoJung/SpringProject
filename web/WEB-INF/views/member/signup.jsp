@@ -143,8 +143,6 @@
             return false;
         }
 
-
-
         if (!re1.test(pw.value)) {
             alert("비밀번호는 영문 대소문자와 숫자 4~12자리로 입력해야 합니다.");
             form.password.focus();
@@ -164,7 +162,6 @@
             form.pnum.focus();
             return false;
         }
-
 
         if(!re2.test(email.value)) {
             alert("이메일형식이 맞지 않습니다.");
