@@ -28,21 +28,7 @@
 </head>
 <body class="background">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<nav class="navbar navbar-default"  style="background-color: ghostwhite; border: 0; max-width: 800px; margin: 25px auto;">
-    <a class="navbar-brand" style="color: thistle">Board</a>
-
-    <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav" style="float:right;">
-            <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
-            <sec:authorize access="isAuthenticated()">
-                <li class="active"><a class = "nav-menu" href="/list"> 게시판 </a></li>
-                <div class="nav-underline"></div>
-            </sec:authorize>
-        </ul>
-    </div>
-    </div>
-</nav>
-
+<jsp:include page="/static/header.jsp"/>
 <h2>아이디와 이름을 입력해주세요.</h2>
 <br>
     <div>

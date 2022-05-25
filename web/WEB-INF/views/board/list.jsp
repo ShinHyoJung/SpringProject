@@ -47,20 +47,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js">
 </script>
 
-<nav class="navbar navbar-default"  style="background-color: ghostwhite; border: 0; max-width: 800px; margin: 25px auto;">
-    <a class="navbar-brand" style="color: thistle">Board</a>
-
-    <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav" style="float:right;">
-            <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
-            <sec:authorize access="isAuthenticated()">
-                <li class="active"><a class = "nav-menu" href="/list"> 게시판 </a></li>
-                <div class="nav-underline"></div>
-            </sec:authorize>
-        </ul>
-    </div>
-    </div>
-</nav>
+<jsp:include page="/static/header.jsp"/>
 
     <table class="table table-hover" style="width:50%;  margin-top: 100px; margin-left: 460px;">
         <tr>
@@ -146,16 +133,7 @@
 <button class="btn btn-default" style="margin-left: -660px;" type="button" onclick="location.href='/write'">글쓰기</button> <br> <br>
 </sec:authorize>
 
-    <form class="navbar-form navbar-right" style="width: 101%;">
-        <div style="margin-left: 1200px;">
-
-           <sec:authorize access="isAuthenticated()">
-            <button class = "btn btn-default navbar-btn" type="button" onclick="Logout()">로그아웃</button>
-            <a id="logout" href="/Logout"></a>
-            <a class= "btn btn-default" href="/Info">회원정보</a>
-           </sec:authorize>
-        </div>
-    </form>
+<jsp:include page="/static/footer.jsp"/>
 <script>
 
         function Logout() {

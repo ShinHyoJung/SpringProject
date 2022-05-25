@@ -17,20 +17,7 @@
 </head>
 <body class="background">
 
-<nav class="navbar navbar-default"  style="background-color: ghostwhite; border: 0; max-width: 800px; margin: 25px auto;">
-    <a class="navbar-brand" style="color: thistle">Board</a>
-
-    <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav" style="float:right;">
-            <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
-            <sec:authorize access="isAuthenticated()">
-                <li class="active"><a class = "nav-menu" href="/list"> 게시판 </a></li>
-                <div class="nav-underline"></div>
-            </sec:authorize>
-        </ul>
-    </div>
-    </div>
-</nav>
+<jsp:include page="/static/header.jsp"/>
 
 <table class="table table-hover" style="width:50%; margin-left: 450px; margin-top: 70px;" >
     <h2 style="margin-left: 600px; margin-top: 50px; display: inline-block;">${writer}</h2>

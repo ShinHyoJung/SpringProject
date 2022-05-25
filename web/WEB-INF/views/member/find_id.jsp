@@ -15,20 +15,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body class="background">
-<nav class="navbar navbar-default"  style="background-color: ghostwhite; border: 0; max-width: 800px; margin: 25px auto;">
-    <a class="navbar-brand" style="color: thistle">Board</a>
-
-    <div class = "collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav" style="float:right;">
-            <li class="active"><a class = "nav-menu" href="/" >홈</a></li>
-            <sec:authorize access="isAuthenticated()">
-                <li class="active"><a class = "nav-menu" href="/list"> 게시판 </a></li>
-                <div class="nav-underline"></div>
-            </sec:authorize>
-        </ul>
-    </div>
-    </div>
-</nav>
+<jsp:include page="/static/header.jsp"/>
 <h2 style="margin-left: 700px; margin-top: 100px;">이름과 전화번호를 입력해주세요.</h2>
 
         <form method="post" action="/findId" style="max-width: 300px; margin-left: 760px; margin-top:100px;">
