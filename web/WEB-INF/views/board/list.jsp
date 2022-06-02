@@ -52,13 +52,13 @@
                 dataType: "json",
                 data: {list: list},
                 success: function (data) {
-                    console.log(data);
-                    console.log(data[0].bno);
                     var s = "";
+
                     $.each(data, function (i) {
+                        var string = "/read/" + data[i].bno;
                         s += "<tr>";
                         s += "<td>" + data[i].bno + "</td>";
-                        s += "<td>" + data[i].btitle + "</td>";
+                        s += "<td> <a href=" + string +">" + data[i].btitle + "</a></td>";
                         s += "<td>" + data[i].bwriter + "</td>";
                         s += "<td>" + data[i].bupdatetime + "</td>";
                         s += "<td>" + data[i].bhit + "</td>";
@@ -68,9 +68,11 @@
                 }
             });
         }
+
     </script>
+
 </head>
-<body style="background-color: ghostwhite;" onload="printtable();">
+<body style="background-color: ghostwhite;" onload="printtable(); printpage();">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js">
 </script>
 
@@ -106,12 +108,47 @@
     <div class="paging_area">
         <ul id="paging" class="pagination" style="margin-left: 500px;">
             <!--이전 페이지 버튼-->
-            <c:if test="${page.prev}">
-                <li class="paging_btn prev"><a class="page"
-                                               href="/list?pageNum=${page.startPage-1}&keyword=${page.cri.keyword}&type=${page.cri.type}">
-                    < </a></li>
-            </c:if>
+            <script>
 
+                function printpage() {
+                    var page;
+                    $.ajax({
+                        method:"GET",
+                        dataType:"json",
+                        url:"/paging",
+                        data: {page: page},
+                        success: function (data) {
+                            var s = "";
+                            var next = data.next;
+                            var prev = data.prev;
+                            var startPage = data.startPage;
+                            var endPage = data.endPage;
+                            var pageNum = data.cri.pageNum;
+                            var keyword = data.cri.keyword;
+                            var type= data.cri.type;
+
+                            if(prev) {
+                                s += "<li class='paging_btn prev'> < </li>";
+                            }
+
+                            for(var i = startPage-1; i<endPage; i++)
+                            {
+                                num = pageNum + i;
+                                s += "<li class='paging_btn'>" + "<a class= 'page'>" +  num + "</a></li>";
+                            }
+
+                            if(next) {
+                                s += "<li class='paging_btn next'> > </li>";
+                            }
+                            $("#paging").html(s);
+                        }
+                    });
+                }
+
+            </script>
+
+            <c:if test= "${page.prev}"> <li class= 'paging_btn prev'><a class='page'
+                 href="/list?pageNum=${page.startPage-1}&keyword=${page.cri.keyword}&type=${page.cri.type}"> < </a></li> </c:if>
             <!--각 번호 페이지 버튼-->
             <c:forEach var="num" begin="${page.startPage}" end="${page.endPage}">
                 <li class="paging_btn ${page.cri.pageNum == num ? "active":""}">

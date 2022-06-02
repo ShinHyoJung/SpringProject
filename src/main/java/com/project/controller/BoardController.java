@@ -60,17 +60,10 @@ public class BoardController {
     public String List(Criteria cri, Model model)  {
 
         logger.info("board");
-        /*
+
         List<BoardDTO> list= boardService.viewBoard(cri);
         model.addAttribute("list", list);
 
-        int total = boardService.countBoard(cri);
-        PagingDTO page = new PagingDTO(cri, total);
-        model.addAttribute("page", page);
-
-
-
-         */
         return "board/list";
     }
 
@@ -83,7 +76,7 @@ public class BoardController {
     }
 
     @ResponseBody
-    @RequestMapping(value="/pagination", method = RequestMethod.GET)
+    @RequestMapping(value="/paging", method = RequestMethod.GET)
     public PagingDTO paging(Criteria cri) {
         logger.info("paging");
         int total = boardService.countBoard(cri);
