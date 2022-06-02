@@ -255,14 +255,12 @@ public class MemberController {
         return "redirect:/Login";
     }
 
-    /*
+
     @Secured("ROLE_ADMIN") // 관리자 페이지
     @RequestMapping("/admin")
     public String manageAdmin()  {
-
-
         return "manage/admin";
     }
-    */
+
 
 }

@@ -8,7 +8,10 @@ import com.project.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.method.P;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -56,13 +60,36 @@ public class BoardController {
     public String List(Criteria cri, Model model)  {
 
         logger.info("board");
+        /*
         List<BoardDTO> list= boardService.viewBoard(cri);
         model.addAttribute("list", list);
 
         int total = boardService.countBoard(cri);
         PagingDTO page = new PagingDTO(cri, total);
         model.addAttribute("page", page);
+
+
+
+         */
         return "board/list";
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/printlist", method = RequestMethod.GET)
+    public List<BoardDTO> printlist(Criteria cri) {
+        logger.info("printlist");
+        List<BoardDTO> list = boardService.viewBoard(cri);
+        return list;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/pagination", method = RequestMethod.GET)
+    public PagingDTO paging(Criteria cri) {
+        logger.info("paging");
+        int total = boardService.countBoard(cri);
+        PagingDTO page = new PagingDTO(cri, total);
+
+        return page;
     }
 
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
