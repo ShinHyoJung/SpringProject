@@ -30,7 +30,7 @@ public class Criteria { // 현재페이지와 페이지당 보여질 게시물 �
 
     // 기본 생성자 -> 기본 세팅: pageNum=1, amount=5
     public Criteria() {
-        this(1, 5);
+        this(1,10);
         this.skip=0;
     }
 

@@ -43,36 +43,102 @@
     <link rel="stylesheet" href="<c:url value="/css/background.css"/>">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <script>
+        var pageNum;
 
-        function printtable() {
-            var list;
+        function printpage() {
+            var page;
             $.ajax({
-                method: "GET",
-                url: "/printlist",
-                dataType: "json",
-                data: {list: list},
+                method:"GET",
+                dataType:"json",
+                url:"/paging",
+                data: {page : page},
                 success: function (data) {
-                    var s = "";
+                    var pagehtml = "";
+                    var next = data.next;
+                    var prev = data.prev;
+                    var startPage = data.startPage;
+                    var endPage = data.endPage;
+                    pageNum = data.cri.pageNum;
+                    var amount = data.cri.amount;
+                    var keyword = data.cri.keyword;
+                    var type= data.cri.type;
 
-                    $.each(data, function (i) {
-                        var string = "/read/" + data[i].bno;
-                        s += "<tr>";
-                        s += "<td>" + data[i].bno + "</td>";
-                        s += "<td> <a href=" + string +">" + data[i].btitle + "</a></td>";
-                        s += "<td>" + data[i].bwriter + "</td>";
-                        s += "<td>" + data[i].bupdatetime + "</td>";
-                        s += "<td>" + data[i].bhit + "</td>";
-                        s += "</tr>";
-                    });
-                    $("#tbody").html(s);
+                    if(prev) {
+                        pagehtml += "<li class='paging_btn prev'><a class='page'> < </a></li>";
+                    }
+
+                    for(var i = startPage-1; i<endPage; i++)
+                    {
+                        num = pageNum + i;
+                        pagehtml += "<li class='paging_btn'>" + "<a class= 'page' onclick=nextlist(" +  num + ")>" +  num + "</a></li>";
+                    }
+
+                    if(next) {
+                        pagehtml += "<li class='paging_btn next'><a class='page'> > </a></li>";
+                    }
+                    $("#paging").html(pagehtml);
                 }
             });
         }
 
+        function printlist() {
+            var list;
+            $.ajax ({
+                method:"GET",
+                dataType:"json",
+                contentType: 'application/json; charset=utf-8',
+                url:"/printlist",
+                data: {list: list},
+                success: function(data) {
+                    var listhtml = "";
+                    $.each(data, function(i) {
+                        var string1 = "/read/" + data[i].bno;
+                        var string2 = "/search/" + data[i].bwriter;
+                        listhtml += "<tr>";
+                        listhtml += "<td>" +data[i].bno + "</td>";
+                        listhtml += "<td> <a href=" + string1 + ">" + data[i].btitle + "</a></td>";
+                        listhtml += "<td> <a href=" + string2 + ">" + data[i].bwriter + "</a></td>";
+                        listhtml += "<td>" + data[i].bupdatetime + "</td>";
+                        listhtml += "<td>" + data[i].bhit + "</td>";
+                        listhtml += "</tr>";
+                    });
+                    $("#tbody").html(listhtml);
+                }
+            })
+        }
+
+        function nextlist(num) {
+            var obj = {"num":num};
+            $.ajax ({
+                method:"POST",
+                dataType:"json",
+                contentType: 'application/json; charset=utf-8',
+                url:"/nextlist",
+                data: JSON.stringify(obj),
+                success: function(data) {
+                    console.log(data);
+                    var listhtml = "";
+                    $.each(data.list, function(i, list) {
+                        var string1 = "/read/" + list.bno;
+                        var string2 = "/search/" + list.bwriter;
+                        listhtml += "<tr>";
+                        listhtml += "<td>" + list.bno + "</td>";
+                        listhtml += "<td> <a href=" + string1 + ">" + list.btitle + "</a></td>";
+                        listhtml += "<td> <a href=" + string2 + ">" + list.bwriter + "</a></td>";
+                        listhtml += "<td>" + list.bupdatetime + "</td>";
+                        listhtml += "<td>" + list.bhit + "</td>";
+                        listhtml += "</tr>";
+                    });
+                    $("#tbody").html(listhtml);
+                }
+            })
+        }
+
+
     </script>
 
 </head>
-<body style="background-color: ghostwhite;" onload="printtable(); printpage();">
+<body style="background-color: ghostwhite;" onload="printpage(); printlist();">
 <script src="https://code.jquery.com/jquery-3.4.1.min.js">
 </script>
 
@@ -106,46 +172,8 @@
 
 <div class="paging_wrap" style="margin-left: 200px;">
     <div class="paging_area">
-        <ul id="paging" class="pagination" style="margin-left: 500px;">
+        <ul id="paging" class="pagination" style="margin-left: 700px;">
             <!--이전 페이지 버튼-->
-            <script>
-
-                function printpage() {
-                    var page;
-                    $.ajax({
-                        method:"GET",
-                        dataType:"json",
-                        url:"/paging",
-                        data: {page: page},
-                        success: function (data) {
-                            var s = "";
-                            var next = data.next;
-                            var prev = data.prev;
-                            var startPage = data.startPage;
-                            var endPage = data.endPage;
-                            var pageNum = data.cri.pageNum;
-                            var keyword = data.cri.keyword;
-                            var type= data.cri.type;
-
-                            if(prev) {
-                                s += "<li class='paging_btn prev'> < </li>";
-                            }
-
-                            for(var i = startPage-1; i<endPage; i++)
-                            {
-                                num = pageNum + i;
-                                s += "<li class='paging_btn'>" + "<a class= 'page'>" +  num + "</a></li>";
-                            }
-
-                            if(next) {
-                                s += "<li class='paging_btn next'> > </li>";
-                            }
-                            $("#paging").html(s);
-                        }
-                    });
-                }
-
-            </script>
 
             <c:if test= "${page.prev}"> <li class= 'paging_btn prev'><a class='page'
                  href="/list?pageNum=${page.startPage-1}&keyword=${page.cri.keyword}&type=${page.cri.type}"> < </a></li> </c:if>

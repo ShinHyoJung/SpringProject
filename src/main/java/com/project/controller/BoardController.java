@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -61,16 +62,31 @@ public class BoardController {
 
         logger.info("board");
 
-        List<BoardDTO> list= boardService.viewBoard(cri);
-        model.addAttribute("list", list);
-
         return "board/list";
     }
 
     @ResponseBody
-    @RequestMapping(value="/printlist", method = RequestMethod.GET)
+    @RequestMapping(value="/nextlist", method = RequestMethod.POST)
+    public Map<String, Object> nextlist(Criteria cri, @RequestBody Map<String, Object> map) throws Exception{
+        logger.info("nextlist");
+        Map<String, Object> listpage = new HashMap<>();
+
+        int num = Integer.parseInt(map.get("num").toString());
+        cri.setPageNum(num);
+        List<BoardDTO> list = boardService.viewBoard(cri);
+        int total = boardService.countBoard(cri);
+        PagingDTO page = new PagingDTO(cri, total);
+        listpage.put("list", list);
+        listpage.put("page", page);
+
+        return listpage;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/printlist", method=RequestMethod.GET)
     public List<BoardDTO> printlist(Criteria cri) {
         logger.info("printlist");
+
         List<BoardDTO> list = boardService.viewBoard(cri);
         return list;
     }
@@ -79,9 +95,9 @@ public class BoardController {
     @RequestMapping(value="/paging", method = RequestMethod.GET)
     public PagingDTO paging(Criteria cri) {
         logger.info("paging");
+
         int total = boardService.countBoard(cri);
         PagingDTO page = new PagingDTO(cri, total);
-
         return page;
     }
 
@@ -93,7 +109,7 @@ public class BoardController {
         String username = ((UserDetails)principal).getUsername();
 
         MemberDTO user = memberService.selectMember(username);
-       // MemberDTO user = memberService.selectMember();
+        //MemberDTO user = memberService.selectMember();
         model.addAttribute("user", user);
         return "board/write";
     }
