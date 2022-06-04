@@ -31,7 +31,9 @@ public interface BoardService {
 
     int countBoard(Criteria cri);
 
-    List<BoardDTO> searchBoard(String bwriter);
+    List<BoardDTO> writerBoard(String bwriter);
+
+    int searchBoard(String bwriter);
 
     BoardDTO heartBoard(int bno);
 

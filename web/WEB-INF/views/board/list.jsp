@@ -53,15 +53,13 @@
                 url:"/paging",
                 data: {page : page},
                 success: function (data) {
+                    console.log(data);
                     var pagehtml = "";
                     var next = data.next;
                     var prev = data.prev;
                     var startPage = data.startPage;
                     var endPage = data.endPage;
                     pageNum = data.cri.pageNum;
-                    var amount = data.cri.amount;
-                    var keyword = data.cri.keyword;
-                    var type= data.cri.type;
 
                     if(prev) {
                         pagehtml += "<li class='paging_btn prev'><a class='page'> < </a></li>";
@@ -70,7 +68,8 @@
                     for(var i = startPage-1; i<endPage; i++)
                     {
                         num = pageNum + i;
-                        pagehtml += "<li class='paging_btn'>" + "<a class= 'page' onclick=nextlist(" +  num + ")>" +  num + "</a></li>";
+
+                        pagehtml += "<li class='paging_btn'><a class= 'page'  onclick=nextlist(" +  num + ")>" +  num + "</a></li>";
                     }
 
                     if(next) {
@@ -108,6 +107,7 @@
         }
 
         function nextlist(num) {
+
             var obj = {"num":num};
             $.ajax ({
                 method:"POST",
@@ -197,7 +197,7 @@
     </div>
 </div>
 
-<form id="moveForm" action="/list" method="get">
+<form id="moveForm" action="/printlist" method="get">
     <input type="hidden" name="pageNum" value="${page.cri.pageNum}">
     <input type="hidden" name="amount" value="${page.cri.amount}">
     <input type="hidden" name="keyword" value="${page.cri.keyword}">
@@ -249,10 +249,50 @@
 
         let type = $("#type").val();
         let keyword = $("#keyword").val();
-        moveForm.find("input[name='type']").val(type);
-        moveForm.find("input[name='keyword']").val(keyword);
-        moveForm.find("input[name='pageNum']").val(1);
-        moveForm.submit();
+
+        var obj = {"type": type, "keyword":keyword};
+
+        $.ajax({
+            method: "POST",
+            dataType: "json",
+            url:"/searchlist",
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(obj),
+            success: function (data) {
+             console.log(data);
+                var listhtml = "";
+                $.each(data.list, function(i, list) {
+                    var string1 = "/read/" + list.bno;
+                    var string2 = "/search/" + list.bwriter;
+                    listhtml += "<tr>";
+                    listhtml += "<td>" + list.bno + "</td>";
+                    listhtml += "<td> <a href=" + string1 + ">" + list.btitle + "</a></td>";
+                    listhtml += "<td> <a href=" + string2 + ">" + list.bwriter + "</a></td>";
+                    listhtml += "<td>" + list.bupdatetime + "</td>";
+                    listhtml += "<td>" + list.bhit + "</td>";
+                    listhtml += "</tr>";
+                });
+                $("#tbody").html(listhtml);
+
+                var pagehtml ="";
+
+                if(data.page.prev) {
+                    pagehtml += "<li class='paging_btn prev'><a class='page'> < </a></li>";
+                }
+
+                for(var i = data.page.startPage-1; i<data.page.endPage; i++)
+                {
+                    var num = data.page.cri.pageNum + i;
+
+                    pagehtml += "<li class='paging_btn'><a class= 'page'  onclick=nextlist(" +  num + ")>" +  num + "</a></li>";
+                }
+
+                if(data.page.next) {
+                    pagehtml += "<li class='paging_btn next'><a class='page'> > </a></li>";
+                }
+                $("#paging").html(pagehtml);
+            }
+        });
     }
 
 

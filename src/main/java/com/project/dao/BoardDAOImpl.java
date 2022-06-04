@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,8 +67,13 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public List<BoardDTO> searchBoard(String bwriter)  {
-        return sqlSession.selectList("searchBoard", bwriter);
+    public List<BoardDTO> writerBoard(String bwriter)  {
+        return sqlSession.selectList("writerBoard", bwriter);
+    }
+
+    @Override
+    public int searchBoard(String bwriter) {
+        return sqlSession.selectOne("searchBoard", bwriter);
     }
 
     @Override

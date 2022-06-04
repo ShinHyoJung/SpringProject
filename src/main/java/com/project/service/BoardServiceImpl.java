@@ -86,7 +86,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardDTO> searchBoard(String bwriter) {
+    public List<BoardDTO> writerBoard(String bwriter) {
+        return boardDAO.writerBoard(bwriter);
+    }
+
+    @Override
+    public int searchBoard(String bwriter) {
         return boardDAO.searchBoard(bwriter);
     }
 

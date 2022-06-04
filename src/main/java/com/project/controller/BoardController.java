@@ -58,7 +58,7 @@ public class BoardController {
 
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @RequestMapping(value="/list", method= RequestMethod.GET) // 게시판 목록
-    public String List(Criteria cri, Model model)  {
+    public String List()  {
 
         logger.info("board");
 
@@ -67,7 +67,7 @@ public class BoardController {
 
     @ResponseBody
     @RequestMapping(value="/nextlist", method = RequestMethod.POST)
-    public Map<String, Object> nextlist(Criteria cri, @RequestBody Map<String, Object> map) throws Exception{
+    public Map<String, Object> nextList(Criteria cri, @RequestBody Map<String, Object> map) throws Exception{
         logger.info("nextlist");
         Map<String, Object> listpage = new HashMap<>();
 
@@ -84,11 +84,31 @@ public class BoardController {
 
     @ResponseBody
     @RequestMapping(value="/printlist", method=RequestMethod.GET)
-    public List<BoardDTO> printlist(Criteria cri) {
+    public List<BoardDTO> printList(Criteria cri) {
         logger.info("printlist");
 
         List<BoardDTO> list = boardService.viewBoard(cri);
         return list;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/searchlist", method=RequestMethod.POST)
+    public Map<String,Object> searchList(Criteria cri, @RequestBody Map<String, Object> map) {
+        logger.info("searchlist");
+
+        String keyword = map.get("keyword").toString();
+        cri.setKeyword(keyword);
+        String type = map.get("type").toString();
+        cri.setType(type);
+
+        List<BoardDTO> list = boardService.viewBoard(cri);
+        int total = boardService.countBoard(cri);
+        PagingDTO page = new PagingDTO(cri, total);
+
+        Map<String, Object> searchmap = new HashMap<>();
+        searchmap.put("list", list);
+        searchmap.put("page", page);
+        return searchmap;
     }
 
     @ResponseBody
@@ -138,7 +158,7 @@ public class BoardController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping(value="/read/{bno}", method = RequestMethod.GET) // 게시글 읽기
-    public String readBoard(@PathVariable("bno")int bno, MemberDTO member, Model model, HttpSession session) throws Exception {
+    public String readBoard(@PathVariable("bno")int bno, MemberDTO member, Model model) throws Exception {
         // 게시글 번호를 받아서 경로설정
         // pathVariable은 RESTful 방식에 맞게 좀 더 직관적
         logger.info("read");
@@ -200,14 +220,17 @@ public class BoardController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping(value="/search/{bwriter}", method=RequestMethod.GET) // 게시글 작성자 검색
-    public String searchBoard(@PathVariable("bwriter")String bwriter, Model model) { // 어떤 요청이든간에 하나밖에 못씀
+    public String writerBoard(@PathVariable("bwriter")String bwriter, Criteria cri, Model model) { // 어떤 요청이든간에 하나밖에 못씀
 
         logger.info("search");
 
-        List<BoardDTO> result = boardService.searchBoard(bwriter);
+        List<BoardDTO> result = boardService.writerBoard(bwriter);
+        int total = boardService.searchBoard(bwriter);
+        PagingDTO page = new PagingDTO(cri, total);
         String writer = bwriter;
         model.addAttribute("result",result);
         model.addAttribute("writer", writer);
+        model.addAttribute("page", page);
         return "board/search";
     }
 
