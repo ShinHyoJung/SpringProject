@@ -8,21 +8,16 @@ import com.project.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.method.P;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -113,7 +108,7 @@ public class BoardController {
 
     @ResponseBody
     @RequestMapping(value="/paging", method = RequestMethod.GET)
-    public PagingDTO paging(Criteria cri) {
+    public PagingDTO Paging(Criteria cri) {
         logger.info("paging");
 
         int total = boardService.countBoard(cri);
@@ -222,16 +217,41 @@ public class BoardController {
     @RequestMapping(value="/search/{bwriter}", method=RequestMethod.GET) // 게시글 작성자 검색
     public String writerBoard(@PathVariable("bwriter")String bwriter, Criteria cri, Model model) { // 어떤 요청이든간에 하나밖에 못씀
 
-        logger.info("search");
+        logger.info("writerBoard");
 
         List<BoardDTO> result = boardService.writerBoard(bwriter);
-        int total = boardService.searchBoard(bwriter);
-        PagingDTO page = new PagingDTO(cri, total);
         String writer = bwriter;
         model.addAttribute("result",result);
         model.addAttribute("writer", writer);
-        model.addAttribute("page", page);
-        return "board/search";
+        return "board/writer";
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/writelist", method = RequestMethod.GET)
+    public List<BoardDTO> writeList(String bwriter) {
+        logger.info("writeList");
+        List<BoardDTO> list = boardService.writerBoard(bwriter);
+        return list;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/writepaging", method=RequestMethod.GET)
+    public PagingDTO writePaging(Criteria cri, String bwriter) {
+        logger.info("writerpaging");
+        int total = boardService.searchBoard(bwriter);
+        PagingDTO page = new PagingDTO(cri, total);
+
+        return page;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="/nextwritelist", method=RequestMethod.POST)
+    public Map<String, Object> nextwriteList(Criteria cri, String bwriter, @RequestBody Map<String, Object> map) {
+        logger.info("nextwriteList");
+        List<BoardDTO> list = boardService.writerBoard(bwriter);
+        int num = Integer.parseInt(map.get("page").toString());
+        cri.setPageNum(num);
+
     }
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
