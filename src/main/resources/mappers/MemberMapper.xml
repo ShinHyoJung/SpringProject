@@ -3,7 +3,7 @@
 
 <mapper namespace="com.project.dao.MemberDAOImpl">
 
-    <insert id="insertMember" parameterType="com.project.dto.MemberDTO">
+    <insert id="insertMember" parameterType="com.project.vo.Member">
         INSERT INTO member(
             id,
             password,
@@ -32,7 +32,7 @@
         )
     </insert>
 
-    <select id="loginMember" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
+    <select id="loginMember" parameterType="com.project.vo.Member" resultType="com.project.vo.Member">
         SELECT idx AS idx,
                id AS id,
                password AS password,
@@ -48,7 +48,7 @@
         WHERE  username = #{username}
     </select>
 
-    <select id="selectMember" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
+    <select id="selectMember" parameterType="com.project.vo.Member" resultType="com.project.vo.Member">
         SELECT idx AS idx,
                id AS id,
                password AS password,
@@ -60,7 +60,7 @@
         WHERE  username=#{username}
     </select>
 
-    <update id="updateMember" parameterType="com.project.dto.MemberDTO">
+    <update id="updateMember" parameterType="com.project.vo.Member">
         UPDATE member
         SET
                password = #{password},
@@ -71,30 +71,30 @@
         WHERE  idx = #{idx}
     </update>
 
-    <update id="updateEmail" parameterType="com.project.dto.MemberDTO">
+    <update id="updateEmail" parameterType="com.project.vo.Member">
         UPDATE  member
         SET
                 email = #{email}
         WHERE   idx = #{idx}
     </update>
-    <delete id="deleteMember" parameterType="com.project.dto.MemberDTO">
+    <delete id="deleteMember" parameterType="com.project.vo.Member">
         DELETE FROM member
         WHERE   username = #{username}
     </delete>
 
-    <select id="checkId" parameterType="com.project.dto.MemberDTO" resultType="int">
+    <select id="checkId" parameterType="com.project.vo.Member" resultType="int">
         SELECT COUNT(*)
         FROM   member
         WHERE  id = #{id}
     </select>
 
-    <select id="checkEmail" parameterType="com.project.dto.MemberDTO" resultType="int">
+    <select id="checkEmail" parameterType="com.project.vo.Member" resultType="int">
         SELECT COUNT(*)
         FROM   member
         WHERE  email = #{email}
     </select>
 
-    <select id="checkNickname" parameterType="com.project.dto.MemberDTO" resultType="int">
+    <select id="checkNickname" parameterType="com.project.vo.Member" resultType="int">
         SELECT COUNT(*)
         FROM   member
         WHERE  nickname = #{nickname}
@@ -130,21 +130,21 @@
         WHERE  username = #{username}
     </update>
 
-    <select id="findId" parameterType="com.project.dto.MemberDTO" resultType="com.project.dto.MemberDTO">
+    <select id="findId" parameterType="com.project.vo.Member" resultType="com.project.vo.Member">
         SELECT username as username
         FROM  member
         WHERE name = #{name}
         AND pnum = #{pnum}
     </select>
 
-    <select id="findPwd" parameterType="com.project.dto.MemberDTO" resultType="int">
+    <select id="findPwd" parameterType="com.project.vo.Member" resultType="int">
         SELECT COUNT(*)
         FROM member
         WHERE id = #{id}
         AND   name = #{name}
     </select>
 
-    <update id="updatePwd" parameterType="com.project.dto.MemberDTO">
+    <update id="updatePwd" parameterType="com.project.vo.Member">
         UPDATE member
         SET
                password = #{password}
@@ -152,7 +152,7 @@
         AND    name = #{name}
     </update>
 
-    <insert id="insertAuthKey" parameterType="com.project.dto.EmailAuthDTO">
+    <insert id="insertAuthKey" parameterType="com.project.vo.EmailAuth">
         INSERT INTO emailauth (
             email,
             authkey
@@ -162,7 +162,7 @@
         )
     </insert>
 
-    <update id="updateAuthKey" parameterType="com.project.dto.EmailAuthDTO">
+    <update id="updateAuthKey" parameterType="com.project.vo.EmailAuth">
         UPDATE member
         SET  authkey =1
         WHERE email = #{email}

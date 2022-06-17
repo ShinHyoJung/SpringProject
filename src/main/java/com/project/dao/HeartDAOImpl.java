@@ -1,13 +1,11 @@
 package com.project.dao;
 
 
-import com.project.dto.HeartDTO;
+import com.project.vo.Heart;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -17,12 +15,12 @@ public class HeartDAOImpl implements HeartDAO {
     SqlSession sqlSession;
 
     @Override
-    public void insertHeart(HeartDTO heart){
+    public void insertHeart(Heart heart){
         sqlSession.insert("insertHeart", heart);
     }
 
     @Override
-    public HeartDTO selectHeart(Map<String, Integer> num){
+    public Heart selectHeart(Map<String, Integer> num){
         return sqlSession.selectOne("selectHeart", num);
     }
 
@@ -32,7 +30,7 @@ public class HeartDAOImpl implements HeartDAO {
     }
 
     @Override
-    public void updateHeart(HeartDTO heart) {
+    public void updateHeart(Heart heart) {
         sqlSession.update("updateHeart", heart);
     }
 }

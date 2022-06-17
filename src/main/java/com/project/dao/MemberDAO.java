@@ -1,11 +1,9 @@
 package com.project.dao;
 
-import com.project.dto.MemberDTO;
+import com.project.vo.Member;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.lang.reflect.Member;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntellliJ IDEA.
@@ -17,29 +15,29 @@ import java.util.Map;
 
 public interface MemberDAO
     {
-        void insertMember(MemberDTO member);
+        void insertMember(Member member);
 
-        MemberDTO loginMember(String username);
+        Member loginMember(String username);
 
-        MemberDTO selectMember(String username);
+        Member selectMember(String username);
 
-        void updateMember(MemberDTO member);
+        void updateMember(Member member);
 
-        void updateEmail(MemberDTO member);
+        void updateEmail(Member member);
 
         void deleteMember(String username);
 
-        int checkId(MemberDTO member);
+        int checkId(Member member);
 
-        int checkEmail(MemberDTO member);
+        int checkEmail(Member member);
 
-        int checkNickname(MemberDTO member);
+        int checkNickname(Member member);
 
-        MemberDTO findId(MemberDTO member);
+        Member findId(Member member);
 
         List<GrantedAuthority> readAuthorities(String username);
 
-        void createAuthorities(MemberDTO member);
+        void createAuthorities(Member member);
 
         void deleteAuthorities(String username);
 
@@ -49,9 +47,9 @@ public interface MemberDAO
 
         void updateAuthKey(String email);
 
-        int findPwd(MemberDTO member);
+        int findPwd(Member member);
 
-        void updatePwd(MemberDTO member);
+        void updatePwd(Member member);
 
         void deleteEmail(String email);
     }

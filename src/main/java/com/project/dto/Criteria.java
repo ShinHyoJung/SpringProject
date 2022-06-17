@@ -29,10 +29,6 @@ public class Criteria { // 현재페이지와 페이지당 보여질 게시물 �
     private String[] typeArr;
 
     // 기본 생성자 -> 기본 세팅: pageNum=1, amount=5
-    public Criteria() {
-        this(1,10);
-        this.skip=0;
-    }
 
     // 생성자 => 원하는 pageNum, 원하는 amount
     public Criteria(int pageNum, int amount) {

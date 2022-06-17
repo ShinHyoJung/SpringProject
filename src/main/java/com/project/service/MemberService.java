@@ -1,6 +1,6 @@
 package com.project.service;
 
-import com.project.dto.MemberDTO;
+import com.project.vo.Member;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,29 +22,29 @@ public interface MemberService extends UserDetailsService
 {
    UserDetails loadUserByUsername(String username);
 
-   void insertMember(MemberDTO member) throws MessagingException, UnsupportedEncodingException;
+   void insertMember(Member member) throws MessagingException, UnsupportedEncodingException;
 
-   MemberDTO loginMember(String username);
+   Member loginMember(String username);
 
-   MemberDTO selectMember(String username) ;
+   Member selectMember(String username) ;
 
-   void updateMember(MemberDTO member);
+   void updateMember(Member member);
 
-   void updateEmail(MemberDTO member);
+   void updateEmail(Member member);
 
    void deleteMember(String username);
 
-   int checkId(MemberDTO member);
+   int checkId(Member member);
 
-   int checkEmail(MemberDTO member);
+   int checkEmail(Member member);
 
-   int checkNickname(MemberDTO member);
+   int checkNickname(Member member);
 
-   MemberDTO findId(MemberDTO username);
+   Member findId(Member username);
 
    Collection<GrantedAuthority> getAuthorities(String username);
 
-   void createAuthorities(MemberDTO member) ;
+   void createAuthorities(Member member) ;
 
    void deleteAuthorities(String username);
 
@@ -52,11 +52,11 @@ public interface MemberService extends UserDetailsService
 
    void updateAuthKey(String email);
 
-   int findPwd(MemberDTO member);
+   int findPwd(Member member);
 
-   void updatePwd(MemberDTO member);
+   void updatePwd(Member member);
 
-   void sendMail(MemberDTO member) throws MessagingException, UnsupportedEncodingException;
+   void sendMail(Member member) throws MessagingException, UnsupportedEncodingException;
 
    void deleteEmail(String email);
 }

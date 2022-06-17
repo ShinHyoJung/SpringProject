@@ -1,17 +1,15 @@
 package com.project.service;
 
-import com.project.dto.HeartDTO;
-
-import java.util.Map;
+import com.project.vo.Heart;
 
 public interface HeartService {
 
-    void insertHeart(HeartDTO heart);
+    void insertHeart(Heart heart);
 
-    HeartDTO selectHeart(int bno, int idx);
+    Heart selectHeart(int bno, int idx);
 
     void deleteHeart(int hno);
 
-    void updateHeart(HeartDTO heart);
+    void updateHeart(Heart heart);
 
 }

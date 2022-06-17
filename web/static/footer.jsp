@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
-<form class="navbar-form navbar-right" style="display: block; width:100%;">
+<form class="navbar-form navbar-right" style="display: block; width:100%; margin-right: 1px;">
     <div style="text-align: right; max-width: 1000px; margin: 0 auto;">
         <sec:authorize access="isAnonymous()">
             <a class="btn btn-default navbar-btn" href="/Login">로그인</a>

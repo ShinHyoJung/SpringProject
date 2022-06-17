@@ -1,13 +1,11 @@
 package com.project.service;
 
 import com.project.dao.HeartDAO;
-import com.project.dto.HeartDTO;
+import com.project.vo.Heart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -17,12 +15,12 @@ public class HeartServiceImpl implements HeartService {
     HeartDAO heartDAO;
 
     @Override
-    public void insertHeart(HeartDTO heart) {
+    public void insertHeart(Heart heart) {
         heartDAO.insertHeart(heart);
     }
 
     @Override
-    public HeartDTO selectHeart(int bno, int idx) {
+    public Heart selectHeart(int bno, int idx) {
         
         Map<String, Integer> num = new HashMap<>();
         num.put("bno",bno);
@@ -38,7 +36,7 @@ public class HeartServiceImpl implements HeartService {
     }
 
     @Override
-    public void updateHeart(HeartDTO heart) {
+    public void updateHeart(Heart heart) {
 
         heartDAO.updateHeart(heart);
     }

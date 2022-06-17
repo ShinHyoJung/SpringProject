@@ -1,17 +1,15 @@
 package com.project.service;
 
 import com.project.dao.MemberDAO;
-import com.project.dto.MemberDTO;
+import com.project.vo.Member;
 import com.project.util.MailUtils;
 import com.project.util.RandomUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
@@ -38,7 +36,7 @@ public class MemberServiceImpl implements MemberService
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{ // SpringSecurity에서 제공하는 인터페이스로, DB에 접근해서 사용자정보를 가져옴
-            MemberDTO member = memberDAO.loginMember(username);
+            Member member = memberDAO.loginMember(username);
             int authkey = member.getAuthkey();
 
             if(authkey==1) { //인증키가 1이면
@@ -57,7 +55,7 @@ public class MemberServiceImpl implements MemberService
 
 
     @Override
-    public void insertMember(MemberDTO member) {
+    public void insertMember(Member member) {
 
         int id = checkId(member);
         int nickname = checkNickname(member);
@@ -73,22 +71,22 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
-    public MemberDTO loginMember(String username) {
+    public Member loginMember(String username) {
        return memberDAO.loginMember(username);
     }
 
     @Override
-    public MemberDTO selectMember(String username) {
+    public Member selectMember(String username) {
            return memberDAO.selectMember(username);
     }
 
     @Override
-    public void updateMember(MemberDTO member)  {
+    public void updateMember(Member member)  {
         memberDAO.updateMember(member);
     }
 
     @Override
-    public void updateEmail(MemberDTO member) {
+    public void updateEmail(Member member) {
         memberDAO.updateEmail(member);
     }
 
@@ -98,19 +96,19 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
-    public int checkId(MemberDTO member) {
+    public int checkId(Member member) {
         int id = memberDAO.checkId(member);
         return id;
     }
 
     @Override
-    public int checkEmail(MemberDTO member) {
+    public int checkEmail(Member member) {
         int email = memberDAO.checkEmail(member);
         return email;
     }
 
     @Override
-    public int checkNickname(MemberDTO member) {
+    public int checkNickname(Member member) {
         int nickname = memberDAO.checkNickname(member);
         return nickname;
     }
@@ -128,7 +126,7 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
-    public void createAuthorities(MemberDTO member) {
+    public void createAuthorities(Member member) {
         memberDAO.createAuthorities(member);
     }
 
@@ -143,23 +141,23 @@ public class MemberServiceImpl implements MemberService
     }
 
     @Override
-    public MemberDTO findId(MemberDTO username) {
+    public Member findId(Member username) {
         return memberDAO.findId(username);
     }
 
     @Override
-    public int findPwd(MemberDTO member)  {
+    public int findPwd(Member member)  {
         int pwd = memberDAO.findPwd(member);
         return pwd;
     }
 
     @Override
-    public void updatePwd(MemberDTO member) {
+    public void updatePwd(Member member) {
         memberDAO.updatePwd(member);
     }
 
     @Override
-    public void sendMail(MemberDTO member) throws MessagingException, UnsupportedEncodingException {
+    public void sendMail(Member member) throws MessagingException, UnsupportedEncodingException {
 
             String key = RandomUtils.getRandomString();
             memberDAO.insertAuthKey(member.getEmail(), key);

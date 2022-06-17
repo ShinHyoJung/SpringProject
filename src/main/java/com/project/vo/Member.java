@@ -1,4 +1,4 @@
-package com.project.dto;
+package com.project.vo;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +12,7 @@ import java.util.Collection;
  * Time: 오후 1:29
  * Comments:
  */
-public class MemberDTO implements UserDetails {
+public class Member implements UserDetails {
 
 
     private static final long serialVersionUID = 1L;

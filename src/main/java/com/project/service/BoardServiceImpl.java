@@ -2,7 +2,7 @@ package com.project.service;
 
 import com.project.util.FileUtils;
 import com.project.dao.BoardDAO;
-import com.project.dto.BoardDTO;
+import com.project.vo.Board;
 import com.project.dto.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class BoardServiceImpl implements BoardService {
     BoardDAO boardDAO;
 
     @Override
-    public void insertBoard(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception {
+    public void insertBoard(Board board, MultipartHttpServletRequest mpRequest) throws Exception {
         boardDAO.insertBoard(board);
         // mpRequest로 첨부파일 파라미터를 받음
         List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(board, mpRequest);
@@ -41,24 +41,24 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardDTO> viewBoard(Criteria cri) {
+    public List<Board> viewBoard(Criteria cri) {
         return boardDAO.viewBoard(cri);
     }
 
     @Override
-    public BoardDTO selectBoard(int bno) {
+    public Board selectBoard(int bno) {
 
         boardDAO.hitBoard(bno);
         return boardDAO.selectBoard(bno);
     }
 
     @Override
-    public BoardDTO modifyBoard(int bno) {
+    public Board modifyBoard(int bno) {
         return boardDAO.modifyBoard(bno);
     }
 
     @Override
-    public void updateBoard(BoardDTO board,String[] files, String [] fileNames, MultipartHttpServletRequest mpRequest) throws IOException {
+    public void updateBoard(Board board, String[] files, String [] fileNames, MultipartHttpServletRequest mpRequest) throws IOException {
         boardDAO.updateBoard(board);
 
         List<Map<String, Object>> list = fileUtils.parseUpdateFileInfo(board, files, fileNames, mpRequest);
@@ -86,7 +86,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardDTO> writerBoard(String bwriter) {
+    public List<Board> writerBoard(String bwriter) {
         return boardDAO.writerBoard(bwriter);
     }
 
@@ -96,7 +96,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public BoardDTO heartBoard(int bno) {
+    public Board heartBoard(int bno) {
         return boardDAO.heartBoard(bno);
     }
 

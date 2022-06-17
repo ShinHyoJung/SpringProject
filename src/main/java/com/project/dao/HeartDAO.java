@@ -1,18 +1,16 @@
 package com.project.dao;
 
-import com.project.dto.HeartDTO;
+import com.project.vo.Heart;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public interface HeartDAO {
 
-    void insertHeart(HeartDTO heart);
+    void insertHeart(Heart heart);
 
-    HeartDTO selectHeart(Map<String, Integer> num);
+    Heart selectHeart(Map<String, Integer> num);
 
     void deleteHeart(int hno);
 
-    void updateHeart(HeartDTO heart);
+    void updateHeart(Heart heart);
 }

@@ -1,6 +1,7 @@
-package com.project.dto;
+package com.project.vo;
 
-public class HeartDTO {
+public class Heart
+{
 
 
     private int hno;

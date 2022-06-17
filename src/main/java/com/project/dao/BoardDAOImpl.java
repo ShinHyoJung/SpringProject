@@ -1,15 +1,11 @@
 package com.project.dao;
 
-import com.project.dto.BoardDTO;
+import com.project.vo.Board;
 import com.project.dto.Criteria;
-import com.project.dto.PagingDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,26 +24,26 @@ public class BoardDAOImpl implements BoardDAO {
     SqlSession sqlSession;
 
     @Override
-    public void insertBoard(BoardDTO board)  {
+    public void insertBoard(Board board)  {
         sqlSession.insert("insertBoard", board);
     }
 
     @Override
-    public List<BoardDTO> viewBoard(Criteria cri)  {
+    public List<Board> viewBoard(Criteria cri)  {
         return sqlSession.selectList("viewBoard", cri);
     }
 
     @Override
-    public BoardDTO selectBoard(int bno)  {
+    public Board selectBoard(int bno)  {
         return sqlSession.selectOne("selectBoard", bno);
     }
 
     @Override
-    public BoardDTO modifyBoard(int bno)  {
+    public Board modifyBoard(int bno)  {
         return sqlSession.selectOne("modifyBoard", bno);
     }
     @Override
-    public void updateBoard(BoardDTO board)  {
+    public void updateBoard(Board board)  {
         sqlSession.update("updateBoard", board);
     }
 
@@ -67,7 +63,7 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public List<BoardDTO> writerBoard(String bwriter)  {
+    public List<Board> writerBoard(String bwriter)  {
         return sqlSession.selectList("writerBoard", bwriter);
     }
 
@@ -77,7 +73,7 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public BoardDTO heartBoard(int bno)  {
+    public Board heartBoard(int bno)  {
         return sqlSession.selectOne("heartBoard", bno);
     }
 

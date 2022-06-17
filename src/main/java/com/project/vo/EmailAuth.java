@@ -1,6 +1,7 @@
-package com.project.dto;
+package com.project.vo;
 
-public class EmailAuthDTO {
+public class EmailAuth
+{
 
 
     private String email;

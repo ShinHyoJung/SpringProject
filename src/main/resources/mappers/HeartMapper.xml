@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.dao.HeartDAOImpl">
 
-    <insert id="insertHeart" parameterType="com.project.dto.HeartDTO">
+    <insert id="insertHeart" parameterType="com.project.vo.Heart">
         INSERT INTO heart (
             heart_no,
             heart_check,
@@ -17,7 +17,7 @@
         )
     </insert>
 
-    <select id="selectHeart" parameterType="java.util.HashMap" resultType="com.project.dto.HeartDTO">
+    <select id="selectHeart" parameterType="java.util.HashMap" resultType="com.project.vo.Heart">
         SELECT  heart_no AS hno,
                 heart_check AS hcheck,
                 board_no AS bno,
@@ -26,14 +26,14 @@
         WHERE   board_no = #{bno} AND idx = #{idx}
     </select>
 
-    <update id="deleteHeart" parameterType="com.project.dto.HeartDTO">
+    <update id="deleteHeart" parameterType="com.project.vo.Heart">
         UPDATE heart
         SET
                 heart_check = 0
         WHERE   heart_no = #{hno}
     </update>
 
-    <update id="updateHeart" parameterType="com.project.dto.HeartDTO">
+    <update id="updateHeart" parameterType="com.project.vo.Heart">
         UPDATE  heart
         SET
                 heart_check = 1

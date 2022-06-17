@@ -1,6 +1,6 @@
 package com.project.dao;
 
-import com.project.dto.CommentDTO;
+import com.project.vo.Comment;
 
 import java.util.List;
 
@@ -13,11 +13,11 @@ import java.util.List;
  */
 public interface CommentDAO {
 
-    void insertComment(CommentDTO comment);
+    void insertComment(Comment comment);
 
-    List<CommentDTO> selectComment(CommentDTO comment);
+    List<Comment> selectComment(Comment comment);
 
-    void deleteComment(CommentDTO comment);
+    void deleteComment(Comment comment);
 
-    void updateComment(CommentDTO comment);
+    void updateComment(Comment comment);
 }

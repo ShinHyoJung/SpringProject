@@ -1,6 +1,6 @@
 package com.project.service;
 
-import com.project.dto.BoardDTO;
+import com.project.vo.Board;
 import com.project.dto.Criteria;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -17,25 +17,25 @@ import java.util.Map;
  */
 public interface BoardService {
 
-    void insertBoard(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception;
+    void insertBoard(Board board, MultipartHttpServletRequest mpRequest) throws Exception;
 
-    List<BoardDTO> viewBoard(Criteria cri);
+    List<Board> viewBoard(Criteria cri);
 
-    BoardDTO selectBoard(int bno);
+    Board selectBoard(int bno);
 
-    BoardDTO modifyBoard(int bno);
+    Board modifyBoard(int bno);
 
-    void updateBoard(BoardDTO board, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws IOException;
+    void updateBoard(Board board, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws IOException;
 
     void deleteBoard(int bno);
 
     int countBoard(Criteria cri);
 
-    List<BoardDTO> writerBoard(String bwriter);
+    List<Board> writerBoard(String bwriter);
 
     int searchBoard(String bwriter);
 
-    BoardDTO heartBoard(int bno);
+    Board heartBoard(int bno);
 
     void upBoard(int bno);
 

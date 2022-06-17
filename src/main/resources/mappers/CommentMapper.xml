@@ -3,7 +3,7 @@
 
 <mapper namespace="com.project.dao.CommentDAOImpl">
 
-    <insert id="insertComment" parameterType="com.project.dto.CommentDTO">
+    <insert id="insertComment" parameterType="com.project.vo.Comment">
         INSERT INTO comment (
             comment_text,
             comment_writer,
@@ -17,7 +17,7 @@
         )
     </insert>
 
-    <select id="selectComment" parameterType="com.project.dto.CommentDTO" resultType="com.project.dto.CommentDTO">
+    <select id="selectComment" parameterType="com.project.vo.Comment" resultType="com.project.vo.Comment">
         SELECT comment_no AS cno,
                comment_text AS ctext,
                comment_writer AS cwriter,
@@ -27,12 +27,12 @@
         WHERE  board_no = #{bno}
     </select>
 
-    <delete id="deleteComment" parameterType="com.project.dto.CommentDTO">
+    <delete id="deleteComment" parameterType="com.project.vo.Comment">
         DELETE FROM comment
         WHERE comment_no = #{cno}
     </delete>
 
-    <update id="updateComment" parameterType="com.project.dto.CommentDTO">
+    <update id="updateComment" parameterType="com.project.vo.Comment">
         UPDATE comment
         SET    comment_text = #{ctext}
         WHERE  comment_no = #{cno}

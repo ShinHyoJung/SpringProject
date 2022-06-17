@@ -7,7 +7,8 @@ package com.project.dto;
  * Time: 오후 4:06
  * Comments:
  */
-public class PagingDTO { // 페이지 계산
+public class Paging
+{ // 페이지 계산
 
 
 
@@ -18,7 +19,7 @@ public class PagingDTO { // 페이지 계산
     private int total; // 전체 게시글 수
     private Criteria cri; // 현재페이지, 페이지당 게시글 표시수 정보
 
-    public PagingDTO(Criteria cri, int total) { //
+    public Paging(Criteria cri, int total) { //
 
         this.cri = cri;
         this.total = total;

@@ -1,11 +1,8 @@
 package com.project.dao;
 
-import com.project.dto.BoardDTO;
+import com.project.vo.Board;
 import com.project.dto.Criteria;
-import com.project.dto.PagingDTO;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -18,15 +15,15 @@ import java.util.Map;
  */
 public interface BoardDAO {
 
-    void insertBoard(BoardDTO board);
+    void insertBoard(Board board);
 
-    List<BoardDTO> viewBoard(Criteria cri); // 페이징을 적용해서 목록을 띄우기 위함
+    List<Board> viewBoard(Criteria cri); // 페이징을 적용해서 목록을 띄우기 위함
 
-    BoardDTO selectBoard(int bno);
+    Board selectBoard(int bno);
 
-    BoardDTO modifyBoard(int bno);
+    Board modifyBoard(int bno);
 
-    void updateBoard(BoardDTO board);
+    void updateBoard(Board board);
 
     void deleteBoard(int bno);
 
@@ -34,11 +31,11 @@ public interface BoardDAO {
 
     int countBoard(Criteria cri);
 
-    List<BoardDTO> writerBoard(String bwriter);
+    List<Board> writerBoard(String bwriter);
 
     int searchBoard(String bwriter);
 
-    BoardDTO heartBoard(int bno);
+    Board heartBoard(int bno);
 
     void upBoard(int bno);
 

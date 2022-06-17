@@ -1,6 +1,6 @@
 package com.project.util;
 
-import com.project.dto.BoardDTO;
+import com.project.vo.Board;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -20,7 +20,7 @@ import java.util.*;
 public class FileUtils { // 첨부파일 정보를 이용해 설정을 하는 클래스
     private static final String filePath = "D:\\file\\"; // 상수로 값이 고정됨
 
-    public List<Map<String, Object>> parseInsertFileInfo(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception {
+    public List<Map<String, Object>> parseInsertFileInfo(Board board, MultipartHttpServletRequest mpRequest) throws Exception {
         // 스프링이 제공하는 파일 업로드 인터페이스
         // 파일을 처음 업로드할때 쓰는 메서드
         // mpRequest는 첨부파일의 파라미터 값을 받을 수 있음
@@ -62,7 +62,7 @@ public class FileUtils { // 첨부파일 정보를 이용해 설정을 하는 �
         return list;
     }
 
-    public List<Map<String, Object>> parseUpdateFileInfo(BoardDTO board,String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws IOException {
+    public List<Map<String, Object>> parseUpdateFileInfo(Board board, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) throws IOException {
         //파일 수정과정에서 쓰이는 메서드
         Iterator<String> iterator = mpRequest.getFileNames();
         MultipartFile multipartFile = null;

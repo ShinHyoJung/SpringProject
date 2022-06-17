@@ -1,6 +1,7 @@
-package com.project.dto;
+package com.project.vo;
 
-public class fileDTO {
+public class File
+{
 
 
     private int fno;

@@ -1,13 +1,11 @@
 package com.project.dao;
 
-import com.project.dto.MemberDTO;
+import com.project.vo.Member;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,31 +28,31 @@ public class MemberDAOImpl implements MemberDAO
 
 
     @Override
-    public void insertMember(MemberDTO member) {
+    public void insertMember(Member member) {
         sqlSession.insert("insertMember", member);
     }
 
 
     @Override
-    public MemberDTO loginMember(String username)
+    public Member loginMember(String username)
     {
        return sqlSession.selectOne("loginMember", username);
 
     }
 
     @Override
-    public MemberDTO selectMember(String username) {
+    public Member selectMember(String username) {
         return sqlSession.selectOne("selectMember", username);
 
     }
 
     @Override
-    public void updateMember(MemberDTO member) {
+    public void updateMember(Member member) {
         sqlSession.update("updateMember", member);
     }
 
     @Override
-    public void updateEmail(MemberDTO member) {
+    public void updateEmail(Member member) {
         sqlSession.update("updateEmail", member);
     }
 
@@ -64,31 +62,31 @@ public class MemberDAOImpl implements MemberDAO
     }
 
     @Override
-    public int checkId(MemberDTO member) {
+    public int checkId(Member member) {
         int id = sqlSession.selectOne("checkId", member);
         return id;
     }
 
     @Override
-    public int checkEmail(MemberDTO member) {
+    public int checkEmail(Member member) {
         int email = sqlSession.selectOne("checkEmail", member);
         return email;
     }
 
     @Override
-    public int checkNickname(MemberDTO member) {
+    public int checkNickname(Member member) {
         int nickname = sqlSession.selectOne("checkNickname", member);
         return nickname;
     }
 
     @Override
-    public MemberDTO findId(MemberDTO member) {
+    public Member findId(Member member) {
         return sqlSession.selectOne("findId", member);
     }
 
 
     @Override
-    public void createAuthorities(MemberDTO member) {
+    public void createAuthorities(Member member) {
         sqlSession.insert("createAuthority", member);
     }
 
@@ -123,13 +121,13 @@ public class MemberDAOImpl implements MemberDAO
     }
 
     @Override
-    public int findPwd(MemberDTO member) {
+    public int findPwd(Member member) {
         int pwd = sqlSession.selectOne("findPwd", member);
         return pwd;
     }
 
     @Override
-    public void updatePwd(MemberDTO member) {
+    public void updatePwd(Member member) {
         sqlSession.update("updatePwd", member);
     }
 

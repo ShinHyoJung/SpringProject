@@ -1,6 +1,6 @@
 package com.project.dao;
 
-import com.project.dto.CommentDTO;
+import com.project.vo.Comment;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,22 +22,22 @@ public class CommentDAOImpl implements CommentDAO {
     SqlSession sqlSession;
 
     @Override
-    public void insertComment(CommentDTO comment) {
+    public void insertComment(Comment comment) {
         sqlSession.insert("insertComment", comment);
     }
 
     @Override
-    public List<CommentDTO> selectComment(CommentDTO comment)  {
+    public List<Comment> selectComment(Comment comment)  {
         return sqlSession.selectList("selectComment", comment);
     }
 
     @Override
-    public void deleteComment(CommentDTO comment) {
+    public void deleteComment(Comment comment) {
         sqlSession.delete("deleteComment", comment);
     }
 
     @Override
-    public void updateComment(CommentDTO comment)  {
+    public void updateComment(Comment comment)  {
         sqlSession.update("updateComment", comment);
     }
 }

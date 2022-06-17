@@ -5,24 +5,23 @@ import com.project.service.BoardService;
 import com.project.service.CommentService;
 import com.project.service.HeartService;
 import com.project.service.MemberService;
+import com.project.vo.Board;
+import com.project.vo.Comment;
+import com.project.vo.Heart;
+import com.project.vo.Member;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.method.P;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -58,67 +57,30 @@ public class BoardController {
 
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @RequestMapping(value="/list", method= RequestMethod.GET) // 게시판 목록
-    public String List()  {
+    public String List(Model model)  {
 
         logger.info("board");
 
         return "board/list";
     }
 
-    @ResponseBody
-    @RequestMapping(value="/nextlist", method = RequestMethod.POST)
-    public Map<String, Object> nextList(Criteria cri, @RequestBody Map<String, Object> map) throws Exception{
-        logger.info("nextlist");
-        Map<String, Object> listpage = new HashMap<>();
-
-        int num = Integer.parseInt(map.get("num").toString());
-        cri.setPageNum(num);
-        List<BoardDTO> list = boardService.viewBoard(cri);
-        int total = boardService.countBoard(cri);
-        PagingDTO page = new PagingDTO(cri, total);
-        listpage.put("list", list);
-        listpage.put("page", page);
-
-        return listpage;
-    }
 
     @ResponseBody
-    @RequestMapping(value="/printlist", method=RequestMethod.GET)
-    public List<BoardDTO> printList(Criteria cri) {
-        logger.info("printlist");
+    @RequestMapping(value="/printlist", method=RequestMethod.POST)
+    public SearchResponse List(@RequestBody Search search) {
+        logger.info("printList");
 
-        List<BoardDTO> list = boardService.viewBoard(cri);
-        return list;
-    }
-
-    @ResponseBody
-    @RequestMapping(value="/searchlist", method=RequestMethod.POST)
-    public Map<String,Object> searchList(Criteria cri, @RequestBody Map<String, Object> map) {
-        logger.info("searchlist");
-
-        String keyword = map.get("keyword").toString();
+        Criteria cri = new Criteria(search.getPageNum(), 7);
+        String keyword = search.getKeyword();
         cri.setKeyword(keyword);
-        String type = map.get("type").toString();
+        String type = search.getType();
         cri.setType(type);
 
-        List<BoardDTO> list = boardService.viewBoard(cri);
+        List<Board> list = boardService.viewBoard(cri);
         int total = boardService.countBoard(cri);
-        PagingDTO page = new PagingDTO(cri, total);
+        Paging paging = new Paging(cri, total);
 
-        Map<String, Object> searchmap = new HashMap<>();
-        searchmap.put("list", list);
-        searchmap.put("page", page);
-        return searchmap;
-    }
-
-    @ResponseBody
-    @RequestMapping(value="/paging", method = RequestMethod.GET)
-    public PagingDTO paging(Criteria cri) {
-        logger.info("paging");
-
-        int total = boardService.countBoard(cri);
-        PagingDTO page = new PagingDTO(cri, total);
-        return page;
+        return new SearchResponse(paging, list);
     }
 
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
@@ -128,7 +90,7 @@ public class BoardController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = ((UserDetails)principal).getUsername();
 
-        MemberDTO user = memberService.selectMember(username);
+        Member user = memberService.selectMember(username);
         //MemberDTO user = memberService.selectMember();
         model.addAttribute("user", user);
         return "board/write";
@@ -136,7 +98,7 @@ public class BoardController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/enroll") // 게시글 등록
-    public String enrollBoard(BoardDTO board, MultipartHttpServletRequest mpRequest) throws Exception {
+    public String enrollBoard(Board board, MultipartHttpServletRequest mpRequest) throws Exception {
 
         logger.info("enroll");
         boardService.insertBoard(board, mpRequest);
@@ -158,11 +120,11 @@ public class BoardController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping(value="/read/{bno}", method = RequestMethod.GET) // 게시글 읽기
-    public String readBoard(@PathVariable("bno")int bno, MemberDTO member, Model model) throws Exception {
+    public String readBoard(@PathVariable("bno")int bno, Member member, Model model) throws Exception {
         // 게시글 번호를 받아서 경로설정
         // pathVariable은 RESTful 방식에 맞게 좀 더 직관적
         logger.info("read");
-        BoardDTO board = boardService.selectBoard(bno); //게시글
+        Board board = boardService.selectBoard(bno); //게시글
         model.addAttribute("board", board);
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -170,13 +132,13 @@ public class BoardController {
 
         member = memberService.selectMember(username);
         int idx = member.getIdx();
-        MemberDTO user = memberService.selectMember(username);
+        Member user = memberService.selectMember(username);
 
-        HeartDTO heart = heartService.selectHeart(bno, idx);
+        Heart heart = heartService.selectHeart(bno, idx);
 
-        CommentDTO comment = new CommentDTO(); // 댓글
+        Comment comment = new Comment(); // 댓글
         comment.setBno(bno);
-        List<CommentDTO> comments = commentService.selectComment(comment);
+        List<Comment> comments = commentService.selectComment(comment);
 
         List<Map<String, Object>> file = boardService.selectFile(bno);
 
@@ -193,7 +155,7 @@ public class BoardController {
     public String modifyBoard(@PathVariable("bno")int bno, Model model) throws Exception {
 
         logger.info("update_page");
-        BoardDTO board = boardService.modifyBoard(bno);
+        Board board = boardService.modifyBoard(bno);
         model.addAttribute("board", board);
 
         List<Map<String, Object>> file = boardService.selectFile(bno);
@@ -203,7 +165,7 @@ public class BoardController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping(value = "/update", method = RequestMethod.POST) // 게시글 수정
-    public String updateBoard(BoardDTO board, @RequestParam(value="fileNoDel[]", required = false) String[] files,
+    public String updateBoard(Board board, @RequestParam(value="fileNoDel[]", required = false) String[] files,
                               @RequestParam(value="fileNameDel[]", required = false) String[] fileNames, MultipartHttpServletRequest mpRequest) throws Exception {
         logger.info("update");
         boardService.updateBoard(board, files, fileNames, mpRequest);
@@ -224,9 +186,9 @@ public class BoardController {
 
         logger.info("search");
 
-        List<BoardDTO> result = boardService.writerBoard(bwriter);
+        List<Board> result = boardService.writerBoard(bwriter);
         int total = boardService.searchBoard(bwriter);
-        PagingDTO page = new PagingDTO(cri, total);
+        Paging page = new Paging(cri, total);
         String writer = bwriter;
         model.addAttribute("result",result);
         model.addAttribute("writer", writer);

@@ -1,7 +1,7 @@
 package com.project.service;
 
 import com.project.dao.CommentDAO;
-import com.project.dto.CommentDTO;
+import com.project.vo.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,22 +22,22 @@ public class CommentServiceImpl implements CommentService{
     CommentDAO commentDAO;
 
     @Override
-    public void insertComment(CommentDTO comment) {
+    public void insertComment(Comment comment) {
         commentDAO.insertComment(comment);
     }
 
     @Override
-    public List<CommentDTO> selectComment(CommentDTO comment) {
+    public List<Comment> selectComment(Comment comment) {
         return commentDAO.selectComment(comment);
     }
 
     @Override
-    public void deleteComment(CommentDTO comment)  {
+    public void deleteComment(Comment comment)  {
         commentDAO.deleteComment(comment);
     }
 
     @Override
-    public void updateComment(CommentDTO comment) {
+    public void updateComment(Comment comment) {
         commentDAO.updateComment(comment);
     }
 }

@@ -1,4 +1,4 @@
-package com.project.dto;
+package com.project.vo;
 
 /**
  * Created with IntellliJ IDEA.
@@ -7,7 +7,8 @@ package com.project.dto;
  * Time: 오후 4:02
  * Comments:
  */
-public class CommentDTO {
+public class Comment
+{
 
     private int cno;
     private String ctext;

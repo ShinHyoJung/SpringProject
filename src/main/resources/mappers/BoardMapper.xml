@@ -3,7 +3,7 @@
 
 <mapper namespace="com.project.dao.BoardDAOImpl">
 
-    <insert id="insertBoard" parameterType="com.project.dto.BoardDTO" useGeneratedKeys="true" keyProperty="bno">
+    <insert id="insertBoard" parameterType="com.project.vo.Board" useGeneratedKeys="true" keyProperty="bno">
       <![CDATA[
         INSERT INTO board(
             board_title,
@@ -25,7 +25,7 @@
         ]]>
     </insert>
 
-    <select id="viewBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
+    <select id="viewBoard" parameterType="com.project.vo.Board" resultType="com.project.vo.Board">
         SELECT board_no AS bno,
                board_title AS btitle,
                board_writer AS bwriter,
@@ -42,7 +42,7 @@
         LIMIT  #{skip}, #{amount}
     </select>
 
-    <select id="selectBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
+    <select id="selectBoard" parameterType="com.project.vo.Board" resultType="com.project.vo.Board">
         SELECT board_no AS bno,
                board_title AS btitle,
                board_writer AS bwriter,
@@ -57,7 +57,7 @@
         WHERE  board_no = #{bno}
     </select>
 
-    <select id="modifyBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
+    <select id="modifyBoard" parameterType="com.project.vo.Board" resultType="com.project.vo.Board">
         SELECT board_no AS bno,
                board_title AS btitle,
                board_writer AS bwriter,
@@ -69,7 +69,7 @@
         WHERE  board_no = #{bno}
     </select>
 
-    <update id="updateBoard" parameterType="com.project.dto.BoardDTO">
+    <update id="updateBoard" parameterType="com.project.vo.Board">
         UPDATE board
         SET
                board_title = #{btitle},
@@ -77,7 +77,7 @@
         WHERE  board_no = #{bno}
     </update>
 
-    <delete id="deleteBoard" parameterType="com.project.dto.BoardDTO">
+    <delete id="deleteBoard" parameterType="com.project.vo.Board">
         DELETE FROM board
         WHERE  board_no = #{bno}
     </delete>
@@ -88,7 +88,7 @@
         WHERE  board_no = #{bno}
     </update>
 
-    <select id="countBoard" parameterType="com.project.dto.BoardDTO" resultType="int">
+    <select id="countBoard" parameterType="com.project.vo.Board" resultType="int">
         SELECT COUNT(*)
         FROM   board
         <if test="keyword != null">
@@ -96,7 +96,7 @@
         </if>
     </select>
 
-    <select id="writerBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
+    <select id="writerBoard" parameterType="com.project.vo.Board" resultType="com.project.vo.Board">
         SELECT board_no AS bno,
                board_title AS btitle,
                board_writer AS bwriter,
@@ -111,25 +111,25 @@
         LIMIT  0, 10
     </select>
 
-    <select id="searchBoard" parameterType="com.project.dto.BoardDTO" resultType="int">
+    <select id="searchBoard" parameterType="com.project.vo.Board" resultType="int">
         SELECT COUNT (*)
         FROM board
         WHERE board_writer = #{bwriter}
     </select>
 
-    <select id="HeartBoard" parameterType="com.project.dto.BoardDTO" resultType="com.project.dto.BoardDTO">
+    <select id="HeartBoard" parameterType="com.project.vo.Board" resultType="com.project.vo.Board">
         SELECT board_heart AS bheart
         FROM   board
         WHERE  board_no = #{bno}
     </select>
 
-    <update id="upBoard" parameterType="com.project.dto.BoardDTO">
+    <update id="upBoard" parameterType="com.project.vo.Board">
         UPDATE board
         SET    board_heart = board_heart+1
         WHERE  board_no = #{bno}
     </update>
 
-    <update id="downBoard" parameterType="com.project.dto.BoardDTO">
+    <update id="downBoard" parameterType="com.project.vo.Board">
         UPDATE  board
         SET     board_heart = board_heart-1
         WHERE   board_no = #{bno}

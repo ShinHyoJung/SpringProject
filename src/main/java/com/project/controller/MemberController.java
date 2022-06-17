@@ -1,6 +1,6 @@
 package com.project.controller;
 
-import com.project.dto.MemberDTO;
+import com.project.vo.Member;
 import com.project.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,12 +13,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
-import java.security.Principal;
 
 /**
  * Created with IntellliJ IDEA.
@@ -62,7 +60,7 @@ public class MemberController {
     }
 
     @RequestMapping("/Signup") // 회원가입 처리
-    public String Signup(@ModelAttribute MemberDTO member) throws MessagingException, UnsupportedEncodingException {
+    public String Signup(@ModelAttribute Member member) throws MessagingException, UnsupportedEncodingException {
         logger.info("Signup");
         String pwdbCrypt = new BCryptPasswordEncoder().encode(member.getPassword()); //비밀번호 암호화
 
@@ -117,7 +115,7 @@ public class MemberController {
     }
 
     @RequestMapping(value= "authEmail", method = RequestMethod.POST)
-    public String authEmail(MemberDTO member) throws MessagingException, UnsupportedEncodingException {
+    public String authEmail(Member member) throws MessagingException, UnsupportedEncodingException {
 
         logger.info("auth_email");
         memberService.updateEmail(member);
@@ -128,7 +126,7 @@ public class MemberController {
 
     @Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/Info") // 회원정보 조회
-    public String selectInfo(MemberDTO member, Model model)  {
+    public String selectInfo(Member member, Model model)  {
 
         logger.info("Info");
 
@@ -136,7 +134,7 @@ public class MemberController {
         String username = ((UserDetails)principal).getUsername(); // 스프링시큐리티 principal 인터페이스에서 사용자 정보를 가져옴
         
         member = memberService.selectMember(username);
-        MemberDTO user = memberService.selectMember(username);
+        Member user = memberService.selectMember(username);
 
         model.addAttribute("user", user);
 
@@ -145,7 +143,7 @@ public class MemberController {
 
     @Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/updateInfo") // 회원정보 수정
-    public String updateInfo(MemberDTO member)  {
+    public String updateInfo(Member member)  {
 
         logger.info("update_Info");
         String pwdbCrypt = new BCryptPasswordEncoder().encode(member.getPassword()); // 수정된 비밀번호 암호화
@@ -156,7 +154,7 @@ public class MemberController {
 
     @Secured({"ROLE_GUEST","ROLE_USER","ROLE_ADMIN"})
     @RequestMapping("/quitSignup") // 회원탈퇴
-    public String quitSignup(MemberDTO member, HttpSession session) {
+    public String quitSignup(Member member, HttpSession session) {
 
         logger.info("quit_Signup");
 
@@ -176,7 +174,7 @@ public class MemberController {
 
     @ResponseBody // http요청의 바디내용을 통째로 자바객체로 변환해서 매핑된 메소드 파라미터로 전달, ajax활용시 편함
     @RequestMapping(value="/checkId", method=RequestMethod.POST)
-    public int checkId(MemberDTO member) throws Exception { // 아이디중복체크, 파라미터
+    public int checkId(Member member) throws Exception { // 아이디중복체크, 파라미터
         logger.info("check_Id");
         int id = memberService.checkId(member);
         return id;
@@ -184,7 +182,7 @@ public class MemberController {
 
     @ResponseBody
     @RequestMapping(value="/checkEmail", method = RequestMethod.POST)
-    public int checkEmail(MemberDTO member) { // 이메일중복체크
+    public int checkEmail(Member member) { // 이메일중복체크
 
         logger.info("check_Email");
         int email = memberService.checkEmail(member);
@@ -193,7 +191,7 @@ public class MemberController {
 
     @ResponseBody
     @RequestMapping(value="/checkNickname", method = RequestMethod.POST)
-    public int checkNickname(MemberDTO member) { // 닉네임 중복체크
+    public int checkNickname(Member member) { // 닉네임 중복체크
 
         logger.info("check_Email");
         int nickname = memberService.checkNickname(member);
@@ -214,10 +212,10 @@ public class MemberController {
     }
 
     @RequestMapping("/findId") // 아이디찾기
-    public String findId(MemberDTO member, Model model) {
+    public String findId(Member member, Model model) {
 
         logger.info("findId");
-        MemberDTO user = memberService.findId(member);
+        Member user = memberService.findId(member);
 
         if(user == null) {
             model.addAttribute("check", 1);
@@ -237,7 +235,7 @@ public class MemberController {
 
     @RequestMapping("/findPwd") // 비밀번호찾기
     @ResponseBody
-    public int findPwd(MemberDTO member) {
+    public int findPwd(Member member) {
 
         logger.info("find_Pwd");
         int pwd = memberService.findPwd(member);
@@ -245,7 +243,7 @@ public class MemberController {
     }
 
     @RequestMapping("/updatePwd") // 비밀번호 변경
-    public String updatePwd(MemberDTO member) {
+    public String updatePwd(Member member) {
 
         logger.info("update_Pwd");
         String pwdbCrypt = new BCryptPasswordEncoder().encode(member.getPassword()); // 수정된 비밀번호 암호화
