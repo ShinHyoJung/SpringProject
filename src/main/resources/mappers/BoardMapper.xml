@@ -108,7 +108,7 @@
         FROM   board
         WHERE  board_writer = #{bwriter}
         ORDER BY board_no DESC
-            LIMIT  #{skip}, #{amount}
+        LIMIT  0, 10
     </select>
 
     <select id="searchBoard" parameterType="com.project.dto.BoardDTO" resultType="int">

@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="<c:url value="/css/background.css"/>" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
-<body class="background" onload="pringpage();">
+<body class="background">
 
 <jsp:include page="/static/header.jsp"/>
 
@@ -39,42 +39,5 @@
 </table>
 
 <a href="/list" class="btn btn-primary" style="margin-left: 1300px;">목록</a>
-
-<script>
-
-    function pringpage() {
-        var page;
-        $.ajax({
-            method: "GET",
-            dataType: "json",
-            data:{page: page},
-            success: function (data) {
-                console.log(data);
-                var pagehtml = "";
-                var next = data.next;
-                var prev = data.prev;
-                var startPage = data.startPage;
-                var endPage = data.endPage;
-                pageNum = data.cri.pageNum;
-
-                if(prev) {
-                    pagehtml += "<li class='paging_btn prev'><a class='page'> < </a></li>";
-                }
-
-                for(var i = startPage-1; i<endPage; i++)
-                {
-                    num = pageNum + i;
-
-                    pagehtml += "<li class='paging_btn'><a class= 'page'  onclick=nextlist(" +  num + ")>" +  num + "</a></li>";
-                }
-
-                if(next) {
-                    pagehtml += "<li class='paging_btn next'><a class='page'> > </a></li>";
-                }
-                $("#paging").html(pagehtml);
-            }
-        });
-    }
-</script>
 </body>
 </html>
