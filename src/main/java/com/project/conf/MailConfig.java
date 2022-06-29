@@ -32,7 +32,7 @@ public class MailConfig {
         mailSender.setHost("smtp.gmail.com"); // 구글 smtp
         mailSender.setPort(587); // 포트번호
         mailSender.setUsername("sljh1020@gmail.com"); // 보내는 사람 이메일 계정
-        mailSender.setPassword("sljh38952008@"); // 보내는사람 이메일 비밀번호
+        mailSender.setPassword("pizaagtsvukoenfy"); // 보내는사람 이메일 비밀번호
         mailSender.setDefaultEncoding("utf-8"); // 한글 인코딩 설정
         mailSender.setJavaMailProperties(properties);
 
