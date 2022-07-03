@@ -235,5 +235,4 @@ public class BoardController {
         response.getOutputStream().close(); // 닫음
     }
 
-
 }

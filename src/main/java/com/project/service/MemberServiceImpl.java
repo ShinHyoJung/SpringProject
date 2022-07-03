@@ -179,4 +179,10 @@ public class MemberServiceImpl implements MemberService
     public void deleteEmail(String email) {
         memberDAO.deleteEmail(email);
     }
+
+    @Override
+    public String checkUser(int idx) {
+        String username = memberDAO.checkUser(idx);
+        return username;
+    }
 }

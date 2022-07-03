@@ -52,4 +52,6 @@ public interface MemberDAO
         void updatePwd(Member member);
 
         void deleteEmail(String email);
+
+        String checkUser(int idx);
     }

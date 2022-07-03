@@ -59,4 +59,6 @@ public interface MemberService extends UserDetailsService
    void sendMail(Member member) throws MessagingException, UnsupportedEncodingException;
 
    void deleteEmail(String email);
+
+   String checkUser(int idx);
 }

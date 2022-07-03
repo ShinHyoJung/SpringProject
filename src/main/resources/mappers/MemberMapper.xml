@@ -172,4 +172,10 @@
         DELETE FROM emailauth
         WHERE  email = #{email}
     </delete>
+
+    <select id="checkUser" parameterType="int" resultType="String">
+        SELECT name as name
+        FROM member
+        WHERE idx = #{idx}
+</select>
 </mapper>

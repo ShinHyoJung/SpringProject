@@ -135,4 +135,10 @@ public class MemberDAOImpl implements MemberDAO
     public void deleteEmail(String email) {
         sqlSession.delete("deleteEmail", email);
     }
+
+    @Override
+    public String checkUser(int idx) {
+        String username = sqlSession.selectOne("checkUser", idx);
+        return username;
+    }
 }
