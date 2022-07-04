@@ -218,12 +218,15 @@
             <artifactId>spring-context-support</artifactId>
             <version>4.2.2.RELEASE</version>
         </dependency>
-
-        <!--httpclient-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.15</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.4</version>
+            <version>4.5.13</version>
         </dependency>
 
     </dependencies>

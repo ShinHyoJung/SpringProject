@@ -2,19 +2,20 @@ package com.project.controller;
 
 
 import com.project.service.MemberService;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.protocol.HTTP;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.Charset;
 
 @Controller
 public class ApiController {
@@ -24,27 +25,47 @@ public class ApiController {
 
     @ResponseBody
     @RequestMapping("/api/checkUser")
-    public void getCheckUser(@RequestBody String requestBody) {
+    public String getCheckUser(@RequestBody String requestBody) {
         System.out.println(requestBody);
         int idx = Integer.parseInt(requestBody);
         String username = memberService.checkUser(idx);
 
         System.out.println(username);
         /*
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        HttpPost httpPost = new HttpPost("http://localhost:8070/demo/apiget");
-        httpPost.setEntity(new StringEntity(username, HTTP.UTF_8));
+        String response = "";
+        try
+        {
+            URL url = new URL("http://localhost:8070/demo/apiGet");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+            conn.setConnectTimeout(10000);
+            conn.setReadTimeout(10000);
+            conn.setDoOutput(true);
 
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+            bw.write(username);
+            bw.flush();
+            bw.close();
 
-         */
-        /*
-        try {
-           // HttpResponse response = httpClient.execute(httpPost);
-        } catch (IOException e) {
+            Charset charset = Charset.forName("UTF-8");
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), charset));
+
+            String inputLine;
+            StringBuffer sb = new StringBuffer();
+            while((inputLine = br.readLine()) != null) {
+                sb.append(inputLine);
+            }
+            br.close();
+
+            response = sb.toString();
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
 
          */
+        return username;
     }
 
 
