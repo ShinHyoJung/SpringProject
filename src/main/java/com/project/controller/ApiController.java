@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
@@ -30,21 +31,7 @@ public class ApiController {
         String username = memberService.checkUser(idx);
 
         System.out.println(username);
-        /*
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        HttpPost httpPost = new HttpPost("http://localhost:8070/demo/apiget");
-        httpPost.setEntity(new StringEntity(username, HTTP.UTF_8));
 
-
-         */
-        /*
-        try {
-           // HttpResponse response = httpClient.execute(httpPost);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-         */
         return username;
     }
 
