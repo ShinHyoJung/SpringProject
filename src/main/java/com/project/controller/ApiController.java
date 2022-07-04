@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
@@ -23,8 +24,8 @@ public class ApiController {
     MemberService memberService;
 
     @ResponseBody
-    @RequestMapping("/api/checkUser")
-    public void getCheckUser(@RequestBody String requestBody) {
+    @RequestMapping(value = "/api/checkUser", produces = "application/json;charset=UTF-8", method= RequestMethod.POST)
+    public String getCheckUser(@RequestBody String requestBody) {
         System.out.println(requestBody);
         int idx = Integer.parseInt(requestBody);
         String username = memberService.checkUser(idx);
@@ -34,8 +35,6 @@ public class ApiController {
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost httpPost = new HttpPost("http://localhost:8070/demo/apiget");
         httpPost.setEntity(new StringEntity(username, HTTP.UTF_8));
-
-
          */
         /*
         try {
@@ -45,6 +44,7 @@ public class ApiController {
         }
 
          */
+        return username;
     }
 
 
