@@ -10,8 +10,6 @@ package com.project.dto;
 public class Paging
 { // 페이지 계산
 
-
-
     private int startPage; // 시작페이지
     private int endPage; // 끝페이지
     private boolean prev; // 이전페이지 존재유무
@@ -19,7 +17,7 @@ public class Paging
     private int total; // 전체 게시글 수
     private Criteria cri; // 현재페이지, 페이지당 게시글 표시수 정보
 
-    public Paging(Criteria cri, int total) { //
+    public Paging(Criteria criteria, int total) { //
 
         this.cri = cri;
         this.total = total;

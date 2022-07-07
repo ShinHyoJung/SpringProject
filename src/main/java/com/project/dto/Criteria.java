@@ -35,7 +35,6 @@ public class Criteria { // 현재페이지와 페이지당 보여질 게시물 �
         this.pageNum = pageNum;
         this.amount = amount;
         this.skip = (pageNum-1) * amount;
-
     }
 
     public int getPageNum() {
