@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -25,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -235,4 +235,12 @@ public class BoardController {
         response.getOutputStream().close(); // 닫음
     }
 
+    @RequestMapping("/qrCode")
+    public String getQrCode(Model model) {
+        String url = "http://localhost:8070/demo/postQrCode";
+        RestTemplate restTemplate = new RestTemplate();
+        String img = restTemplate.getForObject(url, String.class);
+        model.addAttribute("img",img);
+        return "/board/qrCode";
+    }
 }

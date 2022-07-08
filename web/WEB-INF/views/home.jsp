@@ -77,7 +77,7 @@
         <h1 class="cover-heading">페이지</h1>
         <p class="lead">자유롭게 글을 쓰고, 댓글로 의견을 표현하세요.</p>
     </div>
-
+<a href="/qrCode">QrCode</a>
 </main>
 <jsp:include page="/static/footer.jsp"/>
 <script>
