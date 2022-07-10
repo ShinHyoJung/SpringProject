@@ -182,17 +182,17 @@ public class BoardController {
 
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @RequestMapping(value="/search/{bwriter}", method=RequestMethod.GET) // 게시글 작성자 검색
-    public String writerBoard(@PathVariable("bwriter")String bwriter, Criteria cri, Model model) { // 어떤 요청이든간에 하나밖에 못씀
+    public String writerBoard(@PathVariable("bwriter")String bwriter, Model model) { // 어떤 요청이든간에 하나밖에 못씀
 
         logger.info("search");
 
         List<Board> result = boardService.writerBoard(bwriter);
         int total = boardService.searchBoard(bwriter);
-        Paging page = new Paging(cri, total);
+        //Paging page = new Paging(cri, total);
         String writer = bwriter;
         model.addAttribute("result",result);
         model.addAttribute("writer", writer);
-        model.addAttribute("page", page);
+        //model.addAttribute("page", page);
         return "board/search";
     }
 
@@ -235,12 +235,5 @@ public class BoardController {
         response.getOutputStream().close(); // 닫음
     }
 
-    @RequestMapping("/qrCode")
-    public String getQrCode(Model model) {
-        String url = "http://localhost:8070/demo/postQrCode";
-        RestTemplate restTemplate = new RestTemplate();
-        String img = restTemplate.getForObject(url, String.class);
-        model.addAttribute("img",img);
-        return "/board/qrCode";
-    }
+
 }

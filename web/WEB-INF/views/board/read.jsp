@@ -12,13 +12,9 @@
 <html>
 <head>
     <title>게시글읽기</title>
-
     <link rel="stylesheet" href="<c:url value="/css/background.css"/>" >
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
 </head>
 <body class="background">
-
 <jsp:include page="/static/header.jsp"/>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <table class="table table-bordered" style="width: 50%; margin-left: 450px;">

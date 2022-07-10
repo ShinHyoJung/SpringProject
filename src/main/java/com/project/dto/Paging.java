@@ -15,18 +15,18 @@ public class Paging
     private boolean prev; // 이전페이지 존재유무
     private boolean next; // 다음페이지
     private int total; // 전체 게시글 수
-    private Criteria cri; // 현재페이지, 페이지당 게시글 표시수 정보
+    private Criteria criteria; // 현재페이지, 페이지당 게시글 표시수 정보
 
     public Paging(Criteria criteria, int total) { //
 
-        this.cri = cri;
+        this.criteria = criteria;
         this.total = total;
 
-        this.endPage = (int)(Math.ceil(cri.getPageNum()/5.0))*5; // 끝번호를 구한다.  페이지를 5로 나눈후 그 값을 올림해서 5를 곱함 반올림을하는 식
+        this.endPage = (int)(Math.ceil(criteria.getPageNum()/5.0))*5; // 끝번호를 구한다.  페이지를 5로 나눈후 그 값을 올림해서 5를 곱함 반올림을하는 식
 
         this.startPage = this.endPage - 4; // 첫번째 번호는 페이지번호들-1인 4를 빼주면 나옴
 
-        int realEnd = (int)(Math.ceil(total * 1.0/cri.getAmount())); // total을 amount로 나눠서 올림
+        int realEnd = (int)(Math.ceil(total * 1.0/criteria.getAmount())); // total을 amount로 나눠서 올림
 
         if(realEnd < this.endPage) { // 마지막 페이지 유효한지 체크
             this.endPage = realEnd;
@@ -79,16 +79,16 @@ public class Paging
     }
 
     public Criteria getCri() {
-        return cri;
+        return criteria;
     }
 
     public void setCri(Criteria cri) {
-        this.cri = cri;
+        this.criteria = cri;
     }
 
     @Override
     public String toString() {
         return "PagingDTO [startPage=" + startPage + ", endPage=" + endPage + ", prev=" + prev + ", next=" + next
-                + ", total" + total + ", cri=" + cri + "]";
+                + ", total" + total + ", criteria=" + criteria + "]";
     }
 }

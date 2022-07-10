@@ -108,7 +108,6 @@
         FROM   board
         WHERE  board_writer = #{bwriter}
         ORDER BY board_no DESC
-        LIMIT  0, 10
     </select>
 
     <select id="searchBoard" parameterType="com.project.vo.Board" resultType="int">

@@ -42,6 +42,7 @@ public class BoardDAOImpl implements BoardDAO {
     public Board modifyBoard(int bno)  {
         return sqlSession.selectOne("modifyBoard", bno);
     }
+
     @Override
     public void updateBoard(Board board)  {
         sqlSession.update("updateBoard", board);

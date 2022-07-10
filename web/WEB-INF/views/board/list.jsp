@@ -41,7 +41,6 @@
         }
     </style>
     <link rel="stylesheet" href="<c:url value="/css/background.css"/>">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <script>
         function print(pageNum) {
             var keyword, typeOption, type;
@@ -64,26 +63,8 @@
                 data: JSON.stringify(postObj),
                 success: function(SearchResponse) {
                     console.log(SearchResponse);
-                    var listhtml = "";
-
-                    if(SearchResponse.searchResponseList == "") {
-                        listhtml += "검색결과가 없습니다.";
-                    }
-
-                    $.each(SearchResponse.searchResponseList, function(i, searchResponse) {
-                        var string1 = "/read/" + searchResponse.bno;
-                        var string2 = "/search/" + searchResponse.bwriter;
-                        listhtml += "<tr>";
-                        listhtml += "<td>" + searchResponse.bno + "</td>";
-                        listhtml += "<td> <a href=" + string1 + ">" + searchResponse.btitle + "</a></td>";
-                        listhtml += "<td> <a href=" + string2 + ">" + searchResponse.bwriter + "</a></td>";
-                        listhtml += "<td>" + searchResponse.bupdatetime + "</td>";
-                        listhtml += "<td>" + searchResponse.bhit + "</td>";
-                        listhtml += "</tr>";
-                    });
-                    $("#tbody").html(listhtml);
-
                     var pagehtml ="";
+                    var listhtml = "";
 
                     if(SearchResponse.paging.prev) {
                         pagehtml += "<li class='paging_btn prev'><a class='page'> < </a></li>";
@@ -103,7 +84,26 @@
                     if(SearchResponse.paging.next) {
                         pagehtml += "<li class='paging_btn next'><a class='page'> > </a></li>";
                     }
+
+                    if(SearchResponse.searchResponseList == "") {
+                        listhtml += "검색결과가 없습니다.";
+                    }
+
+                    $.each(SearchResponse.searchResponseList, function(i, searchResponse) {
+                        var string1 = "/read/" + searchResponse.bno;
+                        var string2 = "/search/" + searchResponse.bwriter;
+                        listhtml += "<tr>";
+                        listhtml += "<td>" + searchResponse.bno + "</td>";
+                        listhtml += "<td> <a href=" + string1 + ">" + searchResponse.btitle + "</a></td>";
+                        listhtml += "<td> <a href=" + string2 + ">" + searchResponse.bwriter + "</a></td>";
+                        listhtml += "<td>" + searchResponse.bupdatetime + "</td>";
+                        listhtml += "<td>" + searchResponse.bhit + "</td>";
+                        listhtml += "</tr>";
+                    });
+
                     $("#paging").html(pagehtml);
+                    $("#tbody").html(listhtml);
+
                 }
             })
         }

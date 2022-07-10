@@ -12,7 +12,6 @@
 <head>
     <title>아이디찾기</title>
     <link rel="stylesheet" href="<c:url value="/css/background.css"/>">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body class="background">
 <jsp:include page="/static/header.jsp"/>
